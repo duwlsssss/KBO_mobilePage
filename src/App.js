@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
-
+import api from './api/axios'
 function App() {
   const [userEmail, setUserEmail] = useState('');
   const [cards, setCards] = useState([]); //카드 저장용
@@ -22,9 +22,9 @@ function App() {
 
   //서버에서 데이터 가져오기, useEmail이 맞을때만
   const fetchCards = (email) => {
-    fetch('http://localhost:8000/cards')
-      .then((res) => res.json())
-      .then((data) => {
+    api.get('/cards')
+      .then((response) => {
+        const data = response.data;
         if (data.status === 'ok') {
           const userCards = data.data.filter(card => card.userEmail === email);
           // 업데이트 날짜 기준으로 정렬
@@ -34,7 +34,9 @@ function App() {
           setCards(latestCard);
         }
       })
-      .catch((err) => console.error("Fetching cards failed:", err));
+      .catch((error) => {
+        console.error("Fetching cards failed:", error);
+      });
   };
 
   //카드 애니메이션 관련 
@@ -71,7 +73,8 @@ function App() {
           </div>
           <div className={`cardBack ${isFlipped ? 'flipped' : ''}`}>
             <div className="QR">
-              <QRCode value={`http://localhost:3001/MyMyungham?userEmail=${userEmail}`} />
+              {/* <QRCode value={`http://localhost:3001/?userEmail=${userEmail}`} /> */}
+              <QRCode value={`https://kimmobile.netlify.app?userEmail=${userEmail}`} />
             </div>
           </div>
         </div>
