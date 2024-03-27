@@ -1,0 +1,128 @@
+/* .mobile{
+  height: calc(var(--vh, 1vh) * 100);
+} */
+
+.card {
+  /* background-color: aqua; */
+  width: 840px;
+  height: 460px;
+  position: relative;
+  border-radius: 1rem;
+}
+
+.cardFront,
+.cardBack {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  transition: transform 0.5s ease;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.cardBack {
+  background-image: url('/public/images/BC_front.png');
+  background-size: cover; 
+  background-position: center; 
+  transform: rotateY(180deg);
+}
+
+.cardBack.flipped {
+  transform: rotateY(0deg);
+}
+
+.cardFront {
+  background-image: url('/public/images/BC_front.png');
+  background-size: cover; 
+  background-position: center; 
+  transform: rotateY(0deg);
+}
+
+.cardFront.flipped {
+  transform: rotateY(180deg);
+}
+
+.infoContainer {
+  font-family: sans-serif;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.infoItem {
+  position: absolute;
+}
+
+.date{
+  top: 100px;
+  right: 70px;
+}
+.name {
+  top: 140px;
+  right: 150px;
+}
+.school {
+  top: 171px; 
+  left:520px; 
+}
+.studentNum {
+  top: 171px; 
+  right: 150px; 
+}
+.major {
+  top: 203px; 
+  right:150px;
+}
+.email {
+  cursor:pointer;
+  top: 233px; 
+  right: 150px;
+}
+.email:hover{
+  background-color: aquamarine;
+}
+.session {
+  top: 263px; 
+  right:150px;
+}
+.MBTI {
+  top: 293px; 
+  right: 150px;
+}
+.IG {
+  cursor:pointer;
+  top: 325px; 
+  right: 150px; 
+}
+.IG:hover{
+  background-color: aquamarine;
+}
+.moto {
+  top: 356px; 
+  right: 150px;
+}
+
+.QR{
+  position: absolute;
+  margin: 10rem 23rem;
+}
+
+
+button{
+  cursor:pointer;
+  font-family: 'DOSSaemmul', sans-serif;
+}
+
+.savingPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 5rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
