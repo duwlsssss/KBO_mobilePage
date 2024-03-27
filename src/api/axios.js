@@ -7,8 +7,8 @@ import axios from 'axios';
 
 const api = axios.create({
     // //개발용
-    // baseURL: 'http://localhost:8000',//API baseURL
-    baseURL: 'http://kimmyungsa.us-east-2.elasticbeanstalk.com', //API baseURL
+    baseURL: 'http://localhost:8000',//API baseURL
+    // baseURL: 'http://kimmyungsa.us-east-2.elasticbeanstalk.com', //API baseURL
     timeout:5000,
     headers:{
         'Content-Type': 'application/json', //응답헤더, json 형식

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import styles from './CardCollection.module.css';
 import { Link } from 'react-router-dom';
+import useUserEmailStore from '../../store/userEmail'
 
 function CardCollection() {
+  const {userEmail,setUserEmail} = useUserEmailStore();
+
   const [categories, setCategories] = useState([
     { id: 1, name: '기본 카테고리', cards: [] }
   ]);
@@ -98,7 +101,7 @@ function CardCollection() {
           <button onClick={() => deleteCategory(category.id)}>카테고리 삭제</button>
         </div>
       ))}
-     <Link to="/my-card">나의 명함</Link>
+     <Link to={`/my-card?userEmail=${userEmail}`}>나의 명함</Link>
   </div>
   );
 }
