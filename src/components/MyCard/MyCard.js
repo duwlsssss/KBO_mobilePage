@@ -165,12 +165,11 @@ const handleIgClick = () => {
 
   //공유하기 누르면 링크 복사됨 
   const shareCard = () => {
-    const shareUrl = `https://kimmobile.netlify.app/card-info?userEmail=${userEmail}`;
+    // const shareUrl = `https://kimmobile.netlify.app/card-info?userEmail=${userEmail}`;
+    const shareUrl = `http://localhost:3001/card-info?userEmail=${userEmail}`;
+    console.log("공유 주소",shareUrl);
     // 이 URL을 클립보드에 복사하거나 공유
   };
-
-
-
 
 
   //카드 뒤집기 애니메이션 
@@ -199,22 +198,6 @@ const handleIgClick = () => {
       }, 200); 
     }
   };
-
-
-
-
-  //화면 조절
-  function setScreenSize() {
-    let vh = window.innerHeight * 0.01; // 화면 높이의 1% 값을 계산
-    document.documentElement.style.setProperty('--vh', `${vh}px`); // --vh 값을 px 단위로 설정
-  }
-
-  useEffect(() => {
-    setScreenSize();
-    window.addEventListener('resize', setScreenSize); // 화면 크기가 변경될 때마다 재설정
-
-    return () => window.removeEventListener('resize', setScreenSize); // 컴포넌트가 언마운트 될 때 이벤트 리스너 제거
-  }, []);
 
 
 

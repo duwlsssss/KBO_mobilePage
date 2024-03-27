@@ -1,0 +1,131 @@
+.card {
+  background-color: aqua;
+  margin: 9rem -6rem;
+  width: 25rem;
+  height: 43rem;
+  perspective: 300rem;
+  margin: 1rem;
+}
+
+.cardFront,
+.cardBack {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  transition: transform 0.5s ease;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.cardBack {
+  background-image: url('/public/images/BCFront.png');
+  background-size: cover; 
+  background-position: center; 
+  transform: rotateX(180deg);
+}
+
+.cardBack.flipped {
+  transform: rotateX(0deg);
+}
+
+.cardFront {
+  background-image: url('/public/images/BCFront.png');
+  background-size: cover; 
+  background-position: center; 
+  transform: rotateX(0deg);
+}
+
+.cardFront.flipped {
+  transform: rotateX(-180deg);
+}
+
+.infoContainer {
+  transform: rotate(90deg);
+  transform-origin: center center;
+  font-family: sans-serif;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.infoItem {
+  position: absolute;
+}
+
+.date{
+  top: 14rem;
+  right: -7.4rem;
+}
+.name {
+  top: 17.5rem;
+  right: -4rem;
+}
+.school {
+  top: 18.5rem; 
+  left: 16rem; 
+}
+.studentNum {
+  top: 18.5rem; 
+  right: -4rem;
+}
+.major {
+  top: 20rem; 
+  right: -4rem;
+}
+.email {
+  cursor:pointer;
+  top: 22rem; 
+  right:  -4rem;
+}
+.email:hover{
+  background-color: aquamarine;
+}
+.session {
+  top: 24rem; 
+  right: -4rem;
+}
+.MBTI {
+  top: 26rem; 
+  right:  -4rem;
+}
+.IG {
+  cursor:pointer;
+  top: 28rem; 
+  right:  -4rem; 
+}
+.IG:hover{
+  background-color: aquamarine;
+}
+.moto {
+  top: 30rem; 
+  right:  -4rem;
+}
+
+.QR{
+  position: absolute;
+  transform: rotate(90deg);
+  transform-origin: center center;
+  margin: 33rem 2rem;
+}
+
+
+button{
+  cursor:pointer;
+  font-family: 'DOSSaemmul', sans-serif;
+}
+
+.savingPopup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: white;
+  width: 25rem;
+  height: 43rem;
+  margin: 2rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}

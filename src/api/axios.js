@@ -1,14 +1,12 @@
 import axios from 'axios';
 //DB 에 qr코드의 파라미터인 userEmail에 해당하는 카드 정보들을 가져오기 위해 이 api 를 사용합니다.
 
-//const host = window.location.hostname === "localhost" ? 'http://kimmyungsa.us-east-2.elasticbeanstalk.com' : "";
-
+const host = window.location.hostname === "localhost" ? 'http://localhost:8000' : 'http://kimmyungsa.us-east-2.elasticbeanstalk.com';
 //axios 인스턴스 생성
 
 const api = axios.create({
-    // //개발용
-    baseURL: 'http://localhost:8000',//API baseURL
-    // baseURL: 'http://kimmyungsa.us-east-2.elasticbeanstalk.com', //API baseURL
+    //개발용
+    baseURL: host,//API baseURL
     timeout:5000,
     headers:{
         'Content-Type': 'application/json', //응답헤더, json 형식
