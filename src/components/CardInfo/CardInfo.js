@@ -221,7 +221,7 @@ const handleIgClick = () => {
                         <div className={`${styles.cardBack} ${isFlipped ? styles.flipped : ''}`} ref={backRef}>
                         {showQR && (
                           <div className={styles.QR}>
-                            <QRCode value={`https://kimmobile.netlify.app/card-info?userEmail=${userEmail}`} />
+                            <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} />
                           </div>
                         )}
                         </div>

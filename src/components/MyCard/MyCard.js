@@ -221,7 +221,7 @@ const handleIgClick = () => {
   //공유하기 누르면 링크 복사됨 
   const shareCard = async() => {
     try {
-      const shareUrl = `https://kimmobile.netlify.app/card-info?userEmail=${userEmail}`;
+      const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
       // const shareUrl = `http://localhost:3000/card-info?userEmail=${userEmail}`;
       console.log("공유 주소",shareUrl);
       // 공유주소를 클립보드에 복사
@@ -304,7 +304,7 @@ const handleIgClick = () => {
                         <div className={`${styles.cardBack} ${isFlipped ? styles.flipped : ''}`} ref={backRef}>
                         {showQR && (
                           <div className={styles.QR}>
-                            <QRCode value={`https://kimmobile.netlify.app/card-info?userEmail=${userEmail}`} />
+                            <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} />
                           </div>
                         )}
                         </div>
