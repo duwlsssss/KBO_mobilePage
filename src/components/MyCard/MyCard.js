@@ -14,10 +14,23 @@ function MyCard() {
   const {userEmail,setUserEmail} = useUserEmailStore();
   const [cards, setCards] = useState([]); //카드 저장용
   const [cardImage, setCardImage] = useState(null);//이미지 저장
+  const [isLoading, setIsLoading] = useState(true);//로딩 상태 
   const [isSaving, setIsSaving] = useState(false);//사진 저장 상태 추적
   const [isFlipped, setIsFlipped] = useState(false);
   const [showQR,setShowQR]=useState("false");
   const location = useLocation();
+
+  useEffect(() => {
+    // 초기 로딩 상태를 설정하고, 5초 후에 로딩 상태를 변경
+    setIsLoading(true); // 컴포넌트가 마운트될 때 로딩 시작
+    const timer = setTimeout(() => {
+      setIsLoading(false); // 5초 후 로딩 상태를 false로 변경
+    }, 5000);
+
+    // 컴포넌트가 언마운트될 때 타이머를 정리
+    return () => clearTimeout(timer);
+  }, [userEmail]); // userEmail이 변경될 때마다 이 효과를 다시 실행
+
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -83,7 +96,7 @@ function MyCard() {
     console.log("사진 저장 실행");
 
     const waitForRender = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     };
 
     const captureCardImage = async (element, filename) => {
@@ -129,77 +142,8 @@ function MyCard() {
 
     // Clean up and set states back to initial values
     setIsFlipped(false);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await waitForRender();
     setIsSaving(false); 
-    // // 카드를 앞면으로 설정
-    // setIsFlipped(false);
-    // // 앞면이 화면에 표시되기를 잠시 기다림
-    // await new Promise(resolve => setTimeout(resolve, 800));
-
-    // if (frontRef.current) {
-    //   try {
-    //     const canvasFront = await html2canvas(frontRef.current, { scale: 2, useCORS: true });
-
-    //     const dataUrl = canvasFront.toDataURL();
-    //     const rotatedImage = new Image();
-    //     rotatedImage.onload = function() {
-    //       const rotatedCanvas = document.createElement('canvas');
-    //       rotatedCanvas.width = rotatedImage.height;
-    //       rotatedCanvas.height = rotatedImage.width;
-
-    //       const context = rotatedCanvas.getContext('2d');
-    //       context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
-    //       context.rotate(-90 * Math.PI / 180);
-    //       context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
-
-    //       rotatedCanvas.toBlob(function(blob) {
-    //         if (blob) {
-    //           saveAs(blob, "card-front.png");
-    //         }
-    //       });
-    //     };
-    //     rotatedImage.src = dataUrl;
-    //   } catch (error) {
-    //       console.error("Problem saving front of card:", error);
-    //   }
-    // } 
-    // // 카드를 뒷면으로 설정
-    // setIsFlipped(true);
-    // // 뒷면이 화면에 표시되기를 잠시 기다림
-    // await new Promise(resolve => setTimeout(resolve, 800)); 
-
-
-    // if (backRef.current) {
-    //   try {
-    //       // CORS를 통해 외부 이미지를 로드
-    //       const canvasBack = await html2canvas(backRef.current, { scale: 2, useCORS: true });
-    //       const dataUrl = canvasBack.toDataURL();
-    //       const rotatedImage = new Image();
-    //       rotatedImage.onload = function() {
-    //         const rotatedCanvas = document.createElement('canvas');
-    //         rotatedCanvas.width = rotatedImage.height;
-    //         rotatedCanvas.height = rotatedImage.width;
-
-    //         const context = rotatedCanvas.getContext('2d');
-    //         context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
-    //         context.rotate(-90 * Math.PI / 180);
-    //         context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
-
-    //         rotatedCanvas.toBlob(function(blob) {
-    //           if (blob) {
-    //             saveAs(blob, "card-back.png");
-    //           }
-    //         });
-    //       };
-    //       rotatedImage.src = dataUrl;
-    //   } catch (error) {
-    //       console.error("Problem saving back of card:", error);
-    //   }
-  // }
-  // // 마무리로 카드를 원래 상태로 돌려놓기
-  // setIsFlipped(false); 
-  // await new Promise(resolve => setTimeout(resolve, 800));
-  // setIsSaving(false); // 사진 저장 종료
 };
 
 
@@ -261,6 +205,18 @@ const handleIgClick = () => {
     }
   };
 
+  //처음에 로딩 화면 띄우려고
+  if (isLoading) {
+    return (
+      <div className={styles.popUp}>
+        <div className={styles.popUpContent}>
+          <div>카드 로드 중...</div>
+          <ProgressBar progressDuration={4000} totalBlocks={16} /> {/* 여기서 넘기는 초가 더 적어야 progressBar가 먼저 사라지지 않음 */}
+        </div>
+      </div>
+    );
+  }
+
 
   return (
      <>
@@ -274,9 +230,11 @@ const handleIgClick = () => {
               </div>
             </div>
             <div className={styles.contentArea}>
-                {isSaving&&<div className={styles.savingPopup}>
-                  <div>사진 저장 중...</div>
-                  <div><ProgressBar progressDuration={3000} totalBlocks={16}/></div>
+                {isSaving&&<div className={styles.popUp}>
+                  <div className={styles.popUpContent}>
+                    <div>사진 저장 중...</div>
+                    <div><ProgressBar progressDuration={6000} totalBlocks={16}/></div>
+                  </div>
                 </div>}
                 {/* {userEmail}에 해당하는 카드 출력 */}
                 {cards.length > 0 ? (

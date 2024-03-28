@@ -152,33 +152,7 @@
   margin: 23rem 2rem;
 }
 
-
-/* .buttonContainer{
-  display: flex;
-  flex-direction: row;
-  justify-content: center; 
-  gap: 0.5rem; 
-}
-
-button {
-  padding: 0.5rem 0.3rem; 
-  border-radius: 0.3rem;
-  cursor: pointer; 
-  border: 0;
-  outline: 0;
-  padding: 0.5rem 1rem; 
-  font-size: 0.8rem;
-  background-color: rgb(238, 238, 238);
-  box-shadow: rgb(0 0 0 / 10%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(60 66 87 / 8%) 0px 2px 4px 0px;
-  align-items: center;
-  transition: background-color .24s, box-shadow .24s;
-}
-
-button:hover {
-  box-shadow: rgb(0 0 0 / 30%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(60 66 87 / 20%) 0px 3px 9px 0px, rgb(60 66 87 / 20%) 0px 2px 5px 0px;
-} */
-
-.savingPopup {
+.popUp {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -187,11 +161,21 @@ button:hover {
   top: 0;
   left: 0;
   width: 100vw;
-  height:100vh;
+  height: 100vh;
   background-color: #f2f2f2;
   z-index: 1000;
   font-size: 1.2rem;
 }
+
+.popUpContent {
+  width: 100%; 
+  max-width: 600px; 
+  margin-top: -50px; /*조금 위로 옮김*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 @media (max-width: 375px) { /* iPhone SE width */
   .card{
@@ -199,5 +183,23 @@ button:hover {
       margin-top: 0.5rem;
       margin-bottom:1.5rem;
       margin-left:2rem;
+  }
+}
+
+@media (max-width: 360px) {  /* 갤럭시 s8+,노트 width */
+  .card{
+      /* background-color: aqua; */
+      margin-top: 0.1rem;
+      margin-bottom:1rem;
+      margin-left:2.5rem;
+  }
+}
+
+@media (max-width: 320px) { /* z-flip width */
+  .card{
+      /* background-color: aqua; */
+      margin-top: 0.1rem;
+      margin-bottom:1.5rem;
+      margin-left:3.5rem;
   }
 }

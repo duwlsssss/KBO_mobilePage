@@ -7,14 +7,15 @@
 
 body,html {
   margin:0;
+  padding: 0;
   font-family: 'DOSSaemmul', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000000;
-  /* background-color: #f2f2f2; */
+  /* background-color: #000000; */
+  background-color: #f2f2f2;
   --vh: 100%;
-  overflow: hidden;
+  overflow: hidden; /*스크롤 방지 */
 }
 
 #root {
@@ -34,9 +35,18 @@ body,html {
     padding: 2px;
   }
 }
-@media (max-width: 360px) { /* 갤럭시 s8+ width */
+@media (max-width: 360px) { /* 갤럭시 s8+,노트 width */
   body, html {
-    font-size: 16px; 
+    font-size: 14px; 
+  }
+  #root {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 320px) { /* z-flip width */
+  body, html {
+    font-size: 12px; 
   }
   #root {
     padding: 5px;
