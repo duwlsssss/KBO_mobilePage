@@ -6,6 +6,7 @@ import saveAs from "file-saver";
 import styles from './CardInfo.module.css';
 import { useLocation } from 'react-router-dom';
 import  useUserEmailStore from '../../store/userEmail'
+import ProgressBar from '../ProgressBar/ProgressBar';
 import "xp.css/dist/98.css"
 
 function CardInfo() {
@@ -190,7 +191,10 @@ const handleIgClick = () => {
               </div>
             </div>
             <div className={styles.contentArea}>
-                {isSaving && <div className={styles.savingPopup}>사진 저장 중...</div>}
+                {isSaving&&<div className={styles.savingPopup}>
+                  <div>사진 저장 중...</div>
+                  <div><ProgressBar progressDuration={3000} totalBlocks={16}/></div>
+                </div>}
                 {/* {userEmail}에 해당하는 카드 출력 */}
                 {cards.length > 0 ? (
                   <>

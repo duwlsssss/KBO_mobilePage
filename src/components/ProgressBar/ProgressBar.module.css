@@ -1,0 +1,30 @@
+.progressContainer {
+  display: flex;
+  margin-top:0.5rem;
+  width: 200px; 
+  height: 15px; 
+  background-color: #fff; 
+  border-style: solid;
+  border-color: rgb(152, 152, 152);
+  border-radius: 0.3rem; 
+  overflow: hidden; /* 내부 바가 컨테이너를 넘치지 않게 함 */
+  padding-left: 0.1rem;
+}
+
+.block {
+  width: calc(100% / 16); 
+  height: 12px;
+  background: linear-gradient(0deg, rgba(251,251,251,1) 0%, rgba(77,233,87,1) 50%, rgba(251,251,251,1) 100%);
+  border-radius: 0.2rem; 
+  visibility: hidden; /* 초기에는 블록을 숨깁니다 */
+  margin-top: 0.15rem; /* 상단에 마진 추가 */
+  margin-left: 0.1rem; 
+}
+
+.block:last-child {
+  margin-right: 0.2rem; /* 마지막 블록의 오른쪽 마진 추가 */
+}
+
+.visible {
+  visibility: visible;
+}

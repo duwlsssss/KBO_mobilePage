@@ -25,11 +25,13 @@
 
 .card {
   /* background-color: aqua; */
-  margin: 1rem 10rem;
+  margin-left:1rem;
+  margin-right:1rem;
+  margin-top:0.5rem;
+  margin-bottom: 1rem;
   width: 20rem;
   height: 35rem;
   perspective: 300rem;
-  margin: 1rem;
 }
 
 .cardFront,
@@ -197,13 +199,5 @@ button:hover {
       margin-top: 0.5rem;
       margin-bottom:1.5rem;
       margin-left:2rem;
-  }
-}
-@media (max-width: 360px) { /* 갤럭시 s8+ width */
-  body, html {
-    font-size: 16px; 
-  }
-  #root {
-    padding: 5px;
   }
 }
