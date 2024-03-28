@@ -25,13 +25,13 @@ function MyCard() {
     if (email) {
       console.log("url에서 뽑은 userEmail",email);
       setUserEmail(email);
-      console.log("zustan에 저장된 userEmail",userEmail);
     }
  }, []);
 
   //userEmail 변경시 호출됨
   useEffect(() => {
     if (userEmail) {
+      console.log("zustand에 저장된 userEmail",userEmail);
       fetchCards(userEmail);
       fetchImages();
     }
@@ -222,7 +222,7 @@ const handleIgClick = () => {
   const shareCard = async() => {
     try {
       const shareUrl = `https://kimmobile.netlify.app/card-info?userEmail=${userEmail}`;
-      // const shareUrl = `http://localhost:3001/card-info?userEmail=${userEmail}`;
+      // const shareUrl = `http://localhost:3000/card-info?userEmail=${userEmail}`;
       console.log("공유 주소",shareUrl);
       // 공유주소를 클립보드에 복사
       await navigator.clipboard.writeText(shareUrl);
