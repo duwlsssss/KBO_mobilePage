@@ -6,7 +6,7 @@ import saveAs from "file-saver";
 import styles from './CardInfo.module.css';
 import { useLocation } from 'react-router-dom';
 import  useUserEmailStore from '../../store/userEmail'
-import "98.css";
+import "xp.css/dist/98.css"
 
 function CardInfo() {
 

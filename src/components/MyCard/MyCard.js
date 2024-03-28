@@ -7,7 +7,7 @@ import styles from './MyCard.module.css';
 import { useLocation } from 'react-router-dom';
 import  useUserEmailStore from '../../store/userEmail'
 import ProgressBar from '../ProgressBar';
-import "98.css";
+import "xp.css/dist/98.css"
 
 function MyCard() {
 
@@ -219,11 +219,17 @@ const handleIgClick = () => {
 };
 
   //공유하기 누르면 링크 복사됨 
-  const shareCard = () => {
-    const shareUrl = `https://kimmobile.netlify.app/card-info?userEmail=${userEmail}`;
-    // const shareUrl = `http://localhost:3001/card-info?userEmail=${userEmail}`;
-    console.log("공유 주소",shareUrl);
-    // 공유주소를 클립보드에 복사
+  const shareCard = async() => {
+    try {
+      const shareUrl = `https://kimmobile.netlify.app/card-info?userEmail=${userEmail}`;
+      // const shareUrl = `http://localhost:3001/card-info?userEmail=${userEmail}`;
+      console.log("공유 주소",shareUrl);
+      // 공유주소를 클립보드에 복사
+      await navigator.clipboard.writeText(shareUrl);
+      alert("클립보드에 링크가 복사되었어요.");
+    } catch (err) {
+      console.log(err);
+    }
     // 다른 소셜로 공유 (카톡, 메일 ...)
   };
 
