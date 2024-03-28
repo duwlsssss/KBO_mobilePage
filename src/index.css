@@ -4,17 +4,41 @@
   font-weight: normal;
   font-style: normal;
 }
-body {
-  font-family: DOSSaemmul;
+
+body,html {
+  margin:0;
+  font-family: 'DOSSaemmul', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Viewport의 전체 높이 */
-  margin: 0; /* 기본 마진 제거 */
-  background-color: #000000; /* 배경색 지정 */
+  background-color: #000000;
+  /* background-color: #f2f2f2; */
+  --vh: 100%;
+  overflow: hidden;
 }
 
 #root {
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #f2f2f2;
 }
 
+@media (max-width: 375px) { /* iPhone SE width */
+  body, html {
+    font-size: 14.5px; 
+  }
+  #root {
+    padding: 2px;
+  }
+}
+@media (max-width: 360px) { /* 갤럭시 s8+ width */
+  body, html {
+    font-size: 16px; 
+  }
+  #root {
+    padding: 5px;
+  }
+}

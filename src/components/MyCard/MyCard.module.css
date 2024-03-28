@@ -1,8 +1,33 @@
+.addressText {
+  font-size: 0.8rem;
+  color: #ffffff;
+}
+
+.addressTextColor {
+  font-size: 0.9rem;
+  color: rgb(77, 233, 87);
+}
+
+.contentArea{
+  background-color: #FFF;
+  padding-top:1rem;
+  padding-bottom: 1rem;
+}
+
+.ownerText{
+  font-size: 1rem;
+  text-align: center; 
+}
+.ownerTextStrong{
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
 .card {
-  background-color: aqua;
-  margin: 9rem -6rem;
-  width: 25rem;
-  height: 43rem;
+  /* background-color: aqua; */
+  margin: 1rem 10rem;
+  width: 20rem;
+  height: 35rem;
   perspective: 300rem;
   margin: 1rem;
 }
@@ -43,89 +68,142 @@
 .infoContainer {
   transform: rotate(90deg);
   transform-origin: center center;
-  font-family: sans-serif;
+  font-family: "sans-serif";
+  font-size: 1rem;
+  color: #333; 
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
 }
+
 .infoItem {
   position: absolute;
 }
 
+.cardImage{
+  border-radius: 0.3rem;
+  width: 11.5rem;
+  height: 13.5rem;
+  margin-top:11.6rem;
+  margin-left: -5.5rem;
+}
+
 .date{
-  top: 14rem;
-  right: -7.4rem;
+  top: 11.5rem;
+  right: -6rem;
 }
 .name {
-  top: 17.5rem;
+  top: 13.5rem;
+  left: 16rem;
+}
+.engName{
+  top: 13.5rem;
   right: -4rem;
 }
 .school {
-  top: 18.5rem; 
-  left: 16rem; 
+  top: 15rem; 
+  left: 13.5rem; 
 }
 .studentNum {
-  top: 18.5rem; 
+  top: 15rem; 
   right: -4rem;
 }
 .major {
-  top: 20rem; 
+  top: 16.5rem; 
   right: -4rem;
 }
 .email {
   cursor:pointer;
-  top: 22rem; 
-  right:  -4rem;
+  top: 17.8rem; 
+  right: -4rem;
 }
 .email:hover{
   background-color: aquamarine;
 }
 .session {
-  top: 24rem; 
+  top: 19.2rem; 
   right: -4rem;
 }
 .MBTI {
-  top: 26rem; 
-  right:  -4rem;
+  top: 20.5rem; 
+  right: -4rem;
 }
 .IG {
   cursor:pointer;
-  top: 28rem; 
-  right:  -4rem; 
+  top: 21.7rem; 
+  right: -4rem; 
 }
 .IG:hover{
   background-color: aquamarine;
 }
 .moto {
-  top: 30rem; 
-  right:  -4rem;
+  top: 23.5rem; 
+  right: -4rem;
 }
 
 .QR{
   position: absolute;
   transform: rotate(90deg);
   transform-origin: center center;
-  margin: 33rem 2rem;
+  margin: 23rem 2rem;
 }
 
 
-button{
-  cursor:pointer;
-  font-family: 'DOSSaemmul', sans-serif;
+/* .buttonContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center; 
+  gap: 0.5rem; 
 }
+
+button {
+  padding: 0.5rem 0.3rem; 
+  border-radius: 0.3rem;
+  cursor: pointer; 
+  border: 0;
+  outline: 0;
+  padding: 0.5rem 1rem; 
+  font-size: 0.8rem;
+  background-color: rgb(238, 238, 238);
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(60 66 87 / 8%) 0px 2px 4px 0px;
+  align-items: center;
+  transition: background-color .24s, box-shadow .24s;
+}
+
+button:hover {
+  box-shadow: rgb(0 0 0 / 30%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(60 66 87 / 20%) 0px 3px 9px 0px, rgb(60 66 87 / 20%) 0px 2px 5px 0px;
+} */
 
 .savingPopup {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   position: fixed;
-  background-color: white;
-  width: 25rem;
-  height: 43rem;
-  margin: 2rem 1rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height:100vh;
+  background-color: #f2f2f2;
   z-index: 1000;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 375px) { /* iPhone SE width */
+  .card{
+      /* background-color: aqua; */
+      margin-top: 0.5rem;
+      margin-bottom:1.5rem;
+      margin-left:2rem;
+  }
+}
+@media (max-width: 360px) { /* 갤럭시 s8+ width */
+  body, html {
+    font-size: 16px; 
+  }
+  #root {
+    padding: 5px;
+  }
 }
