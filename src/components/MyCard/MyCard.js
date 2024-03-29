@@ -21,14 +21,28 @@ function MyCard() {
   const location = useLocation();
 
   useEffect(() => {
-    // 초기 로딩 상태를 설정하고, 5초 후에 로딩 상태를 변경
     setIsLoading(true); // 컴포넌트가 마운트될 때 로딩 시작
-    const timer = setTimeout(() => {
-      setIsLoading(false); // 5초 후 로딩 상태를 false로 변경
-    }, 5000);
-
-    // 컴포넌트가 언마운트될 때 타이머를 정리
-    return () => clearTimeout(timer);
+    const loadData = async () => {
+      try {
+        // userEmail이 설정되어 있지 않으면 로드하지 않음
+        if (!userEmail) return;
+  
+        // 카드와 이미지 데이터를 동시에 요청
+        await Promise.all([
+          fetchCards(userEmail), // 카드 데이터 로드 
+          fetchImages(userEmail) // 이미지 데이터 로드 
+        ]);
+  
+        // 모든 데이터 로드가 완료되고 2초 더 기다림 로딩 상태를 종료
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Data fetching failed:", error);
+        setIsLoading(false); // 에러 발생 시에도 로딩 상태 종료
+      }
+    };
+  
+    loadData();
   }, [userEmail]); // userEmail이 변경될 때마다 이 효과를 다시 실행
 
 
@@ -39,35 +53,39 @@ function MyCard() {
       console.log("url에서 뽑은 userEmail",email);
       setUserEmail(email);
     }
- }, []);
+ }, []); //컴포넌트가 마운트될 때, userEmail 추출하고 이를 zustand에 저장 
 
   //userEmail 변경시 호출됨
   useEffect(() => {
     if (userEmail) {
       console.log("zustand에 저장된 userEmail",userEmail);
-      fetchCards(userEmail);
-      fetchImages();
     }
-  }, [userEmail]);
+  }, [userEmail]); //userEmail이 변경될떄 zustand네 저장된 userEmail 확인 
 
   //서버에서 데이터 가져오기, useEmail이 맞을때만
   const fetchCards = (userEmail) => {
     api.get('/cards')
-      .then((response) => {
-        const data = response.data;
-        if (data.status === 'ok') {
-          const userCards = data.data.filter(card => card.userEmail === userEmail);
-          // 업데이트 날짜 기준으로 정렬
-          userCards.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-          // 같은 이메일 중 가장 최근에 업데이트된 카드 선택
-          const latestCard = userCards[0] ? [userCards[0]] : [];
-          setCards(latestCard);
-        }
-      })
-      .catch((error) => {
-        console.error("Fetching cards failed:", error);
-      });
+    .then((response) => {
+      const data = response.data;
+      if (data.status === 'ok'&& data.data.length > 0) {
+        // userEmail에 해당하는 카드들을 필터링
+        const userCards = data.data.filter(card => card.userEmail === userEmail);
+        // 배열이 이미 생성 순으로 정렬되어 있어야 함!!!
+        // 가장 마지막 요소가 가장 최신 카드
+        const mostRecentCard = userCards[userCards.length - 1];
+        // 카드가 존재하면 상태 업데이트
+        setCards(mostRecentCard ? [mostRecentCard] : []);
+      }
+    })
+    .catch((error) => {
+      console.error("Fetching cards failed:", error);
+    });  
   };
+
+  //카드 추가후 cards 배열 확인 
+  useEffect(() => {
+    console.log("cards배열", cards);
+  }, [cards]); // cards가 변경될 때마다 실행
 
   //서버에서 이미지 가져오기 
   const fetchImages = async () => {
@@ -91,61 +109,67 @@ function MyCard() {
   const backRef = useRef(null); //카드 부분 참조
 
   const saveCardAsImage = async () => {
-    
-    setIsSaving(true); // 사진 저장 시작
-    console.log("사진 저장 실행");
+    setIsSaving(true); // 사진 저장 상태 시작
+    setShowQR(true); // QR 코드 보이기 시작
+  };
 
-    const waitForRender = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-    };
+  const captureCardImage = async (element, filename) => {
+    try {
+      const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+      const dataUrl = canvas.toDataURL();
+      const rotatedImage = new Image();
+      rotatedImage.onload = function() {
+        const rotatedCanvas = document.createElement('canvas');
+        rotatedCanvas.width = rotatedImage.height;
+        rotatedCanvas.height = rotatedImage.width;
 
-    const captureCardImage = async (element, filename) => {
-      try {
-        const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-        const dataUrl = canvas.toDataURL();
-        const rotatedImage = new Image();
-        rotatedImage.onload = function() {
-          const rotatedCanvas = document.createElement('canvas');
-          rotatedCanvas.width = rotatedImage.height;
-          rotatedCanvas.height = rotatedImage.width;
+        const context = rotatedCanvas.getContext('2d');
+        context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+        context.rotate(-90 * Math.PI / 180);
+        context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
 
-          const context = rotatedCanvas.getContext('2d');
-          context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
-          context.rotate(-90 * Math.PI / 180);
-          context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
+        rotatedCanvas.toBlob(function(blob) {
+          if (blob) {
+            saveAs(blob, filename);
+          }
+        });
+      };
+      rotatedImage.src = dataUrl;
+    } catch (error) {
+      console.error("Error saving card image:", error);
+    }
+  };
 
-          rotatedCanvas.toBlob(function(blob) {
-            if (blob) {
-              saveAs(blob, filename);
-            }
-          });
+  const waitForRender = async () => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         };
-        rotatedImage.src = dataUrl;
-      } catch (error) {
-        console.error("Error saving card image:", error);
-      }
-    };
+    
 
-    setIsFlipped(false);
-    await waitForRender();
+  useEffect(() => {
+    console.log("사진 저장 실행");
+    if (isSaving) {
+      const timer = setTimeout(async () => {
+        setIsFlipped(false);
+        await waitForRender();
+        if (frontRef.current) {
+          await captureCardImage(frontRef.current, "card-front.png");
+        }
+  
+        setIsFlipped(true);
+        await waitForRender();
+        if (backRef.current&&showQR) {
+          await captureCardImage(backRef.current, "card-back.png");
+        }
 
-    if (frontRef.current) {
-      await captureCardImage(frontRef.current, "card-front.png");
-    } 
-
-    setIsFlipped(true);
-    await waitForRender();
-
-    if (backRef.current) {
-      await captureCardImage(backRef.current, "card-back.png");
-    } 
-
-    // Clean up and set states back to initial values
-    setIsFlipped(false);
-    await waitForRender();
-    setIsSaving(false); 
-};
-
+        // Clean up and set states back to initial values
+        setIsFlipped(false);
+        await waitForRender();
+        setIsSaving(false); 
+    },100); //0.1초 후 앞,뒤 확인 시작
+    // 클린업 함수에서 타이머를 정리
+    return () => clearTimeout(timer);
+  }
+}, [showQR, isSaving]); // showQR와 isCapturing 상태에 의존
 
 const handleEmailClick = () => {
   console.log("이메일 클릭");
@@ -170,7 +194,7 @@ const handleIgClick = () => {
       console.log("공유 주소",shareUrl);
       // 공유주소를 클립보드에 복사
       await navigator.clipboard.writeText(shareUrl);
-      alert("클립보드에 링크가 복사되었어요.");
+      alert("링크가 복사되었어요");
     } catch (err) {
       console.log(err);
     }
@@ -198,12 +222,62 @@ const handleIgClick = () => {
     if (!isFlipped) {
       setShowQR(false);
       // 애니메이션이 조금 진행된 후 QR 코드를 보여줌
-      // 애니메이션 지속 시간이 1초일 때
+      // 애니메이션 지속 시간이 0.5초일 때
       setTimeout(() => {
         setShowQR(true);
       }, 150); 
     }
   };
+
+  //backgroundOption에 따라 카드 색 변경
+  const cardBackStyle = {
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    transform: 'rotateX(180deg)',
+  };
+  cardBackStyle.transform = isFlipped ? 'rotateX(0deg)' : 'rotateX(180deg)';
+  if (cards.length > 0) {
+    switch (cards[0].backgroundOption) {
+      case 'Pink':
+        cardBackStyle.backgroundImage = "url('/images/pink-background.png')";
+        break;
+      case 'Green':
+        cardBackStyle.backgroundImage = "url('/images/green-background.png')";
+        break;
+      case 'Blue':
+        cardBackStyle.backgroundImage = "url('/images/blue-background.png')";
+        break;
+      case 'Yellow':
+        cardBackStyle.backgroundImage = "url('/images/yellow-background.png')";
+        break;
+      default: //디폴트는 파랑
+        cardBackStyle.backgroundImage = "url('/images/blue-background.png')";
+    }
+  }
+  const cardFrontStyle = {
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    transform: 'rotateX(0deg)',
+  };
+  cardFrontStyle.transform = isFlipped ? 'rotateX(-180deg)' : 'rotateX(0deg)';
+  if (cards.length > 0) {
+    switch (cards[0].backgroundOption) {
+      case 'Pink':
+        cardFrontStyle.backgroundImage = "url('/images/pink-background.png')";
+        break;
+      case 'Green':
+        cardFrontStyle.backgroundImage = "url('/images/green-background.png')";
+        break;
+      case 'Blue':
+        cardFrontStyle.backgroundImage = "url('/images/blue-background.png')";
+        break;
+      case 'Yellow':
+        cardFrontStyle.backgroundImage = "url('/images/yellow-background.png')";
+        break;
+      default: //디폴트는 파랑
+        cardFrontStyle.backgroundImage = "url('/images/blue-background.png')";
+    }
+  }
 
   //처음에 로딩 화면 띄우려고
   if (isLoading) {
@@ -211,7 +285,7 @@ const handleIgClick = () => {
       <div className={styles.popUp}>
         <div className={styles.popUpContent}>
           <div>카드 로드 중...</div>
-          <ProgressBar progressDuration={4000} totalBlocks={16} /> {/* 여기서 넘기는 초가 더 적어야 progressBar가 먼저 사라지지 않음 */}
+          <ProgressBar progressDuration={1500} totalBlocks={16} /> {/* 여기서 넘기는 초가 더 적어야 progressBar가 먼저 사라지지 않음 */}
         </div>
       </div>
     );
@@ -233,7 +307,7 @@ const handleIgClick = () => {
                 {isSaving&&<div className={styles.popUp}>
                   <div className={styles.popUpContent}>
                     <div>사진 저장 중...</div>
-                    <div><ProgressBar progressDuration={6000} totalBlocks={16}/></div>
+                    <div><ProgressBar progressDuration={3000} totalBlocks={16}/></div>
                   </div>
                 </div>}
                 {/* {userEmail}에 해당하는 카드 출력 */}
@@ -241,7 +315,7 @@ const handleIgClick = () => {
                   <>
                     <div className={styles.ownerText}><span className={styles.ownerTextStrong}>{cards[0].name}</span> 님의 명함</div>
                     <div className={styles.card}>
-                        <div className={`${styles.cardFront} ${isFlipped ? styles.flipped : ''}`} ref={frontRef}>
+                        <div className={`${styles.cardFront} ${isFlipped ? styles.flipped : ''}`} style={cardFrontStyle} ref={frontRef}>
                           <div className={styles.infoContainer}>
                             <div className={`${styles.infoItem} ${styles.date}`}>
                               {cards[0].updatedAt ? new Date(cards[0].updatedAt).toLocaleDateString() : 'N/A'}
@@ -259,10 +333,10 @@ const handleIgClick = () => {
                             {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImage} />}
                           </div>
                         </div>
-                        <div className={`${styles.cardBack} ${isFlipped ? styles.flipped : ''}`} ref={backRef}>
+                        <div className={`${styles.cardBack} ${isFlipped ? styles.flipped : ''}`} style={cardBackStyle} ref={backRef}>
                         {showQR && (
                           <div className={styles.QR}>
-                            <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} />
+                            <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} size={50} />
                           </div>
                         )}
                         </div>
@@ -276,11 +350,6 @@ const handleIgClick = () => {
                   <button type="button" onClick={saveCardAsImage}>저장하기(이미지)</button>
                   <button type="button" onClick={shareCard}>공유하기</button>
                 </div>
-                {/* <div className={styles.buttonContainer}>
-                  <button type="button" onClick={handleCardClick}>카드뒤집기</button>
-                  <button type="button" onClick={saveCardAsImage}>저장하기(이미지)</button>
-                  <button type="button" onClick={shareCard}>공유하기</button>
-                </div> */}
               </div>
           </div>
      </>

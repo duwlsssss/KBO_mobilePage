@@ -45,28 +45,6 @@
   backface-visibility: hidden;
 }
 
-.cardBack {
-  background-image: url('/public/images/BCFront.png');
-  background-size: cover; 
-  background-position: center; 
-  transform: rotateX(180deg);
-}
-
-.cardBack.flipped {
-  transform: rotateX(0deg);
-}
-
-.cardFront {
-  background-image: url('/public/images/BCFront.png');
-  background-size: cover; 
-  background-position: center; 
-  transform: rotateX(0deg);
-}
-
-.cardFront.flipped {
-  transform: rotateX(-180deg);
-}
-
 .infoContainer {
   transform: rotate(90deg);
   transform-origin: center center;
@@ -86,10 +64,11 @@
 
 .cardImage{
   border-radius: 0.3rem;
-  width: 11.5rem;
-  height: 13.5rem;
-  margin-top:11.6rem;
-  margin-left: -5.5rem;
+  width: 11rem;
+  height: 13rem;
+  margin-top:12rem;
+  margin-left: -5.2rem;
+  object-fit: cover;
 }
 
 .date{
@@ -149,7 +128,7 @@
   position: absolute;
   transform: rotate(90deg);
   transform-origin: center center;
-  margin: 23rem 2rem;
+  margin: 30rem 2rem;
 }
 
 .popUp {
