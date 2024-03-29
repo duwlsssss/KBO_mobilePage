@@ -34,7 +34,7 @@ function MyCard() {
         ]);
   
         // 모든 데이터 로드가 완료되고 2초 더 기다림 로딩 상태를 종료
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2500));
         setIsLoading(false);
       } catch (error) {
         console.error("Data fetching failed:", error);
@@ -285,7 +285,7 @@ const handleIgClick = () => {
       <div className={styles.popUp}>
         <div className={styles.popUpContent}>
           <div>카드 로드 중...</div>
-          <ProgressBar progressDuration={1500} totalBlocks={16} /> {/* 여기서 넘기는 초가 더 적어야 progressBar가 먼저 사라지지 않음 */}
+          <ProgressBar progressDuration={2000} totalBlocks={16} /> {/* 여기서 넘기는 초가 더 적어야 progressBar가 먼저 사라지지 않음 */}
         </div>
       </div>
     );

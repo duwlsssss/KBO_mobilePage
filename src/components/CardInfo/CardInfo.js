@@ -34,7 +34,7 @@ function CardInfo() {
         ]);
   
         // 모든 데이터 로드가 완료되고 2초 더 기다림 로딩 상태를 종료
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2500));
         setIsLoading(false);
       } catch (error) {
         console.error("Data fetching failed:", error);
@@ -65,21 +65,27 @@ function CardInfo() {
   //서버에서 데이터 가져오기, useEmail이 맞을때만
   const fetchCards = (userEmail) => {
     api.get('/cards')
-      .then((response) => {
-        const data = response.data;
-        if (data.status === 'ok') {
-          const userCards = data.data.filter(card => card.userEmail === userEmail);
-          // 업데이트 날짜 기준으로 정렬
-          userCards.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-          // 같은 이메일 중 가장 최근에 업데이트된 카드 선택
-          const latestCard = userCards[0] ? [userCards[0]] : [];
-          setCards(latestCard);
-        }
-      })
-      .catch((error) => {
-        console.error("Fetching cards failed:", error);
-      });
+    .then((response) => {
+      const data = response.data;
+      if (data.status === 'ok'&& data.data.length > 0) {
+        // userEmail에 해당하는 카드들을 필터링
+        const userCards = data.data.filter(card => card.userEmail === userEmail);
+        // 배열이 이미 생성 순으로 정렬되어 있어야 함!!!
+        // 가장 마지막 요소가 가장 최신 카드
+        const mostRecentCard = userCards[userCards.length - 1];
+        // 카드가 존재하면 상태 업데이트
+        setCards(mostRecentCard ? [mostRecentCard] : []);
+      }
+    })
+    .catch((error) => {
+      console.error("Fetching cards failed:", error);
+    });  
   };
+
+  //카드 추가후 cards 배열 확인 
+  useEffect(() => {
+    console.log("cards배열", cards);
+  }, [cards]); // cards가 변경될 때마다 실행
 
   //서버에서 이미지 가져오기 
   const fetchImages = async () => {
@@ -103,61 +109,67 @@ function CardInfo() {
   const backRef = useRef(null); //카드 부분 참조
 
   const saveCardAsImage = async () => {
-    
-    setIsSaving(true); // 사진 저장 시작
-    console.log("사진 저장 실행");
+    setIsSaving(true); // 사진 저장 상태 시작
+    setShowQR(true); // QR 코드 보이기 시작
+  };
 
-    const waitForRender = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-    };
+  const captureCardImage = async (element, filename) => {
+    try {
+      const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+      const dataUrl = canvas.toDataURL();
+      const rotatedImage = new Image();
+      rotatedImage.onload = function() {
+        const rotatedCanvas = document.createElement('canvas');
+        rotatedCanvas.width = rotatedImage.height;
+        rotatedCanvas.height = rotatedImage.width;
 
-    const captureCardImage = async (element, filename) => {
-      try {
-        const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-        const dataUrl = canvas.toDataURL();
-        const rotatedImage = new Image();
-        rotatedImage.onload = function() {
-          const rotatedCanvas = document.createElement('canvas');
-          rotatedCanvas.width = rotatedImage.height;
-          rotatedCanvas.height = rotatedImage.width;
+        const context = rotatedCanvas.getContext('2d');
+        context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+        context.rotate(-90 * Math.PI / 180);
+        context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
 
-          const context = rotatedCanvas.getContext('2d');
-          context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
-          context.rotate(-90 * Math.PI / 180);
-          context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
+        rotatedCanvas.toBlob(function(blob) {
+          if (blob) {
+            saveAs(blob, filename);
+          }
+        });
+      };
+      rotatedImage.src = dataUrl;
+    } catch (error) {
+      console.error("Error saving card image:", error);
+    }
+  };
 
-          rotatedCanvas.toBlob(function(blob) {
-            if (blob) {
-              saveAs(blob, filename);
-            }
-          });
+  const waitForRender = async () => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         };
-        rotatedImage.src = dataUrl;
-      } catch (error) {
-        console.error("Error saving card image:", error);
-      }
-    };
+    
 
-    setIsFlipped(false);
-    await waitForRender();
+  useEffect(() => {
+    console.log("사진 저장 실행");
+    if (isSaving) {
+      const timer = setTimeout(async () => {
+        setIsFlipped(false);
+        await waitForRender();
+        if (frontRef.current) {
+          await captureCardImage(frontRef.current, "card-front.png");
+        }
+  
+        setIsFlipped(true);
+        await waitForRender();
+        if (backRef.current&&showQR) {
+          await captureCardImage(backRef.current, "card-back.png");
+        }
 
-    if (frontRef.current) {
-      await captureCardImage(frontRef.current, "card-front.png");
-    } 
-
-    setIsFlipped(true);
-    await waitForRender();
-
-    if (backRef.current) {
-      await captureCardImage(backRef.current, "card-back.png");
-    } 
-
-    // Clean up and set states back to initial values
-    setIsFlipped(false);
-    await waitForRender();
-    setIsSaving(false); 
-};
-
+        // Clean up and set states back to initial values
+        setIsFlipped(false);
+        await waitForRender();
+        setIsSaving(false); 
+    },100); //0.1초 후 앞,뒤 확인 시작
+    // 클린업 함수에서 타이머를 정리
+    return () => clearTimeout(timer);
+  }
+}, [showQR, isSaving]); // showQR와 isCapturing 상태에 의존
 
 const handleEmailClick = () => {
   console.log("이메일 클릭");
@@ -173,6 +185,8 @@ const handleIgClick = () => {
     window.open(instagramUrl, '_blank');
   }
 };
+
+
 
   //카드 뒤집기 애니메이션 
   const handleCardClick = () => {
@@ -194,7 +208,7 @@ const handleIgClick = () => {
     if (!isFlipped) {
       setShowQR(false);
       // 애니메이션이 조금 진행된 후 QR 코드를 보여줌
-      // 애니메이션 지속 시간이 1초일 때
+      // 애니메이션 지속 시간이 0.5초일 때
       setTimeout(() => {
         setShowQR(true);
       }, 150); 
@@ -257,7 +271,7 @@ const handleIgClick = () => {
       <div className={styles.popUp}>
         <div className={styles.popUpContent}>
           <div>카드 로드 중...</div>
-          <ProgressBar progressDuration={1500} totalBlocks={16} /> {/* 여기서 넘기는 초가 더 적어야 progressBar가 먼저 사라지지 않음 */}
+          <ProgressBar progressDuration={2000} totalBlocks={16} /> {/* 여기서 넘기는 초가 더 적어야 progressBar가 먼저 사라지지 않음 */}
         </div>
       </div>
     );
@@ -279,7 +293,7 @@ const handleIgClick = () => {
                 {isSaving&&<div className={styles.popUp}>
                   <div className={styles.popUpContent}>
                     <div>사진 저장 중...</div>
-                    <div><ProgressBar progressDuration={6000} totalBlocks={16}/></div>
+                    <div><ProgressBar progressDuration={3000} totalBlocks={16}/></div>
                   </div>
                 </div>}
                 {/* {userEmail}에 해당하는 카드 출력 */}
@@ -308,7 +322,7 @@ const handleIgClick = () => {
                         <div className={`${styles.cardBack} ${isFlipped ? styles.flipped : ''}`} style={cardBackStyle} ref={backRef}>
                         {showQR && (
                           <div className={styles.QR}>
-                            <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} />
+                            <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} size={50} />
                           </div>
                         )}
                         </div>

@@ -64,10 +64,11 @@
 
 .cardImage{
   border-radius: 0.3rem;
-  width: 11.5rem;
-  height: 13.5rem;
-  margin-top:11.6rem;
-  margin-left: -5.5rem;
+  width: 11rem;
+  height: 13rem;
+  margin-top:12rem;
+  margin-left: -5.2rem;
+  object-fit: cover;
 }
 
 .date{
@@ -127,7 +128,7 @@
   position: absolute;
   transform: rotate(90deg);
   transform-origin: center center;
-  margin: 23rem 2rem;
+  margin: 30rem 2rem;
 }
 
 .popUp {
