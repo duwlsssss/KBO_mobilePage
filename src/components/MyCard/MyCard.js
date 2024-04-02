@@ -4,6 +4,7 @@ import api from '../../api/axios'
 import html2canvas from 'html2canvas';
 import saveAs from "file-saver";
 import styles from './MyCard.module.css';
+import copyToClipboard from "../copyToClipboard";
 import { useLocation } from 'react-router-dom';
 import  useUserEmailStore from '../../store/userEmail'
 import ProgressBar from '../ProgressBar/ProgressBar';
@@ -179,15 +180,32 @@ const handleIgClick = () => {
   console.log("인스타 클릭");
   if (cards[0].ig) {
     console.log('cards[0].ig',cards[0].ig)
-    const instagramUrl = `https://www.instagram.com/${encodeURIComponent(cards[0].ig)}/`; //비공개 계정도 열러기 해야함
-    // const instagramUrl = `https://www.instagram.com/${cards[0].ig}/`;
+    // const instagramUrl = `https://www.instagram.com/${cards[0].ig}/`; //비공개 계정도 열러기 해야함
+    const instagramUrl = `https://www.instagram.com/k_nijy/`;
 
     window.open(instagramUrl, '_blank');
   }
 };
 
   //공유하기 누르면 링크 복사됨 
-  const shareCard = async() => {
+  // const shareCard = async() => {
+  //   try {
+  //     const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
+  //     // const shareUrl = `http://localhost:3000/card-info?userEmail=${userEmail}`;
+  //     console.log("공유 주소",shareUrl);
+  //     // 공유주소를 클립보드에 복사
+  //     await navigator.clipboard.writeText(shareUrl);
+  //     alert("링크가 복사되었어요");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   // 다른 소셜로 공유 (카톡, 메일 ...)
+  // };
+
+  const isShareSupported = () => !!navigator.share; //share api 지원 확인 
+
+  // 텍스트를 클립보드에 복사하는 함수
+  const copyToClipboard = async(userEmail) => {
     try {
       const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
       // const shareUrl = `http://localhost:3000/card-info?userEmail=${userEmail}`;
@@ -198,7 +216,23 @@ const handleIgClick = () => {
     } catch (err) {
       console.log(err);
     }
-    // 다른 소셜로 공유 (카톡, 메일 ...)
+  };
+
+  const shareCard = async (userEmail, cards) => {
+    if (isShareSupported()) {
+      try {
+        await navigator.share({
+          title: `${cards[0].name} 님의 명함`,
+          text: '김씨네 명함 사무소에서 제작한 명함입니다.',
+          url: `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`,
+        });
+      } catch (error) {
+        console.error("share api 링크 공유 실패:", error);
+        copyToClipboard(userEmail);
+      }
+    } else {
+      copyToClipboard(userEmail);
+    }
   };
 
 
