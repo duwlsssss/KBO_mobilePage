@@ -230,10 +230,10 @@ const handleIgClick = () => {
       } catch (error) {
         alert("share api 링크 공유 실패");
         console.error("share api 링크 공유 실패:", error);
-        copyToClipboard(userEmail);
+        copyToClipboard();
       }
     } else {
-      copyToClipboard(userEmail);
+      copyToClipboard();
     }
   };
 
