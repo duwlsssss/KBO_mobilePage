@@ -107,6 +107,7 @@ function MyCard() {
         document.body.removeChild(t);
       };
       function inappbrowserout(){
+        alert('inappbrowserout 호충');
         copytoclipboard(window.location.href);
         alert('URL주소가 복사되었습니다.\n\nSafari가 열리면 주소창을 길게 터치한 뒤, "붙여놓기 및 검색"을 누르면 정상적으로 이용하실 수 있습니다.');
         location.href='x-web-search://?';
