@@ -18,6 +18,7 @@ function MyCard() {
   const [isSaving, setIsSaving] = useState(false);//사진 저장 상태 추적
   const [isFlipped, setIsFlipped] = useState(false);
   const [showQR,setShowQR]=useState("false");
+  const [message, setMessage] = useState(''); //사파리 안내문
   const location = useLocation();
 
   useEffect(() => {
@@ -63,7 +64,7 @@ function MyCard() {
   }, [userEmail]); //userEmail이 변경될떄 zustand네 저장된 userEmail 확인 
 
 
-  // 실행 브라우저 확인
+  // 실행 환경 확인
   function detectBrowser() {
     const userAgent = navigator.userAgent;
   
@@ -87,7 +88,7 @@ function MyCard() {
   //인앱 브라우저로 접속시 
   useEffect(() => {
     const browserType = detectBrowser();
-    alert(`실행 브라우저 ${browserType}`);
+    alert(`실행 환경 ${browserType}`);
 
     // 인앱 브라우저 리디렉션 로직
     const inappdenyExecVanillaJs = (callback) => {
@@ -97,6 +98,7 @@ function MyCard() {
         document.addEventListener('DOMContentLoaded', callback);
       }
     };
+
     inappdenyExecVanillaJs(() => {
       function copytoclipboard(val){
         var t = document.createElement("textarea");
@@ -106,11 +108,10 @@ function MyCard() {
         document.execCommand('copy');
         document.body.removeChild(t);
       };
-      function inappbrowserout(){
-        alert('inappbrowserout 호충');
+      const inappbrowserout=()=>{
+        alert('inappbrowserout 호출');
         copytoclipboard(window.location.href);
-        alert('URL주소가 복사되었습니다.\n\nSafari가 열리면 주소창을 길게 터치한 뒤, "붙여놓기 및 검색"을 누르면 정상적으로 이용하실 수 있습니다.');
-        location.href='x-web-search://?';
+        alert('URL주소가 복사되었습니다.\n\nSafari를 열어 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
       };
 
       const userAgent = navigator.userAgent.toLowerCase();
@@ -131,40 +132,13 @@ function MyCard() {
 		}else if(userAgent.match(/inapp|naver|snapchat|wirtschaftswoche|thunderbird|instagram|everytimeapp|whatsApp|electron|wadiz|aliapp|zumapp|iphone(.*)whale|android(.*)whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|trill|SamsungBrowser\/[^1]/i)){
 			//그외 다른 인앱들
 			if(userAgent.match(/iphone|ipad|ipod/i)){
-				var mobile = document.createElement('meta');
-				mobile.name = 'viewport';
-				mobile.content = "width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui";
-				document.getElementsByTagName('head')[0].appendChild(mobile);
-				//노토산스폰트강제설정
-				var fonts = document.createElement('link');
-				fonts.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap';
-				document.getElementsByTagName('head')[0].appendChild(fonts);
-				document.body.innerHTML = "<style>body{margin:0;padding:0;font-family: 'Noto Sans KR', sans-serif;overflow: hidden;height: 100%;}</style><h2 style='padding-top:50px; text-align:center;font-family: 'Noto Sans KR', sans-serif;'>인앱브라우저 호환문제로 인해<br />Safari로 접속해야합니다.</h2><article style='text-align:center; font-size:17px; word-break:keep-all;color:#999;'>아래 버튼을 눌러 Safari를 실행해주세요<br />Safari가 열리면, 주소창을 길게 터치한 뒤,<br />'붙여놓기 및 이동'을 누르면<br />정상적으로 이용할 수 있습니다.<br /><br /><button onClick={inappbrowserout()} style='min-width:180px;margin-top:10px;height:54px;font-weight: 700;background-color:#31408E;color:#fff;border-radius: 4px;font-size:17px;border:0;'>Safari로 열기</button></article><img style='width:70%;margin:50px 15% 0 15%' src='https://tistory3.daumcdn.net/tistory/1893869/skin/images/inappbrowserout.jpeg' />";
+        setMessage("인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.");
+        inappbrowserout();
 			}else{
-				//안드로이드는 Chrome이 설치되어있음으로 강제로 스킴실행한다.
+				//안드로이드는 Chrome이 설치되어있음으로 강제로 스킴실행
 				location.href='intent://'+target_url.replace(/https?:\/\//i,'')+'#Intent;scheme=http;package=com.android.chrome;end';
 			}
 		}},[]); //컴포넌트 마운트 시 한번 실행됨 
-
-
-    // if(browserType==="Samsung Internet"){alert("삼성 인터넷에서는 정상적인 작동이 안될 수 있습니다. 원활한 진행을 위해 크롬에서 열어주세요");}
-
-    // if (userAgent.indexOf('kakao') >= 0) {
-    //   if(browserType==="iOS"){alert("카카오톡 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 사파리에서 열어주세요");}
-    //   else if(browserType==="Android"){alert("카카오톡 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 크롬에서 열어주세요");}
-    // }
-    // if (userAgent.indexOf('[fb') >= 0) {
-    //   if(browserType==="iOS"){alert("페이스북 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 사파리에서 열어주세요");}
-    //   else if(browserType==="Android"){alert("페이스북 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 크롬에서 열어주세요");}
-    // }
-    // if (userAgent.indexOf('instagram') >= 0) {
-    //   if(browserType==="iOS"){alert("인스타그램 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 사파리에서 열어주세요");}
-    //   else if(browserType==="Android"){alert("인스타그램 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 크롬에서 열어주세요");}
-    // }
-    // if (userAgent.indexOf('trill') >= 0) {
-    //   if(browserType==="iOS"){alert("틱톡 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 사파리에서 열어주세요");}
-    //   else if(browserType==="Android"){alert("틱톡 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 크롬에서 열어주세요");}
-    // }
   }, []); //컴포넌트 마운트 시 1회만 실행
 
 
@@ -478,6 +452,13 @@ const handleIgClick = () => {
                 </div>
               </div>
           </div>
+          <div>
+          {message && (
+            <div>
+              <p>{message}</p>
+            </div>
+          )}
+        </div>
      </>
   );
 }
