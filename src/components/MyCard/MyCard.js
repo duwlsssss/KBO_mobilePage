@@ -100,12 +100,16 @@ function MyCard() {
 
     inappdenyExecVanillaJs(() => {
       function copytoclipboard(val){
-        var t = document.createElement("textarea");
-        document.body.appendChild(t);
-        t.value = val;
-        t.select();
+        // 1. 임시 textarea 요소를 생성하고 body에 부착
+        const $textarea = document.createElement('textarea');
+        document.body.appendChild($textarea);
+        // 2. props로 받은 text값을 textarea의 value로 대입하고 textarea 영역 내 모든 텍스트를 선택(드래그효과)
+        $textarea.value = text;
+        $textarea.select();
+        // 3. execCommand 함수를 이용해 클립보드에 복사
         document.execCommand('copy');
-        document.body.removeChild(t);
+        // 4. 임시 textarea 요소 제거
+        document.body.removeChild($textarea);
       };
       const inappbrowserout=()=>{
         alert(`inappbrowserout 호출  ${window.location.href}`);
