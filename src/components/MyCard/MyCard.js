@@ -222,7 +222,8 @@ const handleIgClick = () => {
       try {
         console.log("공유 주소",`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`);
         await navigator.share({
-          title: '명함',
+          title: '${cards[0].name} 님의 명함',
+          text: '링크를 눌러 명함을 확인하세요',
           url: `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`,
         });
       } catch (error) {
