@@ -221,14 +221,11 @@ const handleIgClick = () => {
     if (isShareSupported()) {
       try {
         console.log("공유 주소",`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`);
-        alert("navigator.share 시도");
         await navigator.share({
-          title: `${cards[0].name} 님의 명함`,
-          text: '김씨네 명함 사무소에서 제작한 명함입니다.',
+          title: '명함',
           url: `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`,
         });
       } catch (error) {
-        alert("share api 링크 공유 실패");
         console.error("share api 링크 공유 실패:", error);
         copyToClipboard();
       }
