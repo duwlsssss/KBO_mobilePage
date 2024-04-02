@@ -92,6 +92,7 @@ function MyCard() {
   useEffect(() => {
     const browserType = detectBrowser();
     console.log("실행 브라우저",browserType);
+    alert(`실행 브라우저 ${browserType}`);
 
     const userAgent = navigator.userAgent.toLowerCase();
 
