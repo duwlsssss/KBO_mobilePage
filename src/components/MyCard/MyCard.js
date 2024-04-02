@@ -104,7 +104,7 @@ function MyCard() {
         const $textarea = document.createElement('textarea');
         document.body.appendChild($textarea);
         // 2. props로 받은 text값을 textarea의 value로 대입하고 textarea 영역 내 모든 텍스트를 선택(드래그효과)
-        $textarea.value = text;
+        $textarea.value = val;
         $textarea.select();
         // 3. execCommand 함수를 이용해 클립보드에 복사
         document.execCommand('copy');
