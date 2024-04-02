@@ -99,28 +99,8 @@ function MyCard() {
     };
 
     inappdenyExecVanillaJs(() => {
-      function copytoclipboard(val){
-        // 1. 임시 textarea 요소를 생성하고 body에 부착
-        const $textarea = document.createElement('textarea');
-        document.body.appendChild($textarea);
-        // 2. props로 받은 text값을 textarea의 value로 대입하고 textarea 영역 내 모든 텍스트를 선택(드래그효과)
-        $textarea.value = val;
-        $textarea.select();
-        // 3. execCommand 함수를 이용해 클립보드에 복사
-        document.execCommand('copy');
-        // 4. 임시 textarea 요소 제거
-        document.body.removeChild($textarea);
-      };
       const inappbrowserout=()=>{
-        alert(`inappbrowserout 호출  ${window.location.href}`);
-        copytoclipboard(window.location.href);
-        // const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
-        // navigator.clipboard.writeText(shareUrl).then(() => {
-        //   alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari를 열어 복사된 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
-        // }).catch(err => {
-        //   alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari에서 실행하시면 정상적으로 이용하실 수 있습니다.');
-        // });
-        alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari를 열어 복사된 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
+        alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari에서 실행하시면 정상적으로 이용하실 수 있습니다.');
       };
 
       const userAgent = navigator.userAgent.toLowerCase();
