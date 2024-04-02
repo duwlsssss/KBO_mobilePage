@@ -18,7 +18,6 @@ function MyCard() {
   const [isSaving, setIsSaving] = useState(false);//사진 저장 상태 추적
   const [isFlipped, setIsFlipped] = useState(false);
   const [showQR,setShowQR]=useState("false");
-  const [message, setMessage] = useState(''); //사파리 안내문
   const location = useLocation();
 
   useEffect(() => {
@@ -104,9 +103,9 @@ function MyCard() {
         alert('inappbrowserout 호출');
         const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
         navigator.clipboard.writeText(shareUrl).then(() => {
-          alert('인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\n\n\nSafari를 열어 복사된 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
+          alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari를 열어 복사된 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
         }).catch(err => {
-          alert('인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\n\n\nSafari에서 실행하시면 정상적으로 이용하실 수 있습니다.');
+          alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari에서 실행하시면 정상적으로 이용하실 수 있습니다.');
         });
       };
 
@@ -128,7 +127,6 @@ function MyCard() {
 		}else if(userAgent.match(/inapp|naver|snapchat|wirtschaftswoche|thunderbird|instagram|everytimeapp|whatsApp|electron|wadiz|aliapp|zumapp|iphone(.*)whale|android(.*)whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|trill|SamsungBrowser\/[^1]/i)){
 			//그외 다른 인앱들
 			if(userAgent.match(/iphone|ipad|ipod/i)){
-        setMessage("인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.");
         inappbrowserout();
 			}else{
 				//안드로이드는 Chrome이 설치되어있음으로 강제로 스킴실행
