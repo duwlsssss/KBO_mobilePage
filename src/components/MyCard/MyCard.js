@@ -62,6 +62,55 @@ function MyCard() {
     }
   }, [userEmail]); //userEmail이 변경될떄 zustand네 저장된 userEmail 확인 
 
+
+  // 실행 브라우저 확인
+  function detectBrowser() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  
+    // Safari on iOS
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      return "Safari on iOS";
+    }
+    // Chrome on Android
+    if (/Chrome/.test(userAgent) && /Android/.test(userAgent)) {
+      return "Chrome Android";
+    }
+    // Opera on Android
+    if (/Opera/.test(userAgent) || /OPR/.test(userAgent)) {
+      return "Opera Android";
+    }
+    // Samsung Internet
+    if (/SamsungBrowser/.test(userAgent)) {
+      return "Samsung Internet";
+    }
+    
+    // If none of the above, return a generic result
+    return "Unknown";
+  }
+
+  //인앱 브라우저로 접속시 안내 문자 띄우기
+  useEffect(() => {
+    const browserType = detectBrowser();
+    console.log("실행 브라우저",browserType);
+
+    const userAgent = navigator.userAgent.toLowerCase();
+
+    if (userAgent.indexOf('kakao') >= 0) {
+      alert("카카오톡 인앱에서는 정상적인 진행이 어려울 수 있습니다.");
+    }
+    if (userAgent.indexOf('[fb') >= 0) {
+      alert("페이스북 인앱에서는 정상적인 진행이 어려울 수 있습니다.");
+    }
+    if (userAgent.indexOf('instagram') >= 0) {
+      alert("인스타그램 인앱에서는 정상적인 진행이 어려울 수 있습니다.");
+    }
+    if (userAgent.indexOf('trill') >= 0) {
+      alert("틱톡 인앱에서는 정상적인 진행이 어려울 수 있습니다.");
+    }
+  }, []); //컴포넌트 마운트 시 1회만 실행
+
+
+
   //서버에서 데이터 가져오기, useEmail이 맞을때만
   const fetchCards = (userEmail) => {
     api.get('/cards')
@@ -222,8 +271,7 @@ const handleIgClick = () => {
       try {
         console.log("공유 주소",`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`);
         await navigator.share({
-          title: '${cards[0].name} 님의 명함',
-          text: '링크를 눌러 명함을 확인하세요',
+          title: `${cards[0].name} 님의 명함`,
           url: `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`,
         });
       } catch (error) {
