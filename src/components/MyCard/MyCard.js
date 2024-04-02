@@ -99,14 +99,24 @@ function MyCard() {
     };
 
     inappdenyExecVanillaJs(() => {
+      function copytoclipboard(val){
+        var t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = val;
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+      };
       const inappbrowserout=()=>{
-        alert('inappbrowserout 호출');
-        const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
-        navigator.clipboard.writeText(shareUrl).then(() => {
-          alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari를 열어 복사된 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
-        }).catch(err => {
-          alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari에서 실행하시면 정상적으로 이용하실 수 있습니다.');
-        });
+        alert(`inappbrowserout 호출  ${window.location.href}`);
+        copytoclipboard(window.location.href);
+        // const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
+        // navigator.clipboard.writeText(shareUrl).then(() => {
+        //   alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari를 열어 복사된 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
+        // }).catch(err => {
+        //   alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari에서 실행하시면 정상적으로 이용하실 수 있습니다.');
+        // });
+        alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari를 열어 복사된 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
       };
 
       const userAgent = navigator.userAgent.toLowerCase();
