@@ -100,18 +100,14 @@ function MyCard() {
     };
 
     inappdenyExecVanillaJs(() => {
-      function copytoclipboard(val){
-        var t = document.createElement("textarea");
-        document.body.appendChild(t);
-        t.value = val;
-        t.select();
-        document.execCommand('copy');
-        document.body.removeChild(t);
-      };
       const inappbrowserout=()=>{
         alert('inappbrowserout 호출');
-        copytoclipboard(window.location.href);
-        alert('URL주소가 복사되었습니다.\n\nSafari를 열어 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
+        const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          alert('인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\n\n\nSafari를 열어 복사된 url을 넣으시면 정상적으로 이용하실 수 있습니다.');
+        }).catch(err => {
+          alert('인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\n\n\nSafari에서 실행하시면 정상적으로 이용하실 수 있습니다.');
+        });
       };
 
       const userAgent = navigator.userAgent.toLowerCase();
@@ -138,7 +134,8 @@ function MyCard() {
 				//안드로이드는 Chrome이 설치되어있음으로 강제로 스킴실행
 				location.href='intent://'+target_url.replace(/https?:\/\//i,'')+'#Intent;scheme=http;package=com.android.chrome;end';
 			}
-		}},[]); //컴포넌트 마운트 시 한번 실행됨 
+    }
+  });
   }, []); //컴포넌트 마운트 시 1회만 실행
 
 
@@ -452,13 +449,6 @@ const handleIgClick = () => {
                 </div>
               </div>
           </div>
-          <div>
-          {message && (
-            <div>
-              <p>{message}</p>
-            </div>
-          )}
-        </div>
      </>
   );
 }
