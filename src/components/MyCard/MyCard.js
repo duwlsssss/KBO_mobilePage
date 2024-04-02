@@ -4,7 +4,6 @@ import api from '../../api/axios'
 import html2canvas from 'html2canvas';
 import saveAs from "file-saver";
 import styles from './MyCard.module.css';
-import copyToClipboard from "../copyToClipboard";
 import { useLocation } from 'react-router-dom';
 import  useUserEmailStore from '../../store/userEmail'
 import ProgressBar from '../ProgressBar/ProgressBar';
