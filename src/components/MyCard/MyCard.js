@@ -65,19 +65,15 @@ function MyCard() {
 
   // 실행 브라우저 확인
   function detectBrowser() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const userAgent = navigator.userAgent;
   
-    // Safari on iOS
+    // iOS
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      return "Safari on iOS";
+      return "iOS";
     }
-    // Chrome on Android
-    if (/Chrome/.test(userAgent) && /Android/.test(userAgent)) {
-      return "Chrome Android";
-    }
-    // Opera on Android
-    if (/Opera/.test(userAgent) || /OPR/.test(userAgent)) {
-      return "Opera Android";
+    // Chrome 
+    if (/Chrome/.test(userAgent)) {
+      return "Chrome";
     }
     // Samsung Internet
     if (/SamsungBrowser/.test(userAgent)) {
@@ -88,26 +84,87 @@ function MyCard() {
     return "Unknown";
   }
 
-  //인앱 브라우저로 접속시 안내 문자 띄우기
+  //인앱 브라우저로 접속시 
   useEffect(() => {
     const browserType = detectBrowser();
-    console.log("실행 브라우저",browserType);
     alert(`실행 브라우저 ${browserType}`);
 
-    const userAgent = navigator.userAgent.toLowerCase();
+    // 인앱 브라우저 리디렉션 로직
+    const inappdenyExecVanillaJs = (callback) => {
+      if (document.readyState !== 'loading') {
+        callback();
+      } else {
+        document.addEventListener('DOMContentLoaded', callback);
+      }
+    };
+    inappdenyExecVanillaJs(() => {
+      function copytoclipboard(val){
+        var t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = val;
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+      };
+      function inappbrowserout(){
+        copytoclipboard(window.location.href);
+        alert('URL주소가 복사되었습니다.\n\nSafari가 열리면 주소창을 길게 터치한 뒤, "붙여놓기 및 이동"를 누르면 정상적으로 이용하실 수 있습니다.');
+        location.href='x-web-search://?';
+      };
 
-    if (userAgent.indexOf('kakao') >= 0) {
-      alert("카카오톡 인앱에서는 정상적인 진행이 어려울 수 있습니다.");
-    }
-    if (userAgent.indexOf('[fb') >= 0) {
-      alert("페이스북 인앱에서는 정상적인 진행이 어려울 수 있습니다.");
-    }
-    if (userAgent.indexOf('instagram') >= 0) {
-      alert("인스타그램 인앱에서는 정상적인 진행이 어려울 수 있습니다.");
-    }
-    if (userAgent.indexOf('trill') >= 0) {
-      alert("틱톡 인앱에서는 정상적인 진행이 어려울 수 있습니다.");
-    }
+      const userAgent = navigator.userAgent.toLowerCase();
+      const target_url = window.location.href;
+
+      // 카카오톡 인앱 브라우저를 감지하고 리디렉션 처리
+      if (userAgent.match(/kakaotalk/i)) {
+        window.location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(target_url);
+      }else if(userAgent.match(/line/i)){
+			
+			//라인 외부브라우저로 호출
+			if(target_url.indexOf('?') !== -1){
+				location.href = target_url+'&openExternalBrowser=1';
+			}else{
+				location.href = target_url+'?openExternalBrowser=1';
+			}
+			
+		}else if(userAgent.match(/inapp|naver|snapchat|wirtschaftswoche|thunderbird|instagram|everytimeapp|whatsApp|electron|wadiz|aliapp|zumapp|iphone(.*)whale|android(.*)whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|trill|SamsungBrowser\/[^1]/i)){
+			//그외 다른 인앱들
+			if(userAgent.match(/iphone|ipad|ipod/i)){
+				var mobile = document.createElement('meta');
+				mobile.name = 'viewport';
+				mobile.content = "width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui";
+				document.getElementsByTagName('head')[0].appendChild(mobile);
+				//노토산스폰트강제설정
+				var fonts = document.createElement('link');
+				fonts.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap';
+				document.getElementsByTagName('head')[0].appendChild(fonts);
+				document.body.innerHTML = "<style>body{margin:0;padding:0;font-family: 'Noto Sans KR', sans-serif;overflow: hidden;height: 100%;}</style><h2 style='padding-top:50px; text-align:center;font-family: 'Noto Sans KR', sans-serif;'>인앱브라우저 호환문제로 인해<br />Safari로 접속해야합니다.</h2><article style='text-align:center; font-size:17px; word-break:keep-all;color:#999;'>아래 버튼을 눌러 Safari를 실행해주세요<br />Safari가 열리면, 주소창을 길게 터치한 뒤,<br />'붙여놓기 및 이동'을 누르면<br />정상적으로 이용할 수 있습니다.<br /><br /><button onclick='inappbrowserout();' style='min-width:180px;margin-top:10px;height:54px;font-weight: 700;background-color:#31408E;color:#fff;border-radius: 4px;font-size:17px;border:0;'>Safari로 열기</button></article><img style='width:70%;margin:50px 15% 0 15%' src='https://tistory3.daumcdn.net/tistory/1893869/skin/images/inappbrowserout.jpeg' />";
+			
+			}else{
+				//안드로이드는 Chrome이 설치되어있음으로 강제로 스킴실행한다.
+				location.href='intent://'+target_url.replace(/https?:\/\//i,'')+'#Intent;scheme=http;package=com.android.chrome;end';
+			}
+		}},[]); //컴포넌트 마운트 시 한번 실행됨 
+
+
+    // if(browserType==="Samsung Internet"){alert("삼성 인터넷에서는 정상적인 작동이 안될 수 있습니다. 원활한 진행을 위해 크롬에서 열어주세요");}
+
+    // if (userAgent.indexOf('kakao') >= 0) {
+    //   if(browserType==="iOS"){alert("카카오톡 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 사파리에서 열어주세요");}
+    //   else if(browserType==="Android"){alert("카카오톡 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 크롬에서 열어주세요");}
+    // }
+    // if (userAgent.indexOf('[fb') >= 0) {
+    //   if(browserType==="iOS"){alert("페이스북 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 사파리에서 열어주세요");}
+    //   else if(browserType==="Android"){alert("페이스북 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 크롬에서 열어주세요");}
+    // }
+    // if (userAgent.indexOf('instagram') >= 0) {
+    //   if(browserType==="iOS"){alert("인스타그램 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 사파리에서 열어주세요");}
+    //   else if(browserType==="Android"){alert("인스타그램 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 크롬에서 열어주세요");}
+    // }
+    // if (userAgent.indexOf('trill') >= 0) {
+    //   if(browserType==="iOS"){alert("틱톡 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 사파리에서 열어주세요");}
+    //   else if(browserType==="Android"){alert("틱톡 인앱에서는 사진 저장이 안될 수 있습니다. 정상적인 진행을 위해 크롬에서 열어주세요");}
+    // }
   }, []); //컴포넌트 마운트 시 1회만 실행
 
 
@@ -236,21 +293,7 @@ const handleIgClick = () => {
   }
 };
 
-  //공유하기 누르면 링크 복사됨 
-  // const shareCard = async() => {
-  //   try {
-  //     const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
-  //     // const shareUrl = `http://localhost:3000/card-info?userEmail=${userEmail}`;
-  //     console.log("공유 주소",shareUrl);
-  //     // 공유주소를 클립보드에 복사
-  //     await navigator.clipboard.writeText(shareUrl);
-  //     alert("링크가 복사되었어요");
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   // 다른 소셜로 공유 (카톡, 메일 ...)
-  // };
-
+  //공유하기 누르면 
   const isShareSupported = () => !!navigator.share; //share api 지원 확인 
 
   // 텍스트를 클립보드에 복사하는 함수
