@@ -207,11 +207,12 @@ function MyCard() {
       rotatedImage.src = dataUrl;
     } catch (error) {
       console.error("Error saving card image:", error);
+      alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
     }
   };
 
   const waitForRender = async () => {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, 800));
         };
     
 
@@ -225,14 +226,11 @@ function MyCard() {
           await captureCardImage(frontRef.current, "card-front.png");
         }
   
-        alert("앞면 저장 성공")
         setIsFlipped(true);
         await waitForRender();
         if (backRef.current&&showQR) {
           await captureCardImage(backRef.current, "card-back.png");
         }
-
-        alert("뒷면 저장 성공")
 
         // Clean up and set states back to initial values
         setIsFlipped(false);
@@ -242,7 +240,7 @@ function MyCard() {
     // 클린업 함수에서 타이머를 정리
     return () => clearTimeout(timer);
   }
-}, [showQR, isSaving]); // showQR와 isCapturing 상태에 의존
+}, [showQR, isSaving, setCardImage]); // showQR와 isCapturing 상태에 의존
 
 const handleEmailClick = () => {
   console.log("이메일 클릭");
