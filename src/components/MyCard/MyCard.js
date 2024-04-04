@@ -225,11 +225,14 @@ function MyCard() {
           await captureCardImage(frontRef.current, "card-front.png");
         }
   
+        alert("앞면 저장 성공")
         setIsFlipped(true);
         await waitForRender();
         if (backRef.current&&showQR) {
           await captureCardImage(backRef.current, "card-back.png");
         }
+
+        alert("뒷면 저장 성공")
 
         // Clean up and set states back to initial values
         setIsFlipped(false);
@@ -368,6 +371,32 @@ const handleIgClick = () => {
     }
   }
 
+  //폰트 번호에 따라 명함 폰트 변경
+  const infoItemStyle = {
+    position: 'absolute',
+  }
+  if (cards.length > 0) {
+    switch (cards[0].fontOption) {
+      case 1:
+        infoItemStyle.fontFamily = "Arial";
+        break;
+      case 2:
+        infoItemStyle.fontFamily = "Times New Roman";
+        break;
+      case 3:
+        infoItemStyle.fontFamily = "Verdana";
+        break;
+      case 4:
+        infoItemStyle.fontFamily = "Georgia";
+        break;
+      case 5:
+        infoItemStyle.fontFamily = "Courier New";
+        break;
+      default: //디폴트는 Arial
+        infoItemStyle.fontFamily = "Arial";
+    }
+  }
+
   //처음에 로딩 화면 띄우려고
   if (isLoading) {
     return (
@@ -383,7 +412,7 @@ const handleIgClick = () => {
 
   return (
      <>
-          <div style={{ width: 350, marginTop:5, marginBottom:5}} className='window'>
+          <div className={styles.container}>
               <div className="title-bar">
               <span className={styles.addressText}>https://www.kimsoffice.com :: 김씨네 <span className={styles.addressTextColor}> 명함제작 </span> 사무소</span>
               <div style={{paddingTop:5, paddingBottom:5}}className="title-bar-controls">
@@ -406,25 +435,25 @@ const handleIgClick = () => {
                     <div className={styles.card}>
                         <div className={`${styles.cardFront} ${isFlipped ? styles.flipped : ''}`} style={cardFrontStyle} ref={frontRef}>
                           <div className={styles.infoContainer}>
-                            <div className={`${styles.infoItem} ${styles.date}`}>
+                            <div className={styles.date} style={infoItemStyle}>
                               {cards[0].updatedAt ? new Date(cards[0].updatedAt).toLocaleDateString() : 'N/A'}
                             </div>
-                            <div className={`${styles.infoItem} ${styles.name}`}>{cards[0].name || 'N/A'}</div>
-                            <div className={`${styles.infoItem} ${styles.engName}`}>{cards[0].engName || 'N/A'}</div>
-                            <div className={`${styles.infoItem} ${styles.school}`}>{cards[0].school || 'N/A'}</div>
-                            <div className={`${styles.infoItem} ${styles.studentNum}`}>{cards[0].studentNum || 'N/A'}</div>
-                            <div className={`${styles.infoItem} ${styles.major}`}>{cards[0].major || 'N/A'}</div>
-                            <div className={`${styles.infoItem} ${styles.email}`} onClick={handleEmailClick}>{cards[0].email || 'N/A'}</div>
-                            <div className={`${styles.infoItem} ${styles.session}`}>{cards[0].session || 'N/A'}</div>
-                            <div className={`${styles.infoItem} ${styles.MBTI}`}>{cards[0].MBTI || 'N/A'}</div>
-                            <div className={`${styles.infoItem} ${styles.IG}`} onClick={handleIgClick}>@{cards[0].ig || 'N/A'}</div>
-                            <div className={`${styles.infoItem} ${styles.moto}`}>{cards[0].moto || 'N/A'}</div>
-                            {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImage} />}
+                            <div className={styles.name} style={infoItemStyle}>{cards[0].name || 'N/A'}</div>
+                            <div className={styles.engName} style={infoItemStyle}>{cards[0].engName || 'N/A'}</div>
+                            <div className={styles.school} style={infoItemStyle}>{cards[0].school || 'N/A'}</div>
+                            <div className={styles.studentNum} style={infoItemStyle}>{cards[0].studentNum || 'N/A'}</div>
+                            <div className={styles.major} style={infoItemStyle}>{cards[0].major || 'N/A'}</div>
+                            <div className={styles.email} style={infoItemStyle} onClick={handleEmailClick}>{cards[0].email || 'N/A'}</div>
+                            <div className={styles.session} style={infoItemStyle}>{cards[0].session || 'N/A'}</div>
+                            <div className={styles.MBTI} style={infoItemStyle}>{cards[0].MBTI || 'N/A'}</div>
+                            <div className={styles.IG} style={infoItemStyle} onClick={handleIgClick}>@{cards[0].ig || 'N/A'}</div>
+                            <div className={styles.moto} style={infoItemStyle}>{cards[0].moto || 'N/A'}</div>
+                            {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImage} style={infoItemStyle} />}
                           </div>
                         </div>
                         <div className={`${styles.cardBack} ${isFlipped ? styles.flipped : ''}`} style={cardBackStyle} ref={backRef}>
                         {showQR && (
-                          <div className={styles.QR}>
+                          <div className={styles.QR} >
                             <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} size={50} />
                           </div>
                         )}

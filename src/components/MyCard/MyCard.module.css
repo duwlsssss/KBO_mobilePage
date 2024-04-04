@@ -1,4 +1,15 @@
+.container{
+  width: 350px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 11px;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
+  background: silver;
+  padding: 3px;
+}
+
 .addressText {
+   -webkit-font-smoothing: none;
   font-size: 0.8rem;
   color: #ffffff;
 }
@@ -15,6 +26,7 @@
 }
 
 .ownerText{
+   -webkit-font-smoothing: none;
   font-size: 1rem;
   text-align: center; 
 }
@@ -58,9 +70,9 @@
   bottom: 0;
 }
 
-.infoItem {
+/* .infoItem {
   position: absolute;
-}
+} */
 
 .cardImage{
   border-radius: 0.3rem;
@@ -128,7 +140,7 @@
   position: absolute;
   transform: rotate(90deg);
   transform-origin: center center;
-  margin: 30rem 2rem;
+  margin: 28rem 2rem;
 }
 
 .popUp {
@@ -147,6 +159,7 @@
 }
 
 .popUpContent {
+  font-family: "Pixelated MS Sans Serif", Arial;
   width: 100%; 
   max-width: 600px; 
   margin-top: -50px; /*조금 위로 옮김*/
@@ -154,7 +167,6 @@
   flex-direction: column;
   align-items: center;
 }
-
 
 @media (max-width: 375px) { /* iPhone SE width */
   .card{
