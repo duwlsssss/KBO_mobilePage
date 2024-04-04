@@ -57,11 +57,11 @@
   backface-visibility: hidden;
 }
 
+
 .infoContainer {
   transform: rotate(90deg);
   transform-origin: center center;
-  font-family: "sans-serif";
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #333; 
   position: absolute;
   top: 0;
@@ -70,77 +70,120 @@
   bottom: 0;
 }
 
-/* .infoItem {
-  position: absolute;
-} */
 
 .cardImage{
-  border-radius: 0.3rem;
+  border-radius: 0.5em;
   width: 11rem;
   height: 13rem;
-  margin-top:12rem;
-  margin-left: -5.2rem;
+  margin-top:11.5rem;
+  margin-left: -4.4rem;
   object-fit: cover;
 }
 
 .date{
   top: 11.5rem;
-  right: -6rem;
+  right: -4.5rem;
 }
 .name {
-  top: 13.5rem;
-  left: 16rem;
+  color: #888; 
+  top: 13.7rem;
+  left: 10rem;
+}
+.nameValue {
+  top: 13.7rem;
+  right: 5rem;
 }
 .engName{
-  top: 13.5rem;
-  right: -4rem;
+  top: 13.7rem;
+  right: 5rem;
 }
 .school {
+  color: #888; 
+  top: 15rem; 
+  left: 10rem;
+}
+.schoolValue {
   top: 15rem; 
   left: 13.5rem; 
 }
-.studentNum {
+.studentNumValue {
   top: 15rem; 
-  right: -4rem;
+  right: -3.5rem;
 }
 .major {
+  color: #888; 
   top: 16.5rem; 
-  right: -4rem;
+  left:10rem;
+}
+.majorValue {
+  top: 16.5rem; 
+  right: -3.5rem;
 }
 .email {
+  color: #888; 
+  top: 17.8rem; 
+  left:10rem;
+}
+.emailValue {
   cursor:pointer;
   top: 17.8rem; 
-  right: -4rem;
+  right: -3.5rem;
 }
-.email:hover{
-  background-color: aquamarine;
+.emailValue:hover{
+  background-color: white;
 }
 .session {
-  top: 19.2rem; 
-  right: -4rem;
+  color: #888; 
+  top: 19.4rem; 
+  left:10rem;
 }
-.MBTI {
-  top: 20.5rem; 
-  right: -4rem;
+.sessionValue {
+  top: 19.4rem; 
+  right: -3.5rem;
+}
+.MBTI{
+  color: #888; 
+  top: 20.8rem; 
+  left:10rem;
+}
+.MBTIValue {
+  top: 20.8rem; 
+  right: -3.5rem;
 }
 .IG {
+  color: #888; 
+  top: 22.3rem; 
+  left:10rem; 
+}
+.IGValue {
   cursor:pointer;
-  top: 21.7rem; 
-  right: -4rem; 
+  top: 22.3rem; 
+  right: -3.5rem; 
 }
-.IG:hover{
-  background-color: aquamarine;
-}
-.moto {
-  top: 23.5rem; 
-  right: -4rem;
+.IGValue:hover{
+  background-color: white;
 }
 
+.moto {
+  position: absolute;
+  top: 13.5rem; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: rotate(90deg);
+  transform-origin: center center;
+  background-color: aquamarine;
+  width:27.5rem;
+  height:8rem;
+  white-space: normal; /* 텍스트가 요소 폭을 넘어가면 줄바꿈되게 함 */
+  overflow: hidden; /* 내용이 요소의 크기를 초과하면 숨김 처리 */
+}
 .QR{
   position: absolute;
   transform: rotate(90deg);
   transform-origin: center center;
-  margin: 28rem 2rem;
+  margin: 28rem 2.5rem;
+  z-index: 100;
 }
 
 .popUp {
