@@ -93,9 +93,9 @@
   top: 13.7rem;
   right: 5rem;
 }
-.engName{
+.engNameValue{
   top: 13.7rem;
-  right: 5rem;
+  right: -3.5rem;
 }
 .school {
   color: #888; 
@@ -172,9 +172,10 @@
   bottom: 0;
   transform: rotate(90deg);
   transform-origin: center center;
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   width:27.5rem;
   height:8rem;
+  font-size: 1.2rem;
   white-space: normal; /* 텍스트가 요소 폭을 넘어가면 줄바꿈되게 함 */
   overflow: hidden; /* 내용이 요소의 크기를 초과하면 숨김 처리 */
 }

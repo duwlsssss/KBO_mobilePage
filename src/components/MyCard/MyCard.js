@@ -87,7 +87,7 @@ function MyCard() {
   //인앱 브라우저로 접속시 
   useEffect(() => {
     const browserType = detectBrowser();
-    alert(`실행 환경 ${browserType}`);
+    // alert(`실행 환경 ${browserType}`);
 
     // 인앱 브라우저 리디렉션 로직
     const inappdenyExecVanillaJs = (callback) => {
@@ -133,15 +133,18 @@ function MyCard() {
 
 
   //서버에서 데이터 가져오기, useEmail이 맞을때만
-  const fetchCards = (userEmail) => {
+  const fetchCards = () => {
     api.get('/cards')
     .then((response) => {
       const data = response.data;
+      // console.log("fetch cards에서 호출 response.data", response.data)
+      // console.log("fetch cards에서 호출 userEmail", userEmail)
       if (data.status === 'ok'&& data.data.length > 0) {
         // userEmail에 해당하는 카드들을 필터링
         const userCards = data.data.filter(card => card.userEmail === userEmail);
         // 배열이 이미 생성 순으로 정렬되어 있어야 함!!!
         // 가장 마지막 요소가 가장 최신 카드
+        // console.log("fetch cards에서 호출 userCards", userCards)
         const mostRecentCard = userCards[userCards.length - 1];
         // 카드가 존재하면 상태 업데이트
         setCards(mostRecentCard ? [mostRecentCard] : []);
@@ -167,8 +170,7 @@ function MyCard() {
         });
       if (response.data && response.data.length > 0) {
         // 이미지 데이터 배열 중 마지막 이미지의 URL을 사용
-        const lastImageIndex = response.data.length - 1;
-        setCardImage(response.data[lastImageIndex].url);
+        setCardImage(response.data[0].url);
       }
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -365,6 +367,7 @@ const handleIgClick = () => {
   if (cards.length > 0) {
     const card = cards[0];
     const backgroundUrlB = `/images/back${card.backgroundOption}.png`; // 배경 이미지 경로 
+    console.log(`card.patternOption,${card.patternOption}`);
     patternUrl = card.patternOption ? `/images/${card.patternOption}.png` : undefined;
     const backgroundUrlF = `/images/front${card.backgroundOption}.png`; // 배경 이미지 경로 
     cardBackStyle.backgroundImage = `url('${backgroundUrlB}')`;
@@ -417,7 +420,6 @@ const handleIgClick = () => {
                             <div className={styles.engNameValue} style={infoItemStyle}>{cards[0].engName || 'N/A'}</div>
                             <div className={styles.school} style={infoItemStyle}>학교</div>
                             <div className={styles.schoolValue} style={infoItemStyle}>{cards[0].school || 'N/A'}</div>
-                            <div className={styles.studentNum} style={infoItemStyle}>학번</div>
                             <div className={styles.studentNumValue} style={infoItemStyle}>{cards[0].studentNum || 'N/A'}</div>
                             <div className={styles.major} style={infoItemStyle}>전공</div>
                             <div className={styles.majorValue} style={infoItemStyle}>{cards[0].major || 'N/A'}</div>
