@@ -6,8 +6,6 @@ const host = window.location.hostname === "localhost" ? 'http://kimmyungsa.us-ea
 //axios 인스턴스 생성
 
 const api = axios.create({
-  
-    // baseURL: host,
     baseURL: host,
     timeout:5000,
     headers:{
