@@ -213,32 +213,47 @@ function MyCard() {
     }
   };
 
-  const waitForRender = async () => {
-          await new Promise((resolve) => setTimeout(resolve, 800));
-        };
-    
+  // const waitForRender = async () => {
+  //         await new Promise((resolve) => setTimeout(resolve, 800));
+  // };
+  const waitForElement = async (selector, timeout = 3000) => {
+    const startTime = new Date().getTime();
+    return new Promise((resolve, reject) => {
+      const timer = setInterval(() => {
+        if (document.querySelector(selector)) {
+          clearInterval(timer);
+          resolve(true);
+        } else if (new Date().getTime() - startTime > timeout) {
+          clearInterval(timer);
+          reject(new Error("Element not found"));
+        }
+      }, 100);
+    });
+  };
 
   useEffect(() => {
     console.log("사진 저장 실행");
     if (isSaving) {
       const timer = setTimeout(async () => {
         setIsFlipped(false);
-        await waitForRender();
+        // await waitForRender();
+        await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
         if (frontRef.current) {
           await captureCardImage(frontRef.current, "card-front.png");
         }
   
         setIsFlipped(true);
-        await waitForRender();
+        // await waitForRender();
+        await waitForElement('.cardBack'); // 뒷면이 화면에 나타날 때까지 기다림
         if (backRef.current&&showQR) {
           await captureCardImage(backRef.current, "card-back.png");
         }
 
         // Clean up and set states back to initial values
         setIsFlipped(false);
-        await waitForRender();
-        alert("사진 저장 성공")
+        await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
         setIsSaving(false); 
+        alert("사진 저장 성공")
     },100); //0.1초 후 앞,뒤 확인 시작
     // 클린업 함수에서 타이머를 정리
     return () => clearTimeout(timer);
@@ -411,7 +426,7 @@ const handleIgClick = () => {
                   <>
                     <div className={styles.ownerText}><span className={styles.ownerTextStrong}>{cards[0].name}</span> 님의 명함</div>
                     <div className={styles.card}>
-                        <div className={styles.cardFront} style={cardFrontStyle} ref={frontRef}>
+                        <div className={`${styles.cardFront} cardFront`} style={cardFrontStyle} ref={frontRef}>
                           <div className={styles.infoContainer}>
                             <div className={styles.date} style={infoItemStyle}>
                               {cards[0].updatedAt ? new Date(cards[0].updatedAt).toLocaleDateString() : 'N/A'}
@@ -435,7 +450,7 @@ const handleIgClick = () => {
                             {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImage} style={infoItemStyle} />}
                           </div>
                         </div>
-                        <div className={styles.cardBack} style={cardBackStyle} ref={backRef}>
+                        <div className={`${styles.cardBack} cardBack`} style={cardBackStyle} ref={backRef}>
                           {showQR && (
                            <>
                               <div className={styles.moto} style={infoItemStyle}>{cards[0].moto || 'N/A'}</div>
