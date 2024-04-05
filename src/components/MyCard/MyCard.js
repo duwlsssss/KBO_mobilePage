@@ -237,6 +237,7 @@ function MyCard() {
         // Clean up and set states back to initial values
         setIsFlipped(false);
         await waitForRender();
+        alert("사진 저장 성공")
         setIsSaving(false); 
     },100); //0.1초 후 앞,뒤 확인 시작
     // 클린업 함수에서 타이머를 정리
