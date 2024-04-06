@@ -213,22 +213,8 @@ function MyCard() {
     }
   };
 
-  // const waitForRender = async () => {
-  //         await new Promise((resolve) => setTimeout(resolve, 800));
-  // };
-  const waitForElement = async (selector, timeout = 1000) => {
-    const startTime = new Date().getTime();
-    return new Promise((resolve, reject) => {
-      const timer = setInterval(() => {
-        if (document.querySelector(selector)) {
-          clearInterval(timer);
-          resolve(true);
-        } else if (new Date().getTime() - startTime > timeout) {
-          clearInterval(timer);
-          reject(new Error(`Element "${selector}" not found within ${timeout}ms`));
-        }
-      }, 100);
-    });
+  const waitForRender = async () => {
+          await new Promise((resolve) => setTimeout(resolve, 800));
   };
 
   useEffect(() => {
@@ -239,8 +225,7 @@ function MyCard() {
       try{
       console.log("사진 저장 실행");
       setIsFlipped(false); //앞면으로 돌리고
-      // await waitForRender();
-      await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
+      await waitForRender();
       if (frontRef.current) {
         console.log("앞면 저장 시작");
         alert("앞면 저장 시작");
@@ -250,8 +235,7 @@ function MyCard() {
       }
 
       setIsFlipped(true); //뒷면으로 돌리고 
-      // await waitForRender();
-      await waitForElement('.cardBack');
+      await waitForRender();
       if (backRef.current) {
         console.log("뒷면 저장 시작");
         alert("뒷면 저장 시작");
@@ -259,13 +243,12 @@ function MyCard() {
         console.log("뒷면 저장 완료");
         alert("뒷면 저장 완료");
       }
-
     } catch (error) {
       console.error("Error during capture process:", error);
       alert("An error occurred: " + error.message + ". Please try again.");
     } finally {
       setIsFlipped(false);
-      // await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
+      await waitForRender();
       setIsSaving(false); 
     }
   };

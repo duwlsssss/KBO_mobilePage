@@ -15,11 +15,15 @@ function App() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   }
-  // 초기 설정
-  setVHVariable();
-  // 윈도우 리사이즈 이벤트가 발생할 때마다 setVHVariable를 호출하여 --vh 값을 업데이트
-  window.addEventListener('resize', setVHVariable);
-  
+
+  useEffect(() => {
+    setVHVariable();
+    
+    // resize 이벤트가 발생하면 다시 계산하도록 아래 코드 추가
+    window.addEventListener('resize', setVHVariable);
+    return () => window.removeEventListener('resize', setVHVariable);
+  }, []);
+
   // Route Handler to manage component rendering based on the query string
   function RouteHandler({ component: Component }) {
     const query = useQuery();
