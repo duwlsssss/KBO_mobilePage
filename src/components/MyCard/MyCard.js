@@ -238,24 +238,27 @@ function MyCard() {
        if (!isSaving) return; // isSaving 상태가 아니면 실행하지 않음
  
        console.log("사진 저장 실행");
+       var data = document.getElementsByClassName('cardFront')
        setIsFlipped(false); //앞면으로 돌리고
        // await waitForRender();
        await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
        if (frontRef.current) {
          console.log("앞면 저장 시작");
         //  alert("앞면 저장 시작");
-         await captureCardImage(frontRef.current, "card-front.png");
+        //  await captureCardImage(frontRef.current, "card-front.png");
+        await captureCardImage(data[0], "card-front.png");
          console.log("앞면 저장 완료");
         //  alert("앞면 저장 완료");
        }
  
        setIsFlipped(true); //뒷면으로 돌리고 
        // await waitForRender();
+       data = document.getElementsByClassName('cardBack')
        await waitForElement('.cardBack');
        if (backRef.current) {
          console.log("뒷면 저장 시작");
         //  alert("뒷면 저장 시작");
-         await captureCardImage(backRef.current, "card-back.png");
+         await captureCardImage(data[0], "card-back.png");
          console.log("뒷면 저장 완료");
         //  alert("뒷면 저장 완료");
        }
@@ -396,7 +399,6 @@ const handleIgClick = () => {
   if (cards.length > 0) {
     const card = cards[0];
     const backgroundUrlB = `/images/back${card.backgroundOption}.png`; // 배경 이미지 경로 
-    console.log(`card.patternOption,${card.patternOption}`);
     patternUrl = card.patternOption ? `/images/${card.patternOption}.png` : undefined;
     const backgroundUrlF = `/images/front${card.backgroundOption}.png`; // 배경 이미지 경로 
     cardBackStyle.backgroundImage = `url('${backgroundUrlB}')`;
