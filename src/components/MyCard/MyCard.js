@@ -242,8 +242,10 @@ function MyCard() {
       await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
       if (frontRef.current) {
         console.log("앞면 저장 시작");
+        alert("앞면 저장 시작");
         await captureCardImage(frontRef.current, "card-front.png");
         console.log("앞면 저장 완료");
+        alert("앞면 저장 완료");
       }
 
       setIsFlipped(true); //뒷면으로 돌리고 
@@ -251,8 +253,10 @@ function MyCard() {
       await waitForElement('.cardBack');
       if (backRef.current && showQR) {
         console.log("뒷면 저장 시작");
+        alert("뒷면 저장 시작");
         await captureCardImage(backRef.current, "card-back.png");
         console.log("뒷면 저장 완료");
+        alert("뒷면 저장 완료");
       }
 
       setIsFlipped(false);
