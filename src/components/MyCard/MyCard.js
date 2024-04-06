@@ -207,7 +207,6 @@ function MyCard() {
         });
       };
       rotatedImage.src = dataUrl;
-      alert("사진 저장 성공")
     } catch (error) {
       console.error("Error saving card image:", error);
       alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
@@ -259,7 +258,6 @@ function MyCard() {
       setIsFlipped(false);
       // await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
       setIsSaving(false); 
-      alert("사진 저장 끝남")
     }
 
     captureProcess().catch(console.error);
