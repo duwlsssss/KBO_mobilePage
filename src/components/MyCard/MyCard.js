@@ -216,7 +216,7 @@ function MyCard() {
   // const waitForRender = async () => {
   //         await new Promise((resolve) => setTimeout(resolve, 800));
   // };
-  const waitForElement = async (selector, timeout = 10000) => {
+  const waitForElement = async (selector, timeout = 1000) => {
     const startTime = new Date().getTime();
     return new Promise((resolve, reject) => {
       const timer = setInterval(() => {
@@ -225,7 +225,7 @@ function MyCard() {
           resolve(true);
         } else if (new Date().getTime() - startTime > timeout) {
           clearInterval(timer);
-          reject(new Error("Element not found"));
+          reject(new Error(`Element "${selector}" not found within ${timeout}ms`));
         }
       }, 100);
     });
@@ -236,6 +236,7 @@ function MyCard() {
     const captureProcess = async () => {
       if (!isSaving) return; // isSaving 상태가 아니면 실행하지 않음
 
+      try{
       console.log("사진 저장 실행");
       setIsFlipped(false); //앞면으로 돌리고
       // await waitForRender();
@@ -259,10 +260,15 @@ function MyCard() {
         alert("뒷면 저장 완료");
       }
 
+    } catch (error) {
+      console.error("Error during capture process:", error);
+      alert("An error occurred: " + error.message + ". Please try again.");
+    } finally {
       setIsFlipped(false);
       // await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
       setIsSaving(false); 
     }
+  };
 
     captureProcess().catch(console.error);
 }, [isSaving]); 
