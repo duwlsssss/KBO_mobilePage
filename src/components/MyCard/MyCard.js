@@ -208,7 +208,7 @@ function MyCard() {
       //    });
       //  };
       //  rotatedImage.src = dataUrl;
-      const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: null });
+      const canvas = await html2canvas(element, { scale: 2, allowTaint: false, useCORS: true, backgroundColor: null });
       canvas.toBlob((blob)=>{
         if (blob) {
           saveAs(blob, filename); // Blob을 직접 파일로 저장
