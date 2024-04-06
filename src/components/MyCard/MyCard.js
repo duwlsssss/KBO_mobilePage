@@ -188,26 +188,32 @@ function MyCard() {
  
    const captureCardImage = async (element, filename) => {
      try {
-       const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor:null });
-       const dataUrl = canvas.toDataURL();
-       const rotatedImage = new Image();
-       rotatedImage.onload = function() {
-         const rotatedCanvas = document.createElement('canvas');
-         rotatedCanvas.width = rotatedImage.height;
-         rotatedCanvas.height = rotatedImage.width;
+      //  const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor:null });
+      //  const dataUrl = canvas.toDataURL();
+      //  const rotatedImage = new Image();
+      //  rotatedImage.onload = function() {
+      //    const rotatedCanvas = document.createElement('canvas');
+      //    rotatedCanvas.width = rotatedImage.height;
+      //    rotatedCanvas.height = rotatedImage.width;
  
-         const context = rotatedCanvas.getContext('2d');
-         context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
-         context.rotate(-90 * Math.PI / 180);
-         context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
+      //    const context = rotatedCanvas.getContext('2d');
+      //    context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+      //    context.rotate(-90 * Math.PI / 180);
+      //    context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
  
-         rotatedCanvas.toBlob(function(blob) {
-           if (blob) {
-             saveAs(blob, filename);
-           }
-         });
-       };
-       rotatedImage.src = dataUrl;
+      //    rotatedCanvas.toBlob(function(blob) {
+      //      if (blob) {
+      //        saveAs(blob, filename);
+      //      }
+      //    });
+      //  };
+      //  rotatedImage.src = dataUrl;
+      const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: null });
+      canvas.toBlob(function(blob) {
+        if (blob) {
+          saveAs(blob, filename); // Blob을 직접 파일로 저장
+        }
+      });
      } catch (error) {
       toast.error('이미지 저장 중 오류가 발생했습니다.');
       alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
@@ -238,28 +244,25 @@ function MyCard() {
        if (!isSaving) return; // isSaving 상태가 아니면 실행하지 않음
  
        console.log("사진 저장 실행");
-       var data = document.getElementsByClassName('cardFront')
        setIsFlipped(false); //앞면으로 돌리고
        // await waitForRender();
        await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
        if (frontRef.current) {
          console.log("앞면 저장 시작");
         //  alert("앞면 저장 시작");
-        //  await captureCardImage(frontRef.current, "card-front.png");
-        await captureCardImage(data[0], "card-front.png");
-         console.log("앞면 저장 완료");
+        await captureCardImage(frontRef.current, "card-front.png");
+        console.log("앞면 저장 완료");
         //  alert("앞면 저장 완료");
        }
  
        setIsFlipped(true); //뒷면으로 돌리고 
        // await waitForRender();
-       data = document.getElementsByClassName('cardBack')
        await waitForElement('.cardBack');
        if (backRef.current) {
          console.log("뒷면 저장 시작");
         //  alert("뒷면 저장 시작");
-         await captureCardImage(data[0], "card-back.png");
-         console.log("뒷면 저장 완료");
+        await captureCardImage(backRef.current, "card-back.png");
+        console.log("뒷면 저장 완료");
         //  alert("뒷면 저장 완료");
        }
  
