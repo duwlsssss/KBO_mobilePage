@@ -44,12 +44,15 @@ body,html {
   justify-content: center;
   align-items: center;
   background-color: #f2f2f2;
-  --vh: 100%;
   overflow: hidden; /*스크롤 방지 */
 }
-
-
-
+#root{
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  height: calc(var(--vh, 1vh) * 100);
+  --vh: 100%;
+}
 @media (max-width: 375px) { /* mini width */
   body, html {
     font-size: 14.5px; 
