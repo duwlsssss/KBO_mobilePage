@@ -43,17 +43,13 @@ body,html {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: #000000; */
   background-color: #f2f2f2;
   --vh: 100%;
   overflow: hidden; /*스크롤 방지 */
 }
 
 
-#root{
-  width: 100vw;
-  height: 100vh;
-}
+
 @media (max-width: 375px) { /* mini width */
   body, html {
     font-size: 14.5px; 
