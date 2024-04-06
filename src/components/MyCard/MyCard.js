@@ -181,33 +181,8 @@ function MyCard() {
    const frontRef = useRef(null); 
    const backRef = useRef(null); //카드 부분 참조
  
-   const saveCardAsImage = async () => {
-     setIsSaving(true); // 사진 저장 상태 시작
-     setShowQR(true); // QR 코드 보이기 시작_qr이 안찍히는 상황 방지
-   };
- 
    const captureCardImage = async (element, filename) => {
      try {
-      // const canvas = await html2canvas(element, { scale: 2, removeContainer: true, useCORS: true, backgroundColor: null });
-      //  const dataUrl = canvas.toDataURL();
-      //  const rotatedImage = new Image();
-      //  rotatedImage.onload = function() {
-      //    const rotatedCanvas = document.createElement('canvas');
-      //    rotatedCanvas.width = rotatedImage.height;
-      //    rotatedCanvas.height = rotatedImage.width;
- 
-      //    const context = rotatedCanvas.getContext('2d');
-      //    context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
-      //    context.rotate(-90 * Math.PI / 180);
-      //    context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
- 
-      //    rotatedCanvas.toBlob(function(blob) {
-      //      if (blob) {
-      //        saveAs(blob, filename);
-      //      }
-      //    });
-      //  };
-      //  rotatedImage.src = dataUrl;
       const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: null });
       canvas.toBlob((blob)=>{
         if (blob) {
@@ -220,9 +195,9 @@ function MyCard() {
      }
    };
  
-   // const waitForRender = async () => {
-   //         await new Promise((resolve) => setTimeout(resolve, 800));
-   // };
+  //  const waitForRender = async () => {
+  //          await new Promise((resolve) => setTimeout(resolve, 800));
+  //  };
    const waitForElement = async (selector, timeout = 800) => {
      const startTime = new Date().getTime();
      return new Promise((resolve, reject) => {
@@ -241,42 +216,41 @@ function MyCard() {
      });
    };
  
-   useEffect(() => {
-     // console.log("isSaving",isSaving);
-     const captureProcess = async () => {
-       if (!isSaving) return; // isSaving 상태가 아니면 실행하지 않음
+   const saveCardFAsImage = async () => {
+    setIsSaving(true); // 사진 저장 상태 시작
  
-       console.log("사진 저장 실행");
-       setIsFlipped(false); //앞면으로 돌리고
-       // await waitForRender();
-       await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
-       if (frontRef.current) {
-         console.log("앞면 저장 시작");
-        //  alert("앞면 저장 시작");
-        await captureCardImage(frontRef.current, "card-front.png");
-        console.log("앞면 저장 완료");
-        //  alert("앞면 저장 완료");
-       }
- 
-       setIsFlipped(true); //뒷면으로 돌리고 
-       // await waitForRender();
-       await waitForElement('.cardBack');
-       if (backRef.current) {
-         console.log("뒷면 저장 시작");
-        //  alert("뒷면 저장 시작");
-        await captureCardImage(backRef.current, "card-back.png");
-        console.log("뒷면 저장 완료");
-        //  alert("뒷면 저장 완료");
-       }
- 
-       setIsFlipped(false);
-       await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
-       await new Promise((resolve) => setTimeout(resolve, 3000));
-       setIsSaving(false); 
-     }
- 
-     captureProcess().catch(console.error);
- }, [isSaving]); 
+    console.log("앞면 저장 실행");
+    setIsFlipped(false); //앞면으로 돌리고
+    // await waitForRender();
+    await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
+    if (frontRef.current) {
+      console.log("앞면 저장 시작");
+    //  alert("앞면 저장 시작");
+    await captureCardImage(frontRef.current, "card-front.png");
+    console.log("앞면 저장 완료");
+    //  alert("앞면 저장 완료");
+    }
+    setIsSaving(false); 
+  };
+  const saveCardBAsImage = async () => {
+    setIsSaving(true); // 사진 저장 상태 시작
+    setShowQR(true); // QR 코드 보이기 시작_qr이 안찍히는 상황 방지
+
+    setIsFlipped(true); //뒷면으로 돌리고 
+    // await waitForRender();
+    await waitForElement('.cardBack');
+    if (backRef.current) {
+      console.log("뒷면 저장 시작");
+    //  alert("뒷면 저장 시작");
+    await captureCardImage(backRef.current, "card-back.png");
+    console.log("뒷면 저장 완료");
+    //  alert("뒷면 저장 완료");
+    }
+
+    setIsFlipped(false);
+    await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
+    setIsSaving(false); 
+  };
 
 const handleEmailClick = () => {
   console.log("이메일 클릭");
@@ -495,10 +469,11 @@ const handleIgClick = () => {
                 ) : (
                   <div>{userEmail}에 해당하는 카드 없음</div>
                 )}
-                <div className="field-row" style={{ justifyContent: "center"}}>
-                  <button type="button" onClick={handleCardClick}>카드뒤집기</button>
-                  <button type="button" onClick={saveCardAsImage}>저장하기(이미지)</button>
-                  <button type="button" onClick={shareCard}>공유하기</button>
+                <div className={styles.btnContainer}>
+                  <button type="button" className={styles.btn} onClick={handleCardClick}>카드뒤집기</button>
+                  <button type="button" className={styles.btn} onClick={saveCardFAsImage}>앞면 저장</button>
+                  <button type="button" className={styles.btn} onClick={saveCardBAsImage}>뒷면 저장</button>
+                  <button type="button" className={styles.btn} onClick={shareCard}>공유하기</button>
                 </div>
               </div>
           </div>
