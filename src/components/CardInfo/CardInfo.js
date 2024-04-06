@@ -3,13 +3,13 @@ import QRCode from 'qrcode.react';
 import api from '../../api/axios'
 import html2canvas from 'html2canvas';
 import saveAs from "file-saver";
-import styles from './CardInfo.module.css';
+import styles from './cardInfo.module.css';
 import { useLocation } from 'react-router-dom';
 import  useUserEmailStore from '../../store/userEmail'
 import ProgressBar from '../ProgressBar/ProgressBar';
 import "xp.css/dist/98.css"
 
-function CardInfo() {
+function cardInfo() {
 
   const {userEmail,setUserEmail} = useUserEmailStore();
   const [cards, setCards] = useState([]); //카드 저장용
@@ -133,15 +133,18 @@ function CardInfo() {
 
 
   //서버에서 데이터 가져오기, useEmail이 맞을때만
-  const fetchCards = (userEmail) => {
+  const fetchCards = () => {
     api.get('/cards')
     .then((response) => {
       const data = response.data;
+      // console.log("fetch cards에서 호출 response.data", response.data)
+      // console.log("fetch cards에서 호출 userEmail", userEmail)
       if (data.status === 'ok'&& data.data.length > 0) {
         // userEmail에 해당하는 카드들을 필터링
         const userCards = data.data.filter(card => card.userEmail === userEmail);
         // 배열이 이미 생성 순으로 정렬되어 있어야 함!!!
         // 가장 마지막 요소가 가장 최신 카드
+        // console.log("fetch cards에서 호출 userCards", userCards)
         const mostRecentCard = userCards[userCards.length - 1];
         // 카드가 존재하면 상태 업데이트
         setCards(mostRecentCard ? [mostRecentCard] : []);
@@ -179,12 +182,12 @@ function CardInfo() {
 
   const saveCardAsImage = async () => {
     setIsSaving(true); // 사진 저장 상태 시작
-    setShowQR(true); // QR 코드 보이기 시작
+    setShowQR(true); // QR 코드 보이기 시작_qr이 안찍히는 상황 방지
   };
 
   const captureCardImage = async (element, filename) => {
     try {
-      const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+      const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor:null });
       const dataUrl = canvas.toDataURL();
       const rotatedImage = new Image();
       rotatedImage.onload = function() {
@@ -212,33 +215,45 @@ function CardInfo() {
 
   const waitForRender = async () => {
           await new Promise((resolve) => setTimeout(resolve, 800));
-        };
-    
+  };
 
   useEffect(() => {
-    console.log("사진 저장 실행");
-    if (isSaving) {
-      const timer = setTimeout(async () => {
-        setIsFlipped(false);
-        await waitForRender();
-        if (frontRef.current) {
-          await captureCardImage(frontRef.current, "card-front.png");
-        }
-  
-        setIsFlipped(true);
-        await waitForRender();
-        if (backRef.current&&showQR) {
-          await captureCardImage(backRef.current, "card-back.png");
-        }
+    // console.log("isSaving",isSaving);
+    const captureProcess = async () => {
+      if (!isSaving) return; // isSaving 상태가 아니면 실행하지 않음
 
-        // Clean up and set states back to initial values
-        setIsFlipped(false);
-        await waitForRender();
-        setIsSaving(false); 
-    },100); //0.1초 후 앞,뒤 확인 시작
-    // 클린업 함수에서 타이머를 정리
-    return () => clearTimeout(timer);
-  }
+      try{
+      console.log("사진 저장 실행");
+      setIsFlipped(false); //앞면으로 돌리고
+      await waitForRender();
+      if (frontRef.current) {
+        console.log("앞면 저장 시작");
+        // alert("앞면 저장 시작"); 
+        await captureCardImage(frontRef.current, "card-front.png");
+        console.log("앞면 저장 완료");
+        // alert("앞면 저장 완료");
+      }
+
+      setIsFlipped(true); //뒷면으로 돌리고 
+      await waitForRender();
+      if (backRef.current) {
+        console.log("뒷면 저장 시작");
+        // alert("뒷면 저장 시작"); 
+        await captureCardImage(backRef.current, "card-back.png");
+        console.log("뒷면 저장 완료");
+        // alert("뒷면 저장 완료");
+      }
+    } catch (error) {
+      console.error("Error during capture process:", error);
+      alert("An error occurred: " + error.message + ". Please try again.");
+    } finally {
+      setIsFlipped(false);
+      await waitForRender();
+      setIsSaving(false); 
+    }
+  };
+
+    captureProcess().catch(console.error);
 }, [isSaving]); 
 
 const handleEmailClick = () => {
@@ -258,9 +273,17 @@ const handleIgClick = () => {
   }
 };
 
+  useEffect(()=>{
+    console.log("isFlipped 변함", isFlipped);
+  },[isFlipped]);
+
   //카드 뒤집기 애니메이션 
   const handleCardClick = () => {
-    //앞면이면
+    // 카드의 뒤집힌 상태를 토글
+    setIsFlipped(!isFlipped);
+    console.log("card flipped!")
+
+    //앞면->뒷면 (f->t)
     if (isFlipped) {
       setShowQR(true);
       // 애니메이션이 조금 진행된 후 QR 코드를 보여줌
@@ -269,12 +292,8 @@ const handleIgClick = () => {
         setShowQR(false);
       }, 150); 
     }
-    
-    // 카드의 뒤집힌 상태를 토글
-    setIsFlipped(!isFlipped);
-    console.log("card flipped!")
 
-    // 카드가 뒤집히기 시작할 때 (앞면에서 뒷면으로 가는 경우)
+    //뒷면->앞면 (t->f)
     if (!isFlipped) {
       setShowQR(false);
       // 애니메이션이 조금 진행된 후 QR 코드를 보여줌
@@ -367,12 +386,11 @@ const handleIgClick = () => {
                     <div><ProgressBar progressDuration={5000} totalBlocks={16}/></div>
                   </div>
                 </div>}
-                {/* {userEmail}에 해당하는 카드 출력 */}
                 {cards.length > 0 ? (
                   <>
                     <div className={styles.ownerText}><span className={styles.ownerTextStrong}>{cards[0].name}</span> 님의 명함</div>
                     <div className={styles.card}>
-                        <div className={styles.cardFront} style={cardFrontStyle} ref={frontRef}>
+                        <div className={`${styles.cardFront} cardFront`} style={cardFrontStyle} ref={frontRef}>
                           <div className={styles.infoContainer}>
                             <div className={styles.date} style={infoItemStyle}>
                               {cards[0].updatedAt ? new Date(cards[0].updatedAt).toLocaleDateString() : 'N/A'}
@@ -396,7 +414,7 @@ const handleIgClick = () => {
                             {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImage} style={infoItemStyle} />}
                           </div>
                         </div>
-                        <div className={styles.cardBack} style={cardBackStyle} ref={backRef}>
+                        <div className={`${styles.cardBack} cardBack`} style={cardBackStyle} ref={backRef}>
                           {showQR && (
                            <>
                               <div className={styles.moto} style={infoItemStyle}>{cards[0].moto || 'N/A'}</div>
@@ -431,4 +449,5 @@ const handleIgClick = () => {
   );
 }
 
-export default CardInfo;
+export default cardInfo;
+
