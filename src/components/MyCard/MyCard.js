@@ -188,32 +188,32 @@ function MyCard() {
  
    const captureCardImage = async (element, filename) => {
      try {
-      const canvas = await html2canvas(element, { scale: 2, removeContainer: true, useCORS: true, backgroundColor: null });
-       const dataUrl = canvas.toDataURL();
-       const rotatedImage = new Image();
-       rotatedImage.onload = function() {
-         const rotatedCanvas = document.createElement('canvas');
-         rotatedCanvas.width = rotatedImage.height;
-         rotatedCanvas.height = rotatedImage.width;
- 
-         const context = rotatedCanvas.getContext('2d');
-         context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
-         context.rotate(-90 * Math.PI / 180);
-         context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
- 
-         rotatedCanvas.toBlob(function(blob) {
-           if (blob) {
-             saveAs(blob, filename);
-           }
-         });
-       };
-       rotatedImage.src = dataUrl;
       // const canvas = await html2canvas(element, { scale: 2, removeContainer: true, useCORS: true, backgroundColor: null });
-      // canvas.toBlob((blob)=>{
-      //   if (blob) {
-      //     saveAs(blob, filename); // Blob을 직접 파일로 저장
-      //   }
-      // });
+      //  const dataUrl = canvas.toDataURL();
+      //  const rotatedImage = new Image();
+      //  rotatedImage.onload = function() {
+      //    const rotatedCanvas = document.createElement('canvas');
+      //    rotatedCanvas.width = rotatedImage.height;
+      //    rotatedCanvas.height = rotatedImage.width;
+ 
+      //    const context = rotatedCanvas.getContext('2d');
+      //    context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+      //    context.rotate(-90 * Math.PI / 180);
+      //    context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
+ 
+      //    rotatedCanvas.toBlob(function(blob) {
+      //      if (blob) {
+      //        saveAs(blob, filename);
+      //      }
+      //    });
+      //  };
+      //  rotatedImage.src = dataUrl;
+      const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: null });
+      canvas.toBlob((blob)=>{
+        if (blob) {
+          saveAs(blob, filename); // Blob을 직접 파일로 저장
+        }
+      });
      } catch (error) {
       toast.error('이미지 저장 중 오류가 발생했습니다.');
       alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
