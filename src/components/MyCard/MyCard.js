@@ -176,85 +176,96 @@ function MyCard() {
       console.error('Error fetching images:', error);
   }};
 
-  //이미지로 저장
-  const frontRef = useRef(null); 
-  const backRef = useRef(null); //카드 부분 참조
-
-  const saveCardAsImage = async () => {
-    setIsSaving(true); // 사진 저장 상태 시작
-    setShowQR(true); // QR 코드 보이기 시작_qr이 안찍히는 상황 방지
-  };
-
-  const captureCardImage = async (element, filename) => {
-    try {
-      const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor:null });
-      const dataUrl = canvas.toDataURL();
-      const rotatedImage = new Image();
-      rotatedImage.onload = function() {
-        const rotatedCanvas = document.createElement('canvas');
-        rotatedCanvas.width = rotatedImage.height;
-        rotatedCanvas.height = rotatedImage.width;
-
-        const context = rotatedCanvas.getContext('2d');
-        context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
-        context.rotate(-90 * Math.PI / 180);
-        context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
-
-        rotatedCanvas.toBlob(function(blob) {
-          if (blob) {
-            saveAs(blob, filename);
-          }
-        });
-      };
-      rotatedImage.src = dataUrl;
-    } catch (error) {
-      console.error("Error saving card image:", error);
-      alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
-    }
-  };
-
-  const waitForRender = async () => {
-          await new Promise((resolve) => setTimeout(resolve, 800));
-  };
-
-  useEffect(() => {
-    // console.log("isSaving",isSaving);
-    const captureProcess = async () => {
-      if (!isSaving) return; // isSaving 상태가 아니면 실행하지 않음
-
-      try{
-      console.log("사진 저장 실행");
-      setIsFlipped(false); //앞면으로 돌리고
-      await waitForRender();
-      if (frontRef.current) {
-        console.log("앞면 저장 시작");
-        // alert("앞면 저장 시작"); 
-        await captureCardImage(frontRef.current, "card-front.png");
-        console.log("앞면 저장 완료");
-        // alert("앞면 저장 완료");
-      }
-
-      setIsFlipped(true); //뒷면으로 돌리고 
-      await waitForRender();
-      if (backRef.current) {
-        console.log("뒷면 저장 시작");
-        // alert("뒷면 저장 시작"); 
-        await captureCardImage(backRef.current, "card-back.png");
-        console.log("뒷면 저장 완료");
-        // alert("뒷면 저장 완료");
-      }
-    } catch (error) {
-      console.error("Error during capture process:", error);
-      alert("An error occurred: " + error.message + ". Please try again.");
-    } finally {
-      setIsFlipped(false);
-      await waitForRender();
-      setIsSaving(false); 
-    }
-  };
-
-    captureProcess().catch(console.error);
-}, [isSaving]); 
+   //이미지로 저장
+   const frontRef = useRef(null); 
+   const backRef = useRef(null); //카드 부분 참조
+ 
+   const saveCardAsImage = async () => {
+     setIsSaving(true); // 사진 저장 상태 시작
+     setShowQR(true); // QR 코드 보이기 시작_qr이 안찍히는 상황 방지
+   };
+ 
+   const captureCardImage = async (element, filename) => {
+     try {
+       const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor:null });
+       const dataUrl = canvas.toDataURL();
+       const rotatedImage = new Image();
+       rotatedImage.onload = function() {
+         const rotatedCanvas = document.createElement('canvas');
+         rotatedCanvas.width = rotatedImage.height;
+         rotatedCanvas.height = rotatedImage.width;
+ 
+         const context = rotatedCanvas.getContext('2d');
+         context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+         context.rotate(-90 * Math.PI / 180);
+         context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
+ 
+         rotatedCanvas.toBlob(function(blob) {
+           if (blob) {
+             saveAs(blob, filename);
+           }
+         });
+       };
+       rotatedImage.src = dataUrl;
+     } catch (error) {
+       console.error("Error saving card image:", error);
+       alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
+     }
+   };
+ 
+   // const waitForRender = async () => {
+   //         await new Promise((resolve) => setTimeout(resolve, 800));
+   // };
+   const waitForElement = async (selector, timeout = 1000) => {
+     const startTime = new Date().getTime();
+     return new Promise((resolve, reject) => {
+       const timer = setInterval(() => {
+         if (document.querySelector(selector)) {
+           clearInterval(timer);
+           resolve(true);
+         } else if (new Date().getTime() - startTime > timeout) {
+           clearInterval(timer);
+           reject(new Error("Element not found"));
+         }
+       }, 100);
+     });
+   };
+ 
+   useEffect(() => {
+     // console.log("isSaving",isSaving);
+     const captureProcess = async () => {
+       if (!isSaving) return; // isSaving 상태가 아니면 실행하지 않음
+ 
+       console.log("사진 저장 실행");
+       setIsFlipped(false); //앞면으로 돌리고
+       // await waitForRender();
+       await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
+       if (frontRef.current) {
+         console.log("앞면 저장 시작");
+        //  alert("앞면 저장 시작");
+         await captureCardImage(frontRef.current, "card-front.png");
+         console.log("앞면 저장 완료");
+        //  alert("앞면 저장 완료");
+       }
+ 
+       setIsFlipped(true); //뒷면으로 돌리고 
+       // await waitForRender();
+       await waitForElement('.cardBack');
+       if (backRef.current) {
+         console.log("뒷면 저장 시작");
+        //  alert("뒷면 저장 시작");
+         await captureCardImage(backRef.current, "card-back.png");
+         console.log("뒷면 저장 완료");
+        //  alert("뒷면 저장 완료");
+       }
+ 
+       setIsFlipped(false);
+       // await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
+       setIsSaving(false); 
+     }
+ 
+     captureProcess().catch(console.error);
+ }, [isSaving]); 
 
 const handleEmailClick = () => {
   console.log("이메일 클릭");
@@ -418,7 +429,7 @@ const handleIgClick = () => {
                 {isSaving&&<div className={styles.popUp}>
                   <div className={styles.popUpContent}>
                     <div>사진 저장 중...</div>
-                    <div><ProgressBar progressDuration={5000} totalBlocks={16}/></div>
+                    <div><ProgressBar progressDuration={6000} totalBlocks={16}/></div>
                   </div>
                 </div>}
                 {cards.length > 0 ? (
