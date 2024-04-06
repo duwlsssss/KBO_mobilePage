@@ -228,20 +228,20 @@ function MyCard() {
       await waitForRender();
       if (frontRef.current) {
         console.log("앞면 저장 시작");
-        alert("앞면 저장 시작"); 
+        // alert("앞면 저장 시작"); 
         await captureCardImage(frontRef.current, "card-front.png");
         console.log("앞면 저장 완료");
-        alert("앞면 저장 완료");
+        // alert("앞면 저장 완료");
       }
 
       setIsFlipped(true); //뒷면으로 돌리고 
       await waitForRender();
       if (backRef.current) {
         console.log("뒷면 저장 시작");
-        alert("뒷면 저장 시작"); 
+        // alert("뒷면 저장 시작"); 
         await captureCardImage(backRef.current, "card-back.png");
         console.log("뒷면 저장 완료");
-        alert("뒷면 저장 완료");
+        // alert("뒷면 저장 완료");
       }
     } catch (error) {
       console.error("Error during capture process:", error);
