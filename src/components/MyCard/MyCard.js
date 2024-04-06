@@ -230,11 +230,14 @@ function MyCard() {
          if (document.querySelector(selector)) {
            clearInterval(timer);
            resolve(true);
+           console.log(`${selector} 로드됨`);
+           alert(`${selector} 로드됨`);
          } else if (new Date().getTime() - startTime > timeout) {
            clearInterval(timer);
            reject(new Error("Element not found"));
          }
        }, 100);
+      
      });
    };
  
