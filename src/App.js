@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import queryString from 'query-string';
 import MyCard from './components/MyCard/MyCard';
 import CardInfo from './components/CardInfo/CardInfo'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function useQuery() {
   return queryString.parse(useLocation().search);
@@ -40,10 +42,13 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<RouteHandler component={MyCard} />} />
-        <Route path="/card-info" element={<RouteHandler component={CardInfo} />} /> 
-      </Routes>
+      <>
+        <ToastContainer />
+        <Routes>
+          <Route path="/" element={<RouteHandler component={MyCard} />} />
+          <Route path="/card-info" element={<RouteHandler component={CardInfo} />} /> 
+        </Routes>
+      </>
     </Router>
   );
 }

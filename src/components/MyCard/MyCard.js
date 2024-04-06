@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import QRCode from 'qrcode.react';
 import api from '../../api/axios'
 import html2canvas from 'html2canvas';
+import { toast } from 'react-toastify';
 import saveAs from "file-saver";
 import styles from './MyCard.module.css';
 import { useLocation } from 'react-router-dom';
@@ -33,7 +34,7 @@ function MyCard() {
           fetchImages(userEmail) // 이미지 데이터 로드 
         ]);
   
-        // 모든 데이터 로드가 완료되고 2초 더 기다림 로딩 상태를 종료
+        // 모든 데이터 로드가 완료되고 2.5초 더 기다림 로딩 상태를 종료
         await new Promise((resolve) => setTimeout(resolve, 2500));
         setIsLoading(false);
       } catch (error) {
@@ -208,8 +209,8 @@ function MyCard() {
        };
        rotatedImage.src = dataUrl;
      } catch (error) {
-       console.error("Error saving card image:", error);
-       alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
+      toast.error('이미지 저장 중 오류가 발생했습니다.');
+      alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
      }
    };
  
@@ -261,6 +262,7 @@ function MyCard() {
  
        setIsFlipped(false);
        await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
+       await new Promise((resolve) => setTimeout(resolve, 3000));
        setIsSaving(false); 
      }
  
