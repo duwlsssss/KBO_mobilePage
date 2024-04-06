@@ -217,7 +217,7 @@ function MyCard() {
   // const waitForRender = async () => {
   //         await new Promise((resolve) => setTimeout(resolve, 800));
   // };
-  const waitForElement = async (selector, timeout = 3000) => {
+  const waitForElement = async (selector, timeout = 10000) => {
     const startTime = new Date().getTime();
     return new Promise((resolve, reject) => {
       const timer = setInterval(() => {
@@ -234,32 +234,31 @@ function MyCard() {
 
   useEffect(() => {
     // console.log("isSaving",isSaving);
-    if (isSaving){
-      console.log("사진 저장 실행");
-      const timer = setTimeout(async () => {
-        setIsFlipped(false); //앞면으로 돌리고
-        // await waitForRender();
-        await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
-        if (frontRef.current) {
-          await captureCardImage(frontRef.current, "card-front.png");
-        }
-  
-        setIsFlipped(true); //뒷면으로 돌리고 
-        // await waitForRender();
-        await waitForElement('.cardBack'); // 뒷면이 화면에 나타날 때까지 기다림
-        if (backRef.current&&showQR) {
-          await captureCardImage(backRef.current, "card-back.png");
-        }
+    const captureProcess = async () => {
+      if (!isSaving) return; // isSaving 상태가 아니면 실행하지 않음
 
-        // Clean up and set states back to initial values
-        setIsFlipped(false);
-        await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
-        alert("사진 저장 성공__")
-        setIsSaving(false); 
-    },100); //0.1초 후 앞,뒤 확인 시작
-    // 클린업 함수에서 타이머를 정리
-    return () => clearTimeout(timer);
-  }
+      console.log("사진 저장 실행");
+      setIsFlipped(false); //앞면으로 돌리고
+      // await waitForRender();
+      await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
+      if (frontRef.current) {
+        await captureCardImage(frontRef.current, "card-front.png");
+      }
+
+      setIsFlipped(true); //뒷면으로 돌리고 
+      // await waitForRender();
+      await waitForElement('.cardBack'); // 뒷면이 화면에 나타날 때까지 기다림
+      if (backRef.current&&showQR) {
+        await captureCardImage(backRef.current, "card-back.png");
+      }
+
+      setIsFlipped(false);
+      await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
+      setIsSaving(false); 
+      alert("사진 저장 끝남")
+    }
+
+    captureProcess().catch(console.error);
 }, [isSaving]); 
 
 const handleEmailClick = () => {
@@ -424,7 +423,7 @@ const handleIgClick = () => {
                 {isSaving&&<div className={styles.popUp}>
                   <div className={styles.popUpContent}>
                     <div>사진 저장 중...</div>
-                    <div><ProgressBar progressDuration={3000} totalBlocks={16}/></div>
+                    <div><ProgressBar progressDuration={10000} totalBlocks={16}/></div>
                   </div>
                 </div>}
                 {/* {userEmail}에 해당하는 카드 출력 */}
