@@ -251,7 +251,7 @@ function MyCard() {
       setIsFlipped(true); //뒷면으로 돌리고 
       // await waitForRender();
       await waitForElement('.cardBack');
-      if (backRef.current && showQR) {
+      if (backRef.current) {
         console.log("뒷면 저장 시작");
         alert("뒷면 저장 시작");
         await captureCardImage(backRef.current, "card-back.png");
@@ -265,7 +265,7 @@ function MyCard() {
     }
 
     captureProcess().catch(console.error);
-}, [isSaving,showQR]); 
+}, [isSaving]); 
 
 const handleEmailClick = () => {
   console.log("이메일 클릭");
