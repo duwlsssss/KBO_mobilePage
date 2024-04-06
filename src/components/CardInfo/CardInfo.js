@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import QRCode from 'qrcode.react';
 import api from '../../api/axios'
 import html2canvas from 'html2canvas';
+import { toast } from 'react-toastify';
 import saveAs from "file-saver";
 import styles from './CardInfo.module.css';
 import { useLocation } from 'react-router-dom';
@@ -33,7 +34,7 @@ function CardInfo() {
           fetchImages(userEmail) // 이미지 데이터 로드 
         ]);
   
-        // 모든 데이터 로드가 완료되고 2초 더 기다림 로딩 상태를 종료
+        // 모든 데이터 로드가 완료되고 2.5초 더 기다림 로딩 상태를 종료
         await new Promise((resolve) => setTimeout(resolve, 2500));
         setIsLoading(false);
       } catch (error) {
@@ -176,85 +177,96 @@ function CardInfo() {
       console.error('Error fetching images:', error);
   }};
 
-  //이미지로 저장
-  const frontRef = useRef(null); 
-  const backRef = useRef(null); //카드 부분 참조
-
-  const saveCardAsImage = async () => {
+   //이미지로 저장
+   const frontRef = useRef(null); 
+   const backRef = useRef(null); //카드 부분 참조
+ 
+   const captureCardImage = async (element, filename) => {
+     try {
+      const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: null });
+      const dataUrl = canvas.toDataURL();
+       const rotatedImage = new Image();
+       rotatedImage.onload = function() {
+         const rotatedCanvas = document.createElement('canvas');
+         rotatedCanvas.width = rotatedImage.height;
+         rotatedCanvas.height = rotatedImage.width;
+ 
+         const context = rotatedCanvas.getContext('2d');
+         context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+         context.rotate(-90 * Math.PI / 180);
+         context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
+ 
+         rotatedCanvas.toBlob(function(blob) {
+           if (blob) {
+             saveAs(blob, filename);
+           }
+         });
+       };
+       rotatedImage.src = dataUrl;
+     } catch (error) {
+      toast.error('이미지 저장 중 오류가 발생했습니다.');
+      alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
+     }
+   };
+ 
+   const waitForRender = async () => {
+           await new Promise((resolve) => setTimeout(resolve, 800));
+   };
+  //  const waitForElement = async (selector, timeout = 800) => {
+  //    const startTime = new Date().getTime();
+  //    return new Promise((resolve, reject) => {
+  //      const timer = setInterval(() => {
+  //        if (document.querySelector(selector)) {
+  //          clearInterval(timer);
+  //          resolve(true);
+  //          console.log(`${selector} 로드됨`);
+  //         //  alert(`${selector} 로드됨`);
+  //        } else if (new Date().getTime() - startTime > timeout) {
+  //          clearInterval(timer);
+  //          reject(new Error("Element not found"));
+  //        }
+  //      }, 100);
+      
+  //    });
+  //  };
+ 
+   const saveCardFAsImage = async () => {
+    setIsSaving(true); // 사진 저장 상태 시작
+ 
+    console.log("앞면 저장 실행");
+    setIsFlipped(false); //앞면으로 돌리고
+    await waitForRender();
+    // await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
+    if (frontRef.current) {
+      console.log("앞면 저장 시작");
+    //  alert("앞면 저장 시작");
+    await captureCardImage(frontRef.current, "card-front.png");
+    console.log("앞면 저장 완료");
+    //  alert("앞면 저장 완료");
+    }
+    setIsSaving(false); 
+  };
+  const saveCardBAsImage = async () => {
     setIsSaving(true); // 사진 저장 상태 시작
     setShowQR(true); // QR 코드 보이기 시작_qr이 안찍히는 상황 방지
-  };
 
-  const captureCardImage = async (element, filename) => {
-    try {
-      const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor:null });
-      const dataUrl = canvas.toDataURL();
-      const rotatedImage = new Image();
-      rotatedImage.onload = function() {
-        const rotatedCanvas = document.createElement('canvas');
-        rotatedCanvas.width = rotatedImage.height;
-        rotatedCanvas.height = rotatedImage.width;
-
-        const context = rotatedCanvas.getContext('2d');
-        context.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
-        context.rotate(-90 * Math.PI / 180);
-        context.drawImage(rotatedImage, -rotatedImage.width / 2, -rotatedImage.height / 2);
-
-        rotatedCanvas.toBlob(function(blob) {
-          if (blob) {
-            saveAs(blob, filename);
-          }
-        });
-      };
-      rotatedImage.src = dataUrl;
-    } catch (error) {
-      console.error("Error saving card image:", error);
-      alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
+    setIsFlipped(true); //뒷면으로 돌리고 
+    await waitForRender();
+    // await waitForElement('.cardBack');
+    if (backRef.current) {
+      console.log("뒷면 저장 시작");
+    //  alert("뒷면 저장 시작");
+    await captureCardImage(backRef.current, "card-back.png");
+    console.log("뒷면 저장 완료");
+    //  alert("뒷면 저장 완료");
     }
+
+    setIsFlipped(false);
+    // await waitForElement('.cardFront');
+    // await new Promise((resolve) => setTimeout(resolve, 800)); // 다시 앞면이 화면에 나타날 때까지 기다림
+    await waitForRender();
+    setIsSaving(false); 
   };
-
-  const waitForRender = async () => {
-          await new Promise((resolve) => setTimeout(resolve, 800));
-  };
-
-  useEffect(() => {
-    // console.log("isSaving",isSaving);
-    const captureProcess = async () => {
-      if (!isSaving) return; // isSaving 상태가 아니면 실행하지 않음
-
-      try{
-      console.log("사진 저장 실행");
-      setIsFlipped(false); //앞면으로 돌리고
-      await waitForRender();
-      if (frontRef.current) {
-        console.log("앞면 저장 시작");
-        // alert("앞면 저장 시작"); 
-        await captureCardImage(frontRef.current, "card-front.png");
-        console.log("앞면 저장 완료");
-        // alert("앞면 저장 완료");
-      }
-
-      setIsFlipped(true); //뒷면으로 돌리고 
-      await waitForRender();
-      if (backRef.current) {
-        console.log("뒷면 저장 시작");
-        // alert("뒷면 저장 시작"); 
-        await captureCardImage(backRef.current, "card-back.png");
-        console.log("뒷면 저장 완료");
-        // alert("뒷면 저장 완료");
-      }
-    } catch (error) {
-      console.error("Error during capture process:", error);
-      alert("An error occurred: " + error.message + ". Please try again.");
-    } finally {
-      setIsFlipped(false);
-      await waitForRender();
-      setIsSaving(false); 
-    }
-  };
-
-    captureProcess().catch(console.error);
-}, [isSaving]); 
 
 const handleEmailClick = () => {
   console.log("이메일 클릭");
@@ -272,6 +284,7 @@ const handleIgClick = () => {
     window.open(instagramUrl, '_blank');
   }
 };
+
 
   useEffect(()=>{
     console.log("isFlipped 변함", isFlipped);
@@ -348,7 +361,6 @@ const handleIgClick = () => {
   if (cards.length > 0) {
     const card = cards[0];
     const backgroundUrlB = `/images/back${card.backgroundOption}.png`; // 배경 이미지 경로 
-    console.log(`card.patternOption,${card.patternOption}`);
     patternUrl = card.patternOption ? `/images/${card.patternOption}.png` : undefined;
     const backgroundUrlF = `/images/front${card.backgroundOption}.png`; // 배경 이미지 경로 
     cardBackStyle.backgroundImage = `url('${backgroundUrlB}')`;
@@ -383,7 +395,7 @@ const handleIgClick = () => {
                 {isSaving&&<div className={styles.popUp}>
                   <div className={styles.popUpContent}>
                     <div>사진 저장 중...</div>
-                    <div><ProgressBar progressDuration={5000} totalBlocks={16}/></div>
+                    <div><ProgressBar progressDuration={1000} totalBlocks={16}/></div>
                   </div>
                 </div>}
                 {cards.length > 0 ? (
@@ -439,9 +451,10 @@ const handleIgClick = () => {
                 ) : (
                   <div>{userEmail}에 해당하는 카드 없음</div>
                 )}
-                <div className="field-row" style={{ justifyContent: "center"}}>
-                  <button type="button" onClick={handleCardClick}>카드뒤집기</button>
-                  <button type="button" onClick={saveCardAsImage}>저장하기(이미지)</button>
+                <div className={styles.btnContainer}>
+                  <button type="button" className={styles.btn} onClick={handleCardClick}>카드뒤집기</button>
+                  <button type="button" className={styles.btn} onClick={saveCardFAsImage}>앞면 저장</button>
+                  <button type="button" className={styles.btn} onClick={saveCardBAsImage}>뒷면 저장</button>
                 </div>
               </div>
           </div>
@@ -450,4 +463,3 @@ const handleIgClick = () => {
 }
 
 export default CardInfo;
-

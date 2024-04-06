@@ -212,6 +212,13 @@
   align-items: center;
 }
 
+.btnContainer{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap:0.8rem;
+}
+
 @media (max-width: 375px) { /* iPhone mini width */
   .card{
       /* background-color: aqua; */
@@ -239,5 +246,8 @@
       margin-top: 0.05rem;
       margin-bottom:1rem;
       margin-left:3.5rem;
+  }
+  .btnContainer{
+    gap:0.4rem;
   }
 }
