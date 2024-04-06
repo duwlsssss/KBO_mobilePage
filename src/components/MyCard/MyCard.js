@@ -242,24 +242,28 @@ function MyCard() {
       // await waitForRender();
       await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
       if (frontRef.current) {
+        console.log("앞면 저장 시작");
         await captureCardImage(frontRef.current, "card-front.png");
+        console.log("앞면 저장 완료");
       }
 
       setIsFlipped(true); //뒷면으로 돌리고 
       // await waitForRender();
-      await waitForElement('.cardBack'); // 뒷면이 화면에 나타날 때까지 기다림
-      if (backRef.current&&showQR) {
+      await waitForElement('.cardBack');
+      if (backRef.current && showQR) {
+        console.log("뒷면 저장 시작");
         await captureCardImage(backRef.current, "card-back.png");
+        console.log("뒷면 저장 완료");
       }
 
       setIsFlipped(false);
-      await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
+      // await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
       setIsSaving(false); 
       alert("사진 저장 끝남")
     }
 
     captureProcess().catch(console.error);
-}, [isSaving]); 
+}, [isSaving,showQR]); 
 
 const handleEmailClick = () => {
   console.log("이메일 클릭");
