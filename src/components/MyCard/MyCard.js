@@ -415,13 +415,12 @@ const handleIgClick = () => {
               </div>
             </div>
             <div className={styles.contentArea}>
-                {/* {isSaving&&<div className={styles.popUp}>
+                {isSaving&&<div className={styles.popUp}>
                   <div className={styles.popUpContent}>
                     <div>사진 저장 중...</div>
-                    <div><ProgressBar progressDuration={10000} totalBlocks={16}/></div>
+                    <div><ProgressBar progressDuration={5000} totalBlocks={16}/></div>
                   </div>
-                </div>} */}
-                {/* {userEmail}에 해당하는 카드 출력 */}
+                </div>}
                 {cards.length > 0 ? (
                   <>
                     <div className={styles.ownerText}><span className={styles.ownerTextStrong}>{cards[0].name}</span> 님의 명함</div>
