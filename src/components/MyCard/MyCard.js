@@ -182,7 +182,7 @@ function MyCard() {
 
   const saveCardAsImage = async () => {
     setIsSaving(true); // 사진 저장 상태 시작
-    setShowQR(true); // QR 코드 보이기 시작
+    setShowQR(true); // QR 코드 보이기 시작_qr이 안찍히는 상황 방지
   };
 
   const captureCardImage = async (element, filename) => {
@@ -207,6 +207,7 @@ function MyCard() {
         });
       };
       rotatedImage.src = dataUrl;
+      alert("사진 저장 성공")
     } catch (error) {
       console.error("Error saving card image:", error);
       alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
@@ -232,17 +233,18 @@ function MyCard() {
   };
 
   useEffect(() => {
-    console.log("사진 저장 실행");
-    if (isSaving) {
+    // console.log("isSaving",isSaving);
+    if (isSaving){
+      console.log("사진 저장 실행");
       const timer = setTimeout(async () => {
-        setIsFlipped(false);
+        setIsFlipped(false); //앞면으로 돌리고
         // await waitForRender();
         await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
         if (frontRef.current) {
           await captureCardImage(frontRef.current, "card-front.png");
         }
   
-        setIsFlipped(true);
+        setIsFlipped(true); //뒷면으로 돌리고 
         // await waitForRender();
         await waitForElement('.cardBack'); // 뒷면이 화면에 나타날 때까지 기다림
         if (backRef.current&&showQR) {
@@ -252,8 +254,8 @@ function MyCard() {
         // Clean up and set states back to initial values
         setIsFlipped(false);
         await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
+        alert("사진 저장 성공__")
         setIsSaving(false); 
-        alert("사진 저장 성공")
     },100); //0.1초 후 앞,뒤 확인 시작
     // 클린업 함수에서 타이머를 정리
     return () => clearTimeout(timer);
@@ -312,9 +314,17 @@ const handleIgClick = () => {
   };
 
 
+  useEffect(()=>{
+    console.log("isFlipped 변함", isFlipped);
+  },[isFlipped]);
+
   //카드 뒤집기 애니메이션 
   const handleCardClick = () => {
-    //앞면이면
+    // 카드의 뒤집힌 상태를 토글
+    setIsFlipped(!isFlipped);
+    console.log("card flipped!")
+
+    //앞면->뒷면 (f->t)
     if (isFlipped) {
       setShowQR(true);
       // 애니메이션이 조금 진행된 후 QR 코드를 보여줌
@@ -323,12 +333,8 @@ const handleIgClick = () => {
         setShowQR(false);
       }, 150); 
     }
-    
-    // 카드의 뒤집힌 상태를 토글
-    setIsFlipped(!isFlipped);
-    console.log("card flipped!")
 
-    // 카드가 뒤집히기 시작할 때 (앞면에서 뒷면으로 가는 경우)
+    //뒷면->앞면 (t->f)
     if (!isFlipped) {
       setShowQR(false);
       // 애니메이션이 조금 진행된 후 QR 코드를 보여줌
