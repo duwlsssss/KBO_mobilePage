@@ -3,13 +3,13 @@ import QRCode from 'qrcode.react';
 import api from '../../api/axios'
 import html2canvas from 'html2canvas';
 import saveAs from "file-saver";
-import styles from './cardInfo.module.css';
+import styles from './CardInfo.module.css';
 import { useLocation } from 'react-router-dom';
 import  useUserEmailStore from '../../store/userEmail'
 import ProgressBar from '../ProgressBar/ProgressBar';
 import "xp.css/dist/98.css"
 
-function cardInfo() {
+function CardInfo() {
 
   const {userEmail,setUserEmail} = useUserEmailStore();
   const [cards, setCards] = useState([]); //카드 저장용
@@ -449,5 +449,5 @@ const handleIgClick = () => {
   );
 }
 
-export default cardInfo;
+export default CardInfo;
 

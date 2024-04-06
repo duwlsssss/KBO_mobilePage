@@ -212,7 +212,7 @@
   align-items: center;
 }
 
-@media (max-width: 375px) { /* iPhone SE width */
+@media (max-width: 375px) { /* iPhone mini width */
   .card{
       /* background-color: aqua; */
       margin-top: 0.5rem;
@@ -230,11 +230,14 @@
   }
 }
 
-@media (max-width: 320px) { /* z-flip width */
+@media (max-width: 320px) { /* z-flip, iphone se width */
+  .container{
+    width: 300px;
+  }
   .card{
       /* background-color: aqua; */
-      margin-top: 0.1rem;
-      margin-bottom:1.5rem;
+      margin-top: 0.05rem;
+      margin-bottom:1rem;
       margin-left:3.5rem;
   }
 }
