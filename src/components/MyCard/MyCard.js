@@ -216,7 +216,7 @@ function MyCard() {
    // const waitForRender = async () => {
    //         await new Promise((resolve) => setTimeout(resolve, 800));
    // };
-   const waitForElement = async (selector, timeout = 1000) => {
+   const waitForElement = async (selector, timeout = 800) => {
      const startTime = new Date().getTime();
      return new Promise((resolve, reject) => {
        const timer = setInterval(() => {
@@ -260,7 +260,7 @@ function MyCard() {
        }
  
        setIsFlipped(false);
-       // await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
+       await waitForElement('.cardFront'); // 다시 앞면이 화면에 나타날 때까지 기다림
        setIsSaving(false); 
      }
  
