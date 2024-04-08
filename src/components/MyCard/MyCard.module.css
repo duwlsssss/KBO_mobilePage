@@ -71,12 +71,29 @@
 }
 
 
-.cardImage{
+/* .cardImage{
   border-radius: 0.5em;
   width: 11rem;
   height: 13rem;
   margin-top:11.5rem;
   margin-left: -4.4rem;
+  object-fit: cover;
+} */
+
+.frame{
+  width: 11rem;
+  height: 14rem;
+  margin-top:11.5rem;
+  margin-left: -3.4rem;
+  z-index: 100;
+}
+
+.cardImage{
+  border-radius: 60%;
+  width: 10rem;
+  height: 13rem;
+  margin-top:11.5rem;
+  margin-left: -10rem;
   object-fit: cover;
 }
 
@@ -125,7 +142,6 @@
   left:10rem;
 }
 .emailValue {
-  cursor:pointer;
   top: 17.8rem; 
   right: -3.5rem;
 }
@@ -156,7 +172,6 @@
   left:10rem; 
 }
 .IGValue {
-  cursor:pointer;
   top: 22.3rem; 
   right: -3.5rem; 
 }

@@ -441,6 +441,7 @@ const handleIgClick = () => {
                             <div className={styles.date} style={infoItemStyle}>
                               {cards[0].updatedAt ? new Date(cards[0].updatedAt).toLocaleDateString() : 'N/A'}
                             </div>
+                            <img className={styles.frame} src='/images/frame.png'></img>
                             <div className={styles.name} style={infoItemStyle}>이름</div>
                             <div className={styles.nameValue} style={infoItemStyle}>{cards[0].name || 'N/A'}</div>
                             <div className={styles.engNameValue} style={infoItemStyle}>{cards[0].engName || 'N/A'}</div>
@@ -469,12 +470,12 @@ const handleIgClick = () => {
                               </div>
                            </>
                           )}
-                           <div style={{
+                          <div style={{
                             position: 'absolute',
                             top: 33,
                             left: 25,
-                            width: '85%',
-                            height: '85%',
+                            width: '88%',
+                            height: '88%',
                             backgroundImage: `url('${patternUrl}')`, // 패턴 이미지
                             backgroundSize: 'cover',
                             pointerEvents: 'none', // 오버레이가 사용자 인터랙션 방해 방지

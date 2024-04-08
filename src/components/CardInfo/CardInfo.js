@@ -439,8 +439,8 @@ const handleIgClick = () => {
                             position: 'absolute',
                             top: 33,
                             left: 25,
-                            width: '85%',
-                            height: '85%',
+                            width: '88%',
+                            height: '88%',
                             backgroundImage: `url('${patternUrl}')`, // 패턴 이미지
                             backgroundSize: 'cover',
                             pointerEvents: 'none', // 오버레이가 사용자 인터랙션 방해 방지
