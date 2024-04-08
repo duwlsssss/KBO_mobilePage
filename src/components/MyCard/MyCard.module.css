@@ -9,7 +9,7 @@
 }
 
 .addressText {
-   -webkit-font-smoothing: none;
+  -webkit-font-smoothing: none;
   font-size: 0.8rem;
   color: #ffffff;
 }
@@ -21,12 +21,17 @@
 
 .contentArea{
   background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .ownerText{
   -webkit-font-smoothing: none;
   font-size: 1rem;
   text-align: center; 
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 .ownerTextStrong{
   font-size: 1.2rem;
@@ -37,7 +42,7 @@
   /* background-color: aqua; */
   margin: 0 1rem;
   width: 20rem;
-  height: 35rem;
+  height: 30rem;
   perspective: 300rem;
 }
 
@@ -248,6 +253,8 @@
   align-items: center;
   justify-content: center;
   gap:0.4rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 375px) { /* iPhone mini width */
