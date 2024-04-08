@@ -73,7 +73,7 @@ function MyCard() {
       return "iOS";
     }
     // android 
-    if (/android/.test(userAgent)) {
+    if (/Android/.test(userAgent)) {
        return "Android";
     }
     // Samsung Internet
@@ -107,11 +107,27 @@ function MyCard() {
       const userAgent = navigator.userAgent.toLowerCase();
       const target_url = window.location.href;
 
+      // URL에서 쿼리 파라미터를 검사하는 함수
+      const searchParams = new URLSearchParams(window.location.search);
+      const fromApp = searchParams.get('from');
+
+      if (browserType === "Samsung Internet") {
+        if (window.confirm('\n인앱브라우저 호환문제로 인해 Chrome으로 접속해야합니다.\n\nChrome에서 실행하시면 정상적으로 이용하실 수 있습니다.')) {
+          // 사용자가 "확인"을 누른 경우에만 리디렉션 코드를 실행
+          location.href = 'intent://'+target_url.replace(/https?:\/\//i,'')+'#Intent;scheme=http;package=com.android.chrome;end';
+        }
+      }
       // 카카오톡 인앱 브라우저를 감지하고 리디렉션 처리
-      if (userAgent.match(/kakaotalk/i)) {
+      if (fromApp === 'kakaotalk') {
+        // 삼성 인터넷 브라우저 감지
+        if (browserType === 'Samsung Internet') {
+          if (window.confirm('\n인앱브라우저 호환문제로 인해 Chrome으로 접속해야합니다.\n\nChrome에서 실행하시면 정상적으로 이용하실 수 있습니다.')) {
+            window.location.href = 'intent://' + window.location.href.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
+          }
+        }
+      } else if (userAgent.match(/kakaotalk/i)) {
         window.location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(target_url);
       }else if(userAgent.match(/line/i)){
-			
 			//라인 외부브라우저로 호출
 			if(target_url.indexOf('?') !== -1){
 				window.location.href = target_url+'&openExternalBrowser=1';
@@ -458,7 +474,7 @@ const handleIgClick = () => {
                             <div className={styles.MBTIValue} style={infoItemStyle}>{cards[0].MBTI || 'N/A'}</div>
                             <div className={styles.IG} style={infoItemStyle}>IG</div>
                             <div className={styles.IGValue} style={infoItemStyle} onClick={handleIgClick}>@{cards[0].ig || 'N/A'}</div>
-                            {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImageRectGrey} style={infoItemStyle} />}
+                            {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImageCircleCGrey} style={infoItemStyle} />}
                             {/* {cardImage && <img src={cardImage} alt="Profile" className={cards[0].cardFrame==="rect"?styles.cardImageCircle:styles.cardImageRect} style={infoItemStyle} />} */}
 
                           </div>
