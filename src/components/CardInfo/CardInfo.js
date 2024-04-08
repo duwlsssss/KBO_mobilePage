@@ -337,22 +337,22 @@ const handleIgClick = () => {
   if (cards.length > 0) {
     switch (cards[0].fontOption) {
       case 1:
-        infoItemStyle.fontFamily = "DOSSaemmul";
+        infoItemStyle.fontFamily = "HakgyoansimBombanghakR";
         break;
       case 2:
-        infoItemStyle.fontFamily = "WAGURITTF";
+        infoItemStyle.fontFamily = "Ownglyph_meetme-Rg";
         break;
       case 3:
-        infoItemStyle.fontFamily = "Ownglyph_meetme-Rg";
+        infoItemStyle.fontFamily = "SUITE-Regular";
         break;
       case 4:
         infoItemStyle.fontFamily = "SUITE-Regular";
         break;
       case 5:
-        infoItemStyle.fontFamily = "ChosunCentennial";
+        infoItemStyle.fontFamily = "Dovemayo_wild";
         break;
       default: //디폴트는 Arial
-        infoItemStyle.fontFamily = "sans-serif";
+        infoItemStyle.fontFamily = "HakgyoansimButpenB";
     }
   }
 

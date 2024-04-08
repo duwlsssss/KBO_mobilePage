@@ -371,22 +371,22 @@ const handleIgClick = () => {
   if (cards.length > 0) {
     switch (cards[0].fontOption) {
       case 1:
-        infoItemStyle.fontFamily = "DOSSaemmul";
+        infoItemStyle.fontFamily = "HakgyoansimBombanghakR";
         break;
       case 2:
-        infoItemStyle.fontFamily = "WAGURITTF";
+        infoItemStyle.fontFamily = "Ownglyph_meetme-Rg";
         break;
       case 3:
-        infoItemStyle.fontFamily = "Ownglyph_meetme-Rg";
+        infoItemStyle.fontFamily = "SUITE-Regular";
         break;
       case 4:
         infoItemStyle.fontFamily = "SUITE-Regular";
         break;
       case 5:
-        infoItemStyle.fontFamily = "ChosunCentennial";
+        infoItemStyle.fontFamily = "Dovemayo_wild";
         break;
       default: //디폴트는 Arial
-        infoItemStyle.fontFamily = "sans-serif";
+        infoItemStyle.fontFamily = "HakgyoansimButpenB";
     }
   }
 
@@ -441,7 +441,7 @@ const handleIgClick = () => {
                             <div className={styles.date} style={infoItemStyle}>
                               {cards[0].updatedAt ? new Date(cards[0].updatedAt).toLocaleDateString() : 'N/A'}
                             </div>
-                            <img className={styles.frame} src='/images/frame.png'></img>
+                            {/* <img className={styles.frame} src='/images/frame.png'></img> */}
                             <div className={styles.name} style={infoItemStyle}>이름</div>
                             <div className={styles.nameValue} style={infoItemStyle}>{cards[0].name || 'N/A'}</div>
                             <div className={styles.engNameValue} style={infoItemStyle}>{cards[0].engName || 'N/A'}</div>
@@ -458,7 +458,9 @@ const handleIgClick = () => {
                             <div className={styles.MBTIValue} style={infoItemStyle}>{cards[0].MBTI || 'N/A'}</div>
                             <div className={styles.IG} style={infoItemStyle}>IG</div>
                             <div className={styles.IGValue} style={infoItemStyle} onClick={handleIgClick}>@{cards[0].ig || 'N/A'}</div>
-                            {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImage} style={infoItemStyle} />}
+                            {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImageRectGrey} style={infoItemStyle} />}
+                            {/* {cardImage && <img src={cardImage} alt="Profile" className={cards[0].cardFrame==="rect"?styles.cardImageCircle:styles.cardImageRect} style={infoItemStyle} />} */}
+
                           </div>
                         </div>
                         <div className={`${styles.cardBack} cardBack`} style={cardBackStyle} ref={backRef}>
