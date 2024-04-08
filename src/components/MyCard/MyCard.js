@@ -88,7 +88,7 @@ function MyCard() {
   //인앱 브라우저로 접속시 
   useEffect(() => {
     const browserType = detectBrowser();
-    // alert(`실행 환경 ${browserType}`);
+    alert(`실행 환경 ${browserType}`);
 
     // 인앱 브라우저 리디렉션 로직
     const inappdenyExecVanillaJs = (callback) => {
