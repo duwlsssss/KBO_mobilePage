@@ -74,7 +74,7 @@ function MyCard() {
     }
 
     const browserType = detectBrowser();
-    alert(`실행 환경 ${browserType}`);
+    // alert(`실행 환경 ${browserType}`);
 
     // 인앱 브라우저 리디렉션 로직
     const inappdenyExecVanillaJs = (callback) => {
@@ -99,7 +99,7 @@ function MyCard() {
       const fromApp = searchParams.get('from');
 
       if (browserType === "Samsung Internet") {
-        if (window.confirm('\n인앱브라우저 호환문제로 인해 Chrome으로 접속해야합니다.\n\nChrome에서 실행하시면 정상적으로 이용하실 수 있습니다.')) {
+        if (window.confirm('\n인앱브라우저 호환문제로 인해 Chrome으로 접속해야합니다.\n\nChrome에서 실행하시면 정상적으로 이용하실 수 있습니다.\n')) {
           // 사용자가 "확인"을 누른 경우에만 리디렉션 코드를 실행
           location.href = 'intent://'+target_url.replace(/https?:\/\//i,'')+'#Intent;scheme=http;package=com.android.chrome;end';
         }
@@ -108,7 +108,7 @@ function MyCard() {
       if (fromApp === 'kakaotalk') {
         // 삼성 인터넷 브라우저 감지
         if (browserType === 'Samsung Internet') {
-          if (window.confirm('\n인앱브라우저 호환문제로 인해 Chrome으로 접속해야합니다.\n\nChrome에서 실행하시면 정상적으로 이용하실 수 있습니다.')) {
+          if (window.confirm('\n인앱브라우저 호환문제로 인해 Chrome으로 접속해야합니다.\n\nChrome에서 실행하시면 정상적으로 이용하실 수 있습니다.\n')) {
             window.location.href = 'intent://' + window.location.href.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
           }
         }
@@ -457,7 +457,7 @@ const handleIgClick = () => {
       <div className={styles.popUp}>
         <div className={styles.popUpContent}>
           <div>카드 로드 중...</div>
-          <ProgressBar progressDuration={2000} totalBlocks={16} /> {/* 여기서 넘기는 초가 더 적어야 progressBar가 먼저 사라지지 않음 */}
+          <ProgressBar progressDuration={4000} totalBlocks={16} /> {/* 여기서 넘기는 초가 더 적어야 progressBar가 먼저 사라지지 않음 */}
         </div>
       </div>
     );
