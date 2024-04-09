@@ -151,13 +151,13 @@ function MyCard() {
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
       return "iOS";
     }
-    // android 
-    if (/Android/.test(userAgent)) {
-       return "Android";
-    }
     // Samsung Internet
     if (/SamsungBrowser/.test(userAgent)) {
       return "Samsung Internet";
+    }
+    // android 
+    if (/Android/.test(userAgent)) {
+      return "Android";
     }
     
     // If none of the above, return a generic result
