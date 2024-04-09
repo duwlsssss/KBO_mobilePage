@@ -53,7 +53,7 @@ function MyCard() {
         ]);
   
         // 모든 데이터 로드가 완료되고 2.5초 더 기다림 로딩 상태를 종료
-        await new Promise((resolve) => setTimeout(resolve, 2500));
+        await new Promise((resolve) => setTimeout(resolve, 5000));
         setIsLoading(false);
       } catch (error) {
         console.error("Data fetching failed:", error);

@@ -229,7 +229,7 @@
   position: absolute;
   transform: rotate(90deg);
   transform-origin: center center;
-  margin: 25rem 2.8rem;
+  margin: 25.5rem 3.5rem;
   z-index: 100;
 }
 
@@ -291,5 +291,8 @@
   }
   .btnContainer{
     gap:0.5rem;
+  }
+  .QR{
+    margin: 25rem 3rem;
   }
 }
