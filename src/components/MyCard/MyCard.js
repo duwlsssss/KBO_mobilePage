@@ -14,10 +14,28 @@ function MyCard() {
 
   const {userEmail,setUserEmail} = useUserEmailStore();
   const [cards, setCards] = useState([]); //카드 저장용
+  const [currentCard, setCurrentCard] = useState(null); //가장 최근 카드 저장용
   const [cardImage, setCardImage] = useState(null);//이미지 저장
   const [isLoading, setIsLoading] = useState(true);//로딩 상태 
   const [isSaving, setIsSaving] = useState(false);//사진 저장 상태 추적
   const [isFlipped, setIsFlipped] = useState(false);
+  const [cardStyles, setCardStyles] = useState({
+    back: {
+      position: 'relative',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    },
+    front: {
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    },
+  });
+  const [infoItemStyle, setInfoItemStyle] = useState({
+    position: 'absolute',
+  });
+  const [mbtiUrl,setMbtiUrl]=useState('');
+  const [patternUrl,setPatternUrl]=useState('');
+  const [frameUrl,setFrameUrl]=useState('');
   const [showQR,setShowQR]=useState("false");
   const location = useLocation();
 
@@ -54,39 +72,7 @@ function MyCard() {
       console.log("url에서 뽑은 userEmail",email);
       setUserEmail(email);
     }
- }, []); //컴포넌트가 마운트될 때, userEmail 추출하고 이를 zustand에 저장 
 
-  //userEmail 변경시 호출됨
-  useEffect(() => {
-    if (userEmail) {
-      console.log("zustand에 저장된 userEmail",userEmail);
-    }
-  }, [userEmail]); //userEmail이 변경될떄 zustand네 저장된 userEmail 확인 
-
-
-  // 실행 환경 확인
-  function detectBrowser() {
-    const userAgent = navigator.userAgent;
-  
-    // iOS
-    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      return "iOS";
-    }
-    // android 
-    if (/Android/.test(userAgent)) {
-       return "Android";
-    }
-    // Samsung Internet
-    if (/SamsungBrowser/.test(userAgent)) {
-      return "Samsung Internet";
-    }
-    
-    // If none of the above, return a generic result
-    return "Unknown";
-  }
-
-  //인앱 브라우저로 접속시 
-  useEffect(() => {
     const browserType = detectBrowser();
     alert(`실행 환경 ${browserType}`);
 
@@ -99,6 +85,7 @@ function MyCard() {
       }
     };
 
+    // 인앱 브라우저 처리
     inappdenyExecVanillaJs(() => {
       const inappbrowserout=()=>{
         alert('\n인앱브라우저 호환문제로 인해 Safari로 접속해야합니다.\n\nSafari에서 실행하시면 정상적으로 이용하실 수 있습니다.');
@@ -145,9 +132,37 @@ function MyCard() {
 			}
     }
   });
-  }, []); //컴포넌트 마운트 시 1회만 실행
+
+ }, []); //컴포넌트가 마운트될 때, userEmail 추출하고 이를 zustand에 저장 
+
+  //userEmail 변경시 호출됨
+  useEffect(() => {
+    if (userEmail) {
+      console.log("zustand에 저장된 userEmail",userEmail);
+    }
+  }, [userEmail]); //userEmail이 변경될떄 zustand네 저장된 userEmail 확인 
 
 
+  // 실행 환경 확인
+  function detectBrowser() {
+    const userAgent = navigator.userAgent;
+  
+    // iOS
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      return "iOS";
+    }
+    // android 
+    if (/Android/.test(userAgent)) {
+       return "Android";
+    }
+    // Samsung Internet
+    if (/SamsungBrowser/.test(userAgent)) {
+      return "Samsung Internet";
+    }
+    
+    // If none of the above, return a generic result
+    return "Unknown";
+  }
 
   //서버에서 데이터 가져오기, useEmail이 맞을때만
   const fetchCards = () => {
@@ -171,11 +186,6 @@ function MyCard() {
       console.error("Fetching cards failed:", error);
     });  
   };
-
-  //카드 추가후 cards 배열 확인 
-  useEffect(() => {
-    console.log("cards배열", cards);
-  }, [cards]); // cards가 변경될 때마다 실행
 
   //서버에서 이미지 가져오기 
   const fetchImages = async () => {
@@ -226,25 +236,8 @@ function MyCard() {
    };
  
    const waitForRender = async () => {
-           await new Promise((resolve) => setTimeout(resolve, 800));
+      await new Promise((resolve) => setTimeout(resolve, 800));
    };
-  //  const waitForElement = async (selector, timeout = 800) => {
-  //    const startTime = new Date().getTime();
-  //    return new Promise((resolve, reject) => {
-  //      const timer = setInterval(() => {
-  //        if (document.querySelector(selector)) {
-  //          clearInterval(timer);
-  //          resolve(true);
-  //          console.log(`${selector} 로드됨`);
-  //         //  alert(`${selector} 로드됨`);
-  //        } else if (new Date().getTime() - startTime > timeout) {
-  //          clearInterval(timer);
-  //          reject(new Error("Element not found"));
-  //        }
-  //      }, 100);
-      
-  //    });
-  //  };
  
    const saveCardFAsImage = async () => {
     setIsSaving(true); // 사진 저장 상태 시작
@@ -367,55 +360,96 @@ const handleIgClick = () => {
     }
   };
 
-  // //backgroundOption에 따라 카드 색 변경
-  const cardBackStyle = {
-    position: 'relative',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    transform: isFlipped ? 'rotateX(0deg)' : 'rotateX(180deg)',
-  };
-  const cardFrontStyle = {
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    transform : isFlipped ? 'rotateX(-180deg)' : 'rotateX(0deg)',
-  };
 
-  //폰트 번호에 따라 명함 폰트 변경
-  const infoItemStyle = {
-    position: 'absolute',
-  }
-  if (cards.length > 0) {
-    switch (cards[0].fontOption) {
+  useEffect(() => {
+    if (cards.length > 0) {
+    const card = cards[0]; // 현재 카드를 임시 변수에 저장
+    setCurrentCard(card);
+
+    if (card) { //currentCard 비동기 업뎃땜에 일단 card 사용
+      // 폰트 옵션에 따른 스타일 조정
+      const newInfoItemStyle = {
+        ...infoItemStyle,
+        fontFamily: getFontFamily(card.fontOption),
+      };
+      setInfoItemStyle(newInfoItemStyle);
+  
+      // 패턴 옵션, 프레임 필터 옵션, MBTI URL 설정
+      const patternImageUrl = card.patternOption ? `/images/${card.patternOption}.png` : undefined;
+      const frameImageUrl = card.frameOption ? `/images/${card.frameOption}.png` : undefined;
+      const mbtiImageUrl = `/images/${card.MBTI}.png`;
+      setPatternUrl(patternImageUrl);
+      setFrameUrl(frameImageUrl);
+      setMbtiUrl(mbtiImageUrl);
+      }
+    }
+  }, [cards]); // 의존성 배열에 cards 포함
+  
+  // 폰트 옵션에 따라 폰트 패밀리를 반환하는 함수
+  function getFontFamily(fontOption) {
+    switch (fontOption) {
       case 1:
-        infoItemStyle.fontFamily = "HakgyoansimBombanghakR";
-        break;
+        return "HakgyoansimBombanghakR";
       case 2:
-        infoItemStyle.fontFamily = "Ownglyph_meetme-Rg";
-        break;
+        return "Ownglyph_meetme-Rg";
       case 3:
-        infoItemStyle.fontFamily = "SUITE-Regular";
-        break;
+        return "SUITE-Regular";
       case 4:
-        infoItemStyle.fontFamily = "SUITE-Regular";
-        break;
+        return "Dovemayo_wild";
       case 5:
-        infoItemStyle.fontFamily = "Dovemayo_wild";
-        break;
+        return "HakgyoansimButpenB";
       default: //디폴트는 Arial
-        infoItemStyle.fontFamily = "HakgyoansimButpenB";
+      return "Arial";
     }
   }
+  
+  useEffect(() => {
+    console.log(currentCard);
+  }, [currentCard]);
 
-  let patternUrl;
+  //카드 추가후 cards 배열 확인 
+  useEffect(() => {
+    if (currentCard) {
+      const newBackStyle = {
+        ...cardStyles.back,
+        backgroundImage: `url('${getBackImageUrl(currentCard.backgroundOption)}')`,
+        transform: isFlipped ? 'rotateX(0deg)' : 'rotateX(180deg)',
+      };
+      const newFrontStyle = {
+        ...cardStyles.front,
+        backgroundImage: `url('/images/${currentCard.backgroundOption}.png')`,
+        transform: isFlipped ? 'rotateX(-180deg)' : 'rotateX(0deg)',
+      };
+      // 스타일 상태를 업데이트합니다.
+      setCardStyles({ back: newBackStyle, front: newFrontStyle });
+    }
+  }, [currentCard, isFlipped]); 
 
-  if (cards.length > 0) {
-    const card = cards[0];
-    const backgroundUrlB = `/images/back${card.backgroundOption}.png`; // 배경 이미지 경로 
-    patternUrl = card.patternOption ? `/images/${card.patternOption}.png` : undefined;
-    const backgroundUrlF = `/images/front${card.backgroundOption}.png`; // 배경 이미지 경로 
-    cardBackStyle.backgroundImage = `url('${backgroundUrlB}')`;
-    cardFrontStyle.backgroundImage = `url('${backgroundUrlF}')`;
-  }
+  // 이 함수는 각 배경 옵션에 따른 URL을 반환합니다.
+  function getBackImageUrl(backgroundOption) {
+      if(backgroundOption==='BlueCheck'){
+        return `/images/backBlue.png`; //뒷 배결
+      }
+      else if(backgroundOption==='GreenMilitary'||backgroundOption==='GreenStrawberry'){
+        return `/images/backGreen.png`; //뒷 배결
+      }
+      else if(backgroundOption==='Grey'||backgroundOption==='GreyAurora'){
+        return `/images/backGrey.png`; //뒷 배결
+      }
+      else if(backgroundOption==='PinkAurora'||backgroundOption==='PinkCheck'||backgroundOption==='PinkOther'||backgroundOption==='Pink'){
+        return `/images/backPink.png`; //뒷 배결
+      }
+      else if(backgroundOption==='PurpleAurora'||backgroundOption==='PurpleCheck'){
+        return `/images/backPurple.png`; //뒷 배결
+      }
+      else if(backgroundOption==='BlueOther'||backgroundOption==='Sky'||backgroundOption==='SkyOther'){
+        return `/images/backSky.png`; //뒷 배결
+      }
+      else if(backgroundOption==='Yellow'){
+        return `/images/backYellow.png`; //뒷 배결
+      }
+    }
+
 
   //처음에 로딩 화면 띄우려고
   if (isLoading) {
@@ -452,51 +486,62 @@ const handleIgClick = () => {
                   <>
                     <div className={styles.ownerText}><span className={styles.ownerTextStrong}>{cards[0].name}</span> 님의 명함</div>
                     <div className={styles.card}>
-                        <div className={`${styles.cardFront} cardFront`} style={cardFrontStyle} ref={frontRef}>
+                        <div className={`${styles.cardFront}`} style={cardStyles.front} ref={frontRef}>
                           <div className={styles.infoContainer}>
                             <div className={styles.date} style={infoItemStyle}>
-                              {cards[0].updatedAt ? new Date(cards[0].updatedAt).toLocaleDateString() : 'N/A'}
+                              {currentCard?.updatedAt ? new Date(currentCard?.updatedAt).toLocaleDateString() : 'N/A'}
                             </div>
-                            {/* <img className={styles.frame} src='/images/frame.png'></img> */}
                             <div className={styles.name} style={infoItemStyle}>이름</div>
-                            <div className={styles.nameValue} style={infoItemStyle}>{cards[0].name || 'N/A'}</div>
-                            <div className={styles.engNameValue} style={infoItemStyle}>{cards[0].engName || 'N/A'}</div>
+                            <div className={styles.nameValue} style={infoItemStyle}>{currentCard?.name || 'N/A'}</div>
+                            <div className={styles.engNameValue} style={infoItemStyle}>{currentCard?.engName || 'N/A'}</div>
                             <div className={styles.school} style={infoItemStyle}>학교</div>
-                            <div className={styles.schoolValue} style={infoItemStyle}>{cards[0].school || 'N/A'}</div>
-                            <div className={styles.studentNumValue} style={infoItemStyle}>{cards[0].studentNum || 'N/A'}</div>
+                            <div className={styles.schoolValue} style={infoItemStyle}>{currentCard?.school || 'N/A'}</div>
+                            <div className={styles.studentNumValue} style={infoItemStyle}>{currentCard?.studentNum || 'N/A'}</div>
                             <div className={styles.major} style={infoItemStyle}>전공</div>
-                            <div className={styles.majorValue} style={infoItemStyle}>{cards[0].major || 'N/A'}</div>
-                            <div className={styles.email} style={infoItemStyle}>이메일</div>
-                            <div className={styles.emailValue} style={infoItemStyle} onClick={handleEmailClick}>{cards[0].email || 'N/A'}</div>
+                            <div className={styles.majorValue} style={infoItemStyle}>{currentCard?.major || 'N/A'}</div>
                             <div className={styles.session} style={infoItemStyle}>진로</div>
-                            <div className={styles.sessionValue} style={infoItemStyle}>{cards[0].session || 'N/A'}</div>
+                            <div className={styles.sessionValue} style={infoItemStyle}><span className={styles.highlight}>{currentCard?.session || 'N/A'}</span></div>
                             <div className={styles.MBTI} style={infoItemStyle}>MBTI</div>
-                            <div className={styles.MBTIValue} style={infoItemStyle}>{cards[0].MBTI || 'N/A'}</div>
+                            {/* <div className={styles.MBTIValue} style={infoItemStyle}>{currentCard?.MBTI || 'N/A'}</div> */}
+                            <div className={styles.email} style={infoItemStyle}>이메일</div>
+                            <div className={styles.emailValue} style={infoItemStyle} onClick={handleEmailClick}>{currentCard?.email || 'N/A'}</div>
                             <div className={styles.IG} style={infoItemStyle}>IG</div>
-                            <div className={styles.IGValue} style={infoItemStyle} onClick={handleIgClick}>@{cards[0].ig || 'N/A'}</div>
-                            {cardImage && <img src={cardImage} alt="Profile" className={styles.cardImageCircleCGrey} style={infoItemStyle} />}
-                            {/* {cardImage && <img src={cardImage} alt="Profile" className={cards[0].cardFrame==="rect"?styles.cardImageCircle:styles.cardImageRect} style={infoItemStyle} />} */}
-
+                            <div className={styles.IGValue} style={infoItemStyle} onClick={handleIgClick}>@{currentCard?.ig || 'N/A'}</div>
+                            {cardImage && 
+                              <img src={cardImage} 
+                              alt="Profile" 
+                              className={currentCard?.frameShapeOption === "Rec" ? styles.cardImageRectGrey : styles.cardImageCircleGrey}
+                              style={infoItemStyle} 
+                            />}
+                            <img src={mbtiUrl} alt="mbti" className={styles.MBTIValue} style={infoItemStyle} />
                           </div>
+                          <div style={{
+                            position: 'absolute',
+                            top: 12,
+                            left: 40,
+                            width: '56%',
+                            height: '34%',
+                            backgroundImage: `url('${frameUrl}')`, // 패턴 이미지
+                            backgroundSize: 'cover',
+                          }}></div>
                         </div>
-                        <div className={`${styles.cardBack} cardBack`} style={cardBackStyle} ref={backRef}>
+                        <div className={`${styles.cardBack}`} style={cardStyles.back} ref={backRef}>
                           {showQR && (
                            <>
-                              <div className={styles.moto} style={infoItemStyle}>{cards[0].moto || 'N/A'}</div>
+                              <div className={styles.moto} style={infoItemStyle}>{currentCard?.moto || 'N/A'}</div>
                               <div className={styles.QR} >
-                                <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} size={50} />
+                                <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} size={30} />
                               </div>
                            </>
                           )}
                           <div style={{
                             position: 'absolute',
-                            top: 33,
+                            top: 8,
                             left: 25,
-                            width: '88%',
-                            height: '88%',
+                            width: '80%',
+                            height: '95%',
                             backgroundImage: `url('${patternUrl}')`, // 패턴 이미지
                             backgroundSize: 'cover',
-                            pointerEvents: 'none', // 오버레이가 사용자 인터랙션 방해 방지
                           }}></div>
                         </div>
                       </div>

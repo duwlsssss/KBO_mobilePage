@@ -85,7 +85,7 @@
   border-radius: 50%;
   width: 10rem;
   height: 12rem;
-  margin-top:9rem;
+  margin-top:10rem;
   margin-left: -3rem;
   object-fit: cover;
 }
@@ -94,8 +94,8 @@
   border-radius: 50%;
   width: 10rem;
   height: 12rem;
-  margin-top:9rem;
-  margin-left: -3rem;
+  margin-top:10rem;
+  margin-left: -4rem;
   object-fit: cover;
 }
 
@@ -113,87 +113,97 @@
   border-radius: 0.2rem;
   width: 10rem;
   height: 12rem;
-  margin-top:9.5rem;
+  margin-top:10rem;
   margin-left: -3.5rem;
   object-fit: cover;
 }
 
 .date{
-  top: 11.5rem;
-  right: -4.5rem;
+  top: 9.2rem;
+  right: -4.1rem;
 }
 .name {
   color: #888; 
-  top: 13.7rem;
+  top: 11.2rem;
   left: 10rem;
 }
 .nameValue {
-  top: 13.7rem;
-  right: 5rem;
+  top: 11.2rem;
+  left: 14rem;
 }
 .engNameValue{
-  top: 13.7rem;
+  top: 11.2rem;
   right: -3.5rem;
 }
 .school {
   color: #888; 
-  top: 15rem; 
+  top: 12.7rem; 
   left: 10rem;
 }
 .schoolValue {
-  top: 15rem; 
-  left: 13.5rem; 
+  top: 12.7rem; 
+  left: 14rem;
 }
 .studentNumValue {
-  top: 15rem; 
+  top: 12.7rem; 
   right: -3.5rem;
 }
 .major {
   color: #888; 
-  top: 16.5rem; 
+  top: 14.1rem; 
   left:10rem;
 }
 .majorValue {
-  top: 16.5rem; 
+  top: 14.1rem; 
   right: -3.5rem;
+}
+.session {
+  color: #888; 
+  top: 15.5rem; 
+  left:10rem;
+}
+.sessionValue {
+  top: 15.5rem; 
+  right: -3.5rem;
+}
+.highlight {
+  /* inset | offset-x | offset-y | color */
+  box-shadow: inset 0 -10px 0 #FCFBEE;
+}
+.MBTI{
+  color: #888; 
+  top: 17rem; 
+  left:10rem;
+}
+.MBTIValue {
+  transform: rotate(-90deg);
+  transform-origin: center center;
+  width: 4rem;
+  height: 4rem;
+  top: 15.5rem; 
+  right: -4rem; 
+  object-fit: cover;
+  pointer-events: none;
 }
 .email {
   color: #888; 
-  top: 17.8rem; 
+  top: 18.5rem; 
   left:10rem;
 }
 .emailValue {
-  top: 17.8rem; 
+  top: 18.4rem; 
   right: -3.5rem;
 }
 .emailValue:hover{
   background-color: white;
 }
-.session {
-  color: #888; 
-  top: 19.4rem; 
-  left:10rem;
-}
-.sessionValue {
-  top: 19.4rem; 
-  right: -3.5rem;
-}
-.MBTI{
-  color: #888; 
-  top: 20.8rem; 
-  left:10rem;
-}
-.MBTIValue {
-  top: 20.8rem; 
-  right: -3.5rem;
-}
 .IG {
   color: #888; 
-  top: 22.3rem; 
+  top: 19.9rem; 
   left:10rem; 
 }
 .IGValue {
-  top: 22.3rem; 
+  top: 19.9rem; 
   right: -3.5rem; 
 }
 .IGValue:hover{
@@ -202,15 +212,15 @@
 
 .moto {
   position: absolute;
-  top: 13.5rem; 
-  left: 0;
+  top: 11.5rem; 
+  left: 0.7rem;
   right: 0;
   bottom: 0;
   transform: rotate(90deg);
   transform-origin: center center;
   /* background-color: aquamarine; */
-  width:27.5rem;
-  height:8rem;
+  width:25.5rem;
+  height:7rem;
   font-size: 1.2rem;
   white-space: normal; /* 텍스트가 요소 폭을 넘어가면 줄바꿈되게 함 */
   overflow: hidden; /* 내용이 요소의 크기를 초과하면 숨김 처리 */
@@ -219,7 +229,7 @@
   position: absolute;
   transform: rotate(90deg);
   transform-origin: center center;
-  margin: 28rem 2.5rem;
+  margin: 25rem 2.8rem;
   z-index: 100;
 }
 
