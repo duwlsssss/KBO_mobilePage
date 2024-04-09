@@ -1,7 +1,7 @@
 .container{
   width: 350px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   font-size: 11px;
   box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
   background: silver;
@@ -9,7 +9,7 @@
 }
 
 .addressText {
-   -webkit-font-smoothing: none;
+  -webkit-font-smoothing: none;
   font-size: 0.8rem;
   color: #ffffff;
 }
@@ -21,14 +21,17 @@
 
 .contentArea{
   background-color: #FFF;
-  padding-top:1rem;
-  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .ownerText{
-   -webkit-font-smoothing: none;
+  -webkit-font-smoothing: none;
   font-size: 1rem;
   text-align: center; 
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 .ownerTextStrong{
   font-size: 1.2rem;
@@ -37,12 +40,9 @@
 
 .card {
   /* background-color: aqua; */
-  margin-left:1rem;
-  margin-right:1rem;
-  margin-top:0.5rem;
-  margin-bottom: 1rem;
+  margin: 0 1rem;
   width: 20rem;
-  height: 35rem;
+  height: 30rem;
   perspective: 300rem;
 }
 
@@ -71,91 +71,139 @@
 }
 
 
-.cardImage{
+/* .cardImage{
   border-radius: 0.5em;
   width: 11rem;
   height: 13rem;
   margin-top:11.5rem;
   margin-left: -4.4rem;
   object-fit: cover;
+} */
+
+.cardImageCircleWhite{
+  border: solid white 2px;
+  border-radius: 50%;
+  width: 10rem;
+  height: 12rem;
+  margin-top:10rem;
+  margin-left: -3rem;
+  object-fit: cover;
+}
+.cardImageCircleGrey{
+  border: solid grey 2px;
+  border-radius: 50%;
+  width: 10rem;
+  height: 12rem;
+  margin-top:10rem;
+  margin-left: -4rem;
+  object-fit: cover;
+}
+
+.cardImageRectWhite{
+  border: solid white 2px;
+  border-radius: 0.2rem;
+  width: 10rem;
+  height: 12rem;
+  margin-top:9.5rem;
+  margin-left: -3.5rem;
+  object-fit: cover;
+}
+.cardImageRectGrey{
+  border: solid grey 2px;
+  border-radius: 0.2rem;
+  width: 10rem;
+  height: 12rem;
+  margin-top:10rem;
+  margin-left: -3.5rem;
+  object-fit: cover;
 }
 
 .date{
-  top: 11.5rem;
-  right: -4.5rem;
+  top: 9.25rem;
+  right: -4.1rem;
 }
 .name {
   color: #888; 
-  top: 13.7rem;
-  left: 10rem;
+  top: 11.35rem;
+  left:10rem;
 }
 .nameValue {
-  top: 13.7rem;
-  right: 5rem;
+  top: 11.35rem;
+  left: 14rem;
 }
 .engNameValue{
-  top: 13.7rem;
+  top: 11.35rem;
   right: -3.5rem;
 }
 .school {
   color: #888; 
-  top: 15rem; 
+  top: 12.75rem; 
   left: 10rem;
 }
 .schoolValue {
-  top: 15rem; 
-  left: 13.5rem; 
+  top: 12.75rem; 
+  left: 14rem;
 }
 .studentNumValue {
-  top: 15rem; 
+  top: 12.75rem; 
   right: -3.5rem;
 }
 .major {
   color: #888; 
-  top: 16.5rem; 
+  top: 14.15rem; 
   left:10rem;
 }
 .majorValue {
-  top: 16.5rem; 
+  top: 14.15rem; 
   right: -3.5rem;
+}
+.session {
+  color: #888; 
+  top: 15.55rem; 
+  left:10rem;
+}
+.sessionValue {
+  top: 15.55rem; 
+  right: -3.5rem;
+}
+.highlight {
+  /* inset | offset-x | offset-y | color */
+  box-shadow: inset 0 -10px 0 #FCFBEE;
+}
+.MBTI{
+  color: #888; 
+  top: 17.05rem; 
+  left:10rem;
+}
+.MBTIValue {
+  transform: rotate(-90deg);
+  transform-origin: center center;
+  width: 4rem;
+  height: 4rem;
+  top: 15.55rem; 
+  right: -4rem; 
+  object-fit: cover;
+  pointer-events: none;
 }
 .email {
   color: #888; 
-  top: 17.8rem; 
+  top: 18.55rem; 
   left:10rem;
 }
 .emailValue {
-  top: 17.8rem; 
+  top: 18.55rem; 
   right: -3.5rem;
 }
 .emailValue:hover{
   background-color: white;
 }
-.session {
-  color: #888; 
-  top: 19.4rem; 
-  left:10rem;
-}
-.sessionValue {
-  top: 19.4rem; 
-  right: -3.5rem;
-}
-.MBTI{
-  color: #888; 
-  top: 20.8rem; 
-  left:10rem;
-}
-.MBTIValue {
-  top: 20.8rem; 
-  right: -3.5rem;
-}
 .IG {
   color: #888; 
-  top: 22.3rem; 
+  top: 19.85rem; 
   left:10rem; 
 }
 .IGValue {
-  top: 22.3rem; 
+  top: 19.85rem; 
   right: -3.5rem; 
 }
 .IGValue:hover{
@@ -164,15 +212,15 @@
 
 .moto {
   position: absolute;
-  top: 13.5rem; 
-  left: 0;
+  top: 11.5rem; 
+  left: 0.7rem;
   right: 0;
   bottom: 0;
   transform: rotate(90deg);
   transform-origin: center center;
   /* background-color: aquamarine; */
-  width:27.5rem;
-  height:8rem;
+  width:25.5rem;
+  height:7rem;
   font-size: 1.2rem;
   white-space: normal; /* 텍스트가 요소 폭을 넘어가면 줄바꿈되게 함 */
   overflow: hidden; /* 내용이 요소의 크기를 초과하면 숨김 처리 */
@@ -181,7 +229,7 @@
   position: absolute;
   transform: rotate(90deg);
   transform-origin: center center;
-  margin: 28rem 2.5rem;
+  margin: 25rem 2.8rem;
   z-index: 100;
 }
 
@@ -214,23 +262,21 @@
   display:flex;
   align-items: center;
   justify-content: center;
-  gap:0.8rem;
+  gap:0.4rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 375px) { /* iPhone mini width */
   .card{
       /* background-color: aqua; */
-      margin-top: 0.5rem;
-      margin-bottom:1.5rem;
-      margin-left:2rem;
+      margin-left:2rem; 
   }
 }
 
 @media (max-width: 360px) {  /* 갤럭시 s8+,노트 width */
   .card{
       /* background-color: aqua; */
-      margin-top: 0.1rem;
-      margin-bottom:1rem;
       margin-left:2.5rem;
   }
 }
@@ -241,11 +287,9 @@
   }
   .card{
       /* background-color: aqua; */
-      margin-top: 0.05rem;
-      margin-bottom:1rem;
       margin-left:3.5rem;
   }
   .btnContainer{
-    gap:0.4rem;
+    gap:0.5rem;
   }
 }

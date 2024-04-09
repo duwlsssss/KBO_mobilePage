@@ -119,51 +119,51 @@
 }
 
 .date{
-  top: 9.2rem;
+  top: 9.25rem;
   right: -4.1rem;
 }
 .name {
   color: #888; 
-  top: 11.2rem;
-  left: 10rem;
+  top: 11.35rem;
+  left:10rem;
 }
 .nameValue {
-  top: 11.2rem;
+  top: 11.35rem;
   left: 14rem;
 }
 .engNameValue{
-  top: 11.2rem;
+  top: 11.35rem;
   right: -3.5rem;
 }
 .school {
   color: #888; 
-  top: 12.7rem; 
+  top: 12.75rem; 
   left: 10rem;
 }
 .schoolValue {
-  top: 12.7rem; 
+  top: 12.75rem; 
   left: 14rem;
 }
 .studentNumValue {
-  top: 12.7rem; 
+  top: 12.75rem; 
   right: -3.5rem;
 }
 .major {
   color: #888; 
-  top: 14.1rem; 
+  top: 14.15rem; 
   left:10rem;
 }
 .majorValue {
-  top: 14.1rem; 
+  top: 14.15rem; 
   right: -3.5rem;
 }
 .session {
   color: #888; 
-  top: 15.5rem; 
+  top: 15.55rem; 
   left:10rem;
 }
 .sessionValue {
-  top: 15.5rem; 
+  top: 15.55rem; 
   right: -3.5rem;
 }
 .highlight {
@@ -172,7 +172,7 @@
 }
 .MBTI{
   color: #888; 
-  top: 17rem; 
+  top: 17.05rem; 
   left:10rem;
 }
 .MBTIValue {
@@ -180,18 +180,18 @@
   transform-origin: center center;
   width: 4rem;
   height: 4rem;
-  top: 15.5rem; 
+  top: 15.55rem; 
   right: -4rem; 
   object-fit: cover;
   pointer-events: none;
 }
 .email {
   color: #888; 
-  top: 18.5rem; 
+  top: 18.55rem; 
   left:10rem;
 }
 .emailValue {
-  top: 18.4rem; 
+  top: 18.55rem; 
   right: -3.5rem;
 }
 .emailValue:hover{
@@ -199,11 +199,11 @@
 }
 .IG {
   color: #888; 
-  top: 19.9rem; 
+  top: 19.85rem; 
   left:10rem; 
 }
 .IGValue {
-  top: 19.9rem; 
+  top: 19.85rem; 
   right: -3.5rem; 
 }
 .IGValue:hover{
