@@ -80,15 +80,6 @@
   object-fit: cover;
 } */
 
-.cardImageCircleWhite{
-  border: solid white 2px;
-  border-radius: 50%;
-  width: 10rem;
-  height: 12rem;
-  margin-top:10rem;
-  margin-left: -3rem;
-  object-fit: cover;
-}
 .cardImageCircleGrey{
   border: solid grey 2px;
   border-radius: 50%;
@@ -99,19 +90,10 @@
   object-fit: cover;
 }
 
-.cardImageRectWhite{
-  border: solid white 2px;
-  border-radius: 0.2rem;
-  width: 10rem;
-  height: 12rem;
-  margin-top:9.5rem;
-  margin-left: -3.5rem;
-  object-fit: cover;
-}
 .cardImageRectGrey{
   border: solid grey 2px;
   border-radius: 0.2rem;
-  width: 10rem;
+  width: 9rem;
   height: 12rem;
   margin-top:10rem;
   margin-left: -3.5rem;

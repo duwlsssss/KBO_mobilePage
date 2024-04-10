@@ -377,6 +377,7 @@ const handleIgClick = () => {
       // 패턴 옵션, 프레임 필터 옵션, MBTI URL 설정
       const patternImageUrl = card.patternOption ? `/images/pattern/${card.patternOption}.png` : undefined;
       const frameImageUrl = card.frameOption ? `/images/frame/${card.frameOption}.png` : undefined;
+      console.log("frameImageUrl",frameImageUrl);
       const mbtiImageUrl = `/images/mbti/${card.MBTI}.png`;
       setPatternUrl(patternImageUrl);
       setFrameUrl(frameImageUrl);
@@ -510,7 +511,7 @@ const handleIgClick = () => {
                             {cardImage && 
                               <img src={cardImage} 
                               alt="Profile" 
-                              className={currentCard?.frameShapeOption === "Rec" ? styles.cardImageRectGrey : styles.cardImageCircleGrey}
+                              className={currentCard?.frameShapeoption === "Rec" ? styles.cardImageRectGrey : styles.cardImageCircleGrey}
                               style={infoItemStyle} 
                             />}
                             <img src={mbtiUrl} alt="mbti" className={styles.MBTIValue} style={infoItemStyle} />
