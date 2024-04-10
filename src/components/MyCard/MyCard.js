@@ -375,9 +375,9 @@ const handleIgClick = () => {
       setInfoItemStyle(newInfoItemStyle);
   
       // 패턴 옵션, 프레임 필터 옵션, MBTI URL 설정
-      const patternImageUrl = card.patternOption ? `/images/${card.patternOption}.png` : undefined;
-      const frameImageUrl = card.frameOption ? `/images/${card.frameOption}.png` : undefined;
-      const mbtiImageUrl = `/images/${card.MBTI}.png`;
+      const patternImageUrl = card.patternOption ? `/images/pattern/${card.patternOption}.png` : undefined;
+      const frameImageUrl = card.frameOption ? `/images/frame/${card.frameOption}.png` : undefined;
+      const mbtiImageUrl = `/images/mbti/${card.MBTI}.png`;
       setPatternUrl(patternImageUrl);
       setFrameUrl(frameImageUrl);
       setMbtiUrl(mbtiImageUrl);
@@ -417,7 +417,7 @@ const handleIgClick = () => {
       };
       const newFrontStyle = {
         ...cardStyles.front,
-        backgroundImage: `url('/images/${currentCard.backgroundOption}.png')`,
+        backgroundImage: `url('/images/front/${currentCard.backgroundOption}.png')`,
         transform: isFlipped ? 'rotateX(-180deg)' : 'rotateX(0deg)',
       };
       // 스타일 상태를 업데이트합니다.
@@ -428,25 +428,25 @@ const handleIgClick = () => {
   // 이 함수는 각 배경 옵션에 따른 URL을 반환합니다.
   function getBackImageUrl(backgroundOption) {
       if(backgroundOption==='BlueCheck'){
-        return `/images/backBlue.png`; //뒷 배결
+        return `/images/back/backBlue.png`; //뒷 배결
       }
       else if(backgroundOption==='GreenMilitary'||backgroundOption==='GreenStrawberry'){
-        return `/images/backGreen.png`; //뒷 배결
+        return `/images/back/backGreen.png`; //뒷 배결
       }
       else if(backgroundOption==='Grey'||backgroundOption==='GreyAurora'){
-        return `/images/backGrey.png`; //뒷 배결
+        return `/images/back/backGrey.png`; //뒷 배결
       }
       else if(backgroundOption==='PinkAurora'||backgroundOption==='PinkCheck'||backgroundOption==='PinkOther'||backgroundOption==='Pink'){
-        return `/images/backPink.png`; //뒷 배결
+        return `/images/back/backPink.png`; //뒷 배결
       }
       else if(backgroundOption==='PurpleAurora'||backgroundOption==='PurpleCheck'){
-        return `/images/backPurple.png`; //뒷 배결
+        return `/images/back/backPurple.png`; //뒷 배결
       }
       else if(backgroundOption==='BlueOther'||backgroundOption==='Sky'||backgroundOption==='SkyOther'){
-        return `/images/backSky.png`; //뒷 배결
+        return `/images/back/backSky.png`; //뒷 배결
       }
       else if(backgroundOption==='Yellow'){
-        return `/images/backYellow.png`; //뒷 배결
+        return `/images/back/backYellow.png`; //뒷 배결
       }
     }
 
@@ -517,7 +517,7 @@ const handleIgClick = () => {
                           </div>
                           <div style={{
                             position: 'absolute',
-                            top: 12,
+                            top: 10,
                             left: 40,
                             width: '56%',
                             height: '34%',
