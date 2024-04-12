@@ -200,7 +200,7 @@ function MyCard() {
       }
       else {
         // 데이터가 비어있을 경우 기본 이미지 설정
-        setCardImage('/images/kimLogo_padded.png');
+        setCardImage('/images/kimLogo_padded_.png');
       }
     } catch (error) {
       console.error('Error fetching images:', error);
