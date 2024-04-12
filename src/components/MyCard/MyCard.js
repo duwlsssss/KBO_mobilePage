@@ -212,7 +212,7 @@ function MyCard() {
  
    const captureCardImage = async (element, filename) => {
      try {
-      const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: null});
+      const canvas = await html2canvas(element, { useCORS:true, backgroundColor: null, logging:true});
       const dataUrl = canvas.toDataURL();
       const rotatedImage = new Image();
       rotatedImage.onload = function() {
