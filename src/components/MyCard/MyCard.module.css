@@ -83,8 +83,8 @@
 .cardImageCircleGrey{
   border: solid grey 2px;
   border-radius: 50%;
-  width: 10rem;
-  height: 12rem;
+  width:9.5rem;
+  height: 11.5rem;
   margin-top:10rem;
   margin-left: -4rem;
   object-fit: cover;
@@ -93,10 +93,10 @@
 .cardImageRectGrey{
   border: solid grey 2px;
   border-radius: 0.2rem;
-  width: 9rem;
-  height: 12rem;
+  width: 9.5rem;
+  height: 11.5rem;
   margin-top:10rem;
-  margin-left: -3.5rem;
+  margin-left: -4rem;
   object-fit: cover;
 }
 
