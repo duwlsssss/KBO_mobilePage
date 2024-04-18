@@ -81,23 +81,22 @@
 } */
 
 .cardImageCircleGrey{
-  border: solid grey 2px;
-  border-radius: 50%;
-  width:9.5rem;
-  height: 11.5rem;
+  border-radius: 0.5em;
+  width: 11rem;
+  height: 13rem;
   margin-top:10rem;
-  margin-left: -4rem;
+  margin-left: 4rem;
   object-fit: cover;
 }
 
 .cardImageRectGrey{
-  border: solid grey 2px;
-  border-radius: 0.2rem;
+  /* border: solid grey 2px; */
+  /* border-radius: 0.2rem; */
   width: 9.5rem;
   height: 11.5rem;
-  margin-top:10rem;
-  margin-left: -4rem;
-  object-fit: cover;
+  margin-top:30rem;
+  margin-left: 10rem;
+  /* object-fit: cover; */
 }
 
 .date{

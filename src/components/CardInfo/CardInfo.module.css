@@ -46,6 +46,13 @@
 }
 
 
+.cardImg{
+  width:10rem;
+  height:13rem;
+  object-fit: cover;
+}
+
+
 
 .cardFront,
 .cardBack {

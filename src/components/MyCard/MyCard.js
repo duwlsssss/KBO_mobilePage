@@ -472,54 +472,54 @@ const handleIgClick = () => {
 
   return (
      <>
-          <div className={styles.container}>
-              <div className="title-bar">
-              <span className={styles.addressText}>https://www.kimsoffice.com :: 김씨네 <span className={styles.addressTextColor}> 명함제작 </span> 사무소</span>
-              <div style={{paddingTop:5, paddingBottom:5}}className="title-bar-controls">
-                <button aria-label="Minimize" />
-                <button aria-label="Maximize" />
-                <button aria-label="Close" />
-              </div>
+        <div className={styles.container}>
+            <div className="title-bar">
+            <span className={styles.addressText}>https://www.kimsoffice.com :: 김씨네 <span className={styles.addressTextColor}> 명함제작 </span> 사무소</span>
+            <div style={{paddingTop:5, paddingBottom:5}}className="title-bar-controls">
+              <button aria-label="Minimize" />
+              <button aria-label="Maximize" />
+              <button aria-label="Close" />
             </div>
-            <div className={styles.contentArea}>
-                {isSaving&&<div className={styles.popUp}>
-                  <div className={styles.popUpContent}>
-                    <div>사진 저장 중...</div>
-                    <div><ProgressBar progressDuration={1000} totalBlocks={16}/></div>
-                  </div>
-                </div>}
-                {cards.length > 0 ? (
-                  <>
-                    <div className={styles.ownerText}><span className={styles.ownerTextStrong}>{cards[0].name||'사용자'}</span> 님의 명함</div>
-                    <div className={styles.card}>
-                        <div className={`${styles.cardFront}`} style={cardStyles.front} ref={frontRef}>
-                          <div className={styles.infoContainer}>
-                            <div className={styles.date} style={infoItemStyle}>
-                              {cards[0].updatedAt ? new Date(cards[0].updatedAt).toLocaleDateString() : ''}
-                            </div>
-                            <div className={styles.name} style={infoItemStyle}>이름</div>
-                            <div className={styles.nameValue} style={infoItemStyle}>{cards[0].name || ''}</div>
-                            <div className={styles.engNameValue} style={infoItemStyle}>{cards[0].engName || ''}</div>
-                            <div className={styles.school} style={infoItemStyle}>학교</div>
-                            <div className={styles.schoolValue} style={infoItemStyle}>{cards[0].school || ''}</div>
-                            <div className={styles.studentNumValue} style={infoItemStyle}>{cards[0].studentNum || ''}</div>
-                            <div className={styles.major} style={infoItemStyle}>전공</div>
-                            <div className={styles.majorValue} style={infoItemStyle}>{cards[0].major || ''}</div>
-                            <div className={styles.session} style={infoItemStyle}>진로</div>
-                            <div className={styles.sessionValue} style={infoItemStyle}><span className={styles.highlight}>{cards[0].session || ''}</span></div>
-                            <div className={styles.MBTI} style={infoItemStyle}>MBTI</div>
-                            {/* <div className={styles.MBTIValue} style={infoItemStyle}>{cards[0].MBTI || ''}</div> */}
-                            <div className={styles.email} style={infoItemStyle}>이메일</div>
-                            <div className={styles.emailValue} style={infoItemStyle} onClick={handleEmailClick}>{cards[0].email || ''}</div>
-                            <div className={styles.IG} style={infoItemStyle}>IG</div>
-                            <div className={styles.IGValue} style={infoItemStyle} onClick={handleIgClick}>{cards[0].ig ? `@${cards[0].ig}` : ''}</div>
-                            {cardImage && 
-                              <img src={cardImage} 
-                              alt="Profile" 
-                              className={cards[0].frameShapeoption === "Rec" ? styles.cardImageRectGrey : styles.cardImageCircleGrey}
-                              style={infoItemStyle} 
-                            />}
-                            {mbtiUrl && <img src={mbtiUrl} alt="mbti" className={styles.MBTIValue} style={infoItemStyle} />}
+          </div>
+          <div className={styles.contentArea}>
+              {isSaving&&<div className={styles.popUp}>
+                <div className={styles.popUpContent}>
+                  <div>사진 저장 중...</div>
+                  <div><ProgressBar progressDuration={1000} totalBlocks={16}/></div>
+                </div>
+              </div>}
+              {cards.length > 0 ? (
+                <>
+                  <div className={styles.ownerText}><span className={styles.ownerTextStrong}>{cards[0].name||'사용자'}</span> 님의 명함</div>
+                  <div className={styles.card}>
+                      <div className={`${styles.cardFront}`} style={cardStyles.front} ref={frontRef}>
+                        <div className={styles.infoContainer}>
+                          <div className={styles.date} style={infoItemStyle}>
+                            {cards[0].updatedAt ? new Date(cards[0].updatedAt).toLocaleDateString() : ''}
+                          </div>
+                          <div className={styles.name} style={infoItemStyle}>이름</div>
+                          <div className={styles.nameValue} style={infoItemStyle}>{cards[0].name || ''}</div>
+                          <div className={styles.engNameValue} style={infoItemStyle}>{cards[0].engName || ''}</div>
+                          <div className={styles.school} style={infoItemStyle}>학교</div>
+                          <div className={styles.schoolValue} style={infoItemStyle}>{cards[0].school || ''}</div>
+                          <div className={styles.studentNumValue} style={infoItemStyle}>{cards[0].studentNum || ''}</div>
+                          <div className={styles.major} style={infoItemStyle}>전공</div>
+                          <div className={styles.majorValue} style={infoItemStyle}>{cards[0].major || ''}</div>
+                          <div className={styles.session} style={infoItemStyle}>진로</div>
+                          <div className={styles.sessionValue} style={infoItemStyle}><span className={styles.highlight}>{cards[0].session || ''}</span></div>
+                          <div className={styles.MBTI} style={infoItemStyle}>MBTI</div>
+                          <div className={styles.email} style={infoItemStyle}>이메일</div>
+                          <div className={styles.emailValue} style={infoItemStyle} onClick={handleEmailClick}>{cards[0].email || ''}</div>
+                          <div className={styles.IG} style={infoItemStyle}>IG</div>
+                          <div className={styles.IGValue} style={infoItemStyle} onClick={handleIgClick}>{cards[0].ig ? `@${cards[0].ig}` : ''}</div>
+                          {cardImage && 
+                            <img src={cardImage} 
+                            alt="Profile" 
+                            className={styles.cardImageCircleGrey}
+                            // className={cards[0].frameShapeoption === "Rec" ? styles.cardImageRectGrey : styles.cardImageCircleGrey}
+                            style={infoItemStyle} 
+                          />}
+                          {mbtiUrl && <img src={mbtiUrl} alt="mbti" className={styles.MBTIValue} style={infoItemStyle} />}
                           </div>
                           {frameUrl && 
                           <div style={{
@@ -531,40 +531,39 @@ const handleIgClick = () => {
                             backgroundImage: `url('${frameUrl}')`, // 패턴 이미지
                             backgroundSize: 'cover',
                           }}></div>}
-                        </div>
-                        <div className={`${styles.cardBack}`} style={cardStyles.back} ref={backRef}>
-                          {showQR && (
-                           <>
-                              <div className={styles.moto} style={infoItemStyle}>{cards[0].moto || ''}</div>
-                              <div className={styles.QR} >
-                                <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} size={30} />
-                              </div>
-                           </>
-                          )}
-                          {patternUrl&&
-                          <div style={{
-                            position: 'absolute',
-                            top: 8,
-                            left: 25,
-                            width: '80%',
-                            height: '95%',
-                            backgroundImage: `url('${patternUrl}')`, // 패턴 이미지
-                            backgroundSize: 'cover',
-                          }}></div>}
-                        </div>
                       </div>
+                      <div className={`${styles.cardBack}`} style={cardStyles.back} ref={backRef}>
+                        {showQR && (
+                          <>
+                            <div className={styles.moto} style={infoItemStyle}>{cards[0].moto || ''}</div>
+                            <div className={styles.QR} >
+                              <QRCode value={`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`} size={30} />
+                            </div>
+                          </>
+                        )}
+                        {patternUrl&&
+                        <div style={{
+                          position: 'absolute',
+                          top: 8,
+                          left: 25,
+                          width: '80%',
+                          height: '95%',
+                          backgroundImage: `url('${patternUrl}')`, // 패턴 이미지
+                          backgroundSize: 'cover',
+                        }}></div>}
+                      </div>
+                    </div>
                   </>
-                ) : (
-                  <div>{userEmail}에 해당하는 카드 없음</div>
-                )}
-                <div className={styles.btnContainer}>
-                  <button type="button" className={styles.btn} onClick={handleCardClick}>카드뒤집기</button>
-                  <button type="button" className={styles.btn} onClick={saveCardFAsImage}>저장하기 (이미지)</button>
-                  <button type="button" className={styles.btn} onClick={shareCard}>공유하기</button>
-                </div>
-              </div>
+                  ) : ( <div>{userEmail}에 해당하는 카드 없음</div>)
+                  } 
+                  <div className={styles.btnContainer}>
+                    <button type="button" className={styles.btn} onClick={handleCardClick}>카드뒤집기</button>
+                    <button type="button" className={styles.btn} onClick={saveCardFAsImage}>저장하기 (이미지)</button>
+                    <button type="button" className={styles.btn} onClick={shareCard}>공유하기</button>
+                  </div>
+                  </div>
           </div>
-     </>
+      </>
   );
 }
 
