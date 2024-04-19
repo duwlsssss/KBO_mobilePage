@@ -513,12 +513,13 @@ const handleIgClick = () => {
                           <div className={styles.IG} style={infoItemStyle}>IG</div>
                           <div className={styles.IGValue} style={infoItemStyle} onClick={handleIgClick}>{cards[0].ig ? `@${cards[0].ig}` : ''}</div>
                           {cardImage && 
-                            <img src={cardImage} 
-                            alt="Profile" 
-                            className={styles.cardImageCircleGrey}
-                            // className={cards[0].frameShapeoption === "Rec" ? styles.cardImageRectGrey : styles.cardImageCircleGrey}
-                            style={infoItemStyle} 
-                          />}
+                            <div className={styles.cardImageContainer}>
+                              <img src={cardImage} 
+                              alt="Profile" 
+                              className={cards[0].frameShapeoption === "Rec" ? styles.cardImageRectGrey : styles.cardImageCircleGrey}
+                              style={infoItemStyle} 
+                            />
+                            </div>}
                           {mbtiUrl && <img src={mbtiUrl} alt="mbti" className={styles.MBTIValue} style={infoItemStyle} />}
                           </div>
                           {frameUrl && 
