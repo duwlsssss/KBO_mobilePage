@@ -1,2 +1,2 @@
 /api/*  http://kimmyungsa.us-east-2.elasticbeanstalk.com/:splat  200
-/*      index.html 200
+/* /index.html 200
