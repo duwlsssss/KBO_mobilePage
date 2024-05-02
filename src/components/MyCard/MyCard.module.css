@@ -165,16 +165,17 @@
   top: 17.05rem; 
   left:10rem;
 }
+
 .MBTIValue {
   transform: rotate(-90deg);
   transform-origin: center center;
   width: 4rem;
-  height: 4rem;
-  top: 15.55rem; 
-  right: -4rem; 
-  object-fit: cover;
+  height: 5rem;
+  top: 14.7rem; 
+  right: -4.3rem; 
   pointer-events: none;
 }
+
 .email {
   color: #888; 
   top: 18.55rem; 

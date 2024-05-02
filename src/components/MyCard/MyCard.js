@@ -518,7 +518,9 @@ const handleIgClick = () => {
                               style={infoItemStyle} 
                             />
                             </div>}
-                          {mbtiUrl && <img src={mbtiUrl} alt="mbti" className={styles.MBTIValue} style={infoItemStyle} />}
+                          {mbtiUrl && 
+                              <img src={mbtiUrl} alt="mbti" className={styles.MBTIValue} style={infoItemStyle}/>
+                          }
                           </div>
                           {frameUrl && 
                           <div style={{
