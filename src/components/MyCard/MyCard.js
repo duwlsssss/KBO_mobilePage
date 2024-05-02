@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import QRCode from 'qrcode.react';
 import api from '../../api/axios'
 import html2canvas from 'html2canvas';
-import { toast } from 'react-toastify';
 import saveAs from "file-saver";
 import styles from './MyCard.module.css';
 import { useLocation } from 'react-router-dom';
@@ -238,7 +237,6 @@ function MyCard() {
       //   }
       // });
       } catch (error) {
-      toast.error('이미지 저장 중 오류가 발생했습니다.');
       alert("사진 저장 중에 문제가 생겼습니다. 다시 시도해주세요")
     }
    };
