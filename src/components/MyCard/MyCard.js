@@ -199,7 +199,7 @@ function MyCard() {
       }
       else {
         // 데이터가 비어있을 경우 기본 이미지 설정
-        setCardImage('/images/kimLogo_padded_.png');
+        setCardImage('/images/kimLogo_padded_.webp');
       }
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -398,7 +398,7 @@ const handleIgClick = () => {
       const patternImageUrl = card.patternOption ? `/images/pattern/${card.patternOption}.png` : '';
       const frameImageUrl = card.frameOption ? `/images/frame/${card.frameOption}.png` : '';
       console.log("frameImageUrl",frameImageUrl);
-      const mbtiImageUrl = card.MBTI ?`/images/mbti/${card.MBTI}.png`:'';
+      const mbtiImageUrl = card.MBTI ?`/images/mbti/${card.MBTI}.webp`:'';
       setPatternUrl(patternImageUrl);
       setFrameUrl(frameImageUrl);
       setMbtiUrl(mbtiImageUrl);
