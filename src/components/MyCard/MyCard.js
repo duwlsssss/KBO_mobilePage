@@ -398,7 +398,7 @@ const handleIgClick = () => {
       const patternImageUrl = card.patternOption ? `/images/pattern/${card.patternOption}.png` : '';
       const frameImageUrl = card.frameOption ? `/images/frame/${card.frameOption}.png` : '';
       console.log("frameImageUrl",frameImageUrl);
-      const mbtiImageUrl = card.MBTI ?`/images/mbti/${card.MBTI}.webp`:'';
+      const mbtiImageUrl = card.MBTI ?`/images/mbti/${card.MBTI}.png`:'';
       setPatternUrl(patternImageUrl);
       setFrameUrl(frameImageUrl);
       setMbtiUrl(mbtiImageUrl);
@@ -419,7 +419,7 @@ const handleIgClick = () => {
         return "Dovemayo_wild";
       case 5:
         return "HakgyoansimButpenB";
-      default: //디폴트는 Arial
+      default: //디폴트
       return "sans-serif";
     }
   }
@@ -431,7 +431,7 @@ const handleIgClick = () => {
         return `/images/back/backBlue.png`;
       case 'GreenMilitary':
       case 'GreenStrawberry':
-        return `/images/back/backGreen.png`; 
+        return `/images/back/back_gs.png`; 
       case 'Grey':
       case 'GreyAurora':
         return `/images/back/backGrey.png`;
@@ -444,9 +444,9 @@ const handleIgClick = () => {
       case 'PurpleCheck':
         return `/images/back/backPurple.png`;
       case 'BlueOther':
-      case 'Sky':
+      case 'Blue':
       case 'SkyOther':
-        return `/images/back/backSky.png`;
+        return `/images/back/backBlue.png`;
       case 'Yellow':
         return `/images/back/backYellow.png`;
       default:

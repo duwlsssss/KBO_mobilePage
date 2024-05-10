@@ -24,6 +24,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .ownerText{
@@ -39,11 +40,11 @@
 }
 
 .card {
-  /* background-color: aqua; */
-  margin: 0 1rem;
-  width: 20rem;
+  background-color: aqua;
+  width: 19rem;
   height: 30rem;
   perspective: 300rem;
+  margin-right:2rem;
 }
 
 .cardFront,
@@ -89,7 +90,7 @@
   height: 12rem;
   overflow: hidden; 
   margin-top: 10rem;
-  margin-left: -4.1rem;
+  margin-left: -4.5rem;
   border-radius: 50%; 
   border: 2px solid grey; 
 }
@@ -104,22 +105,19 @@
   border-radius: 0.2rem;
   width: 9.5rem;
   height: 11.5rem;
-  /* margin-top: 10rem;
-  margin-left: 4rem; */
-  /* object-fit: cover; */
 }
 
 .date{
-  top: 9.25rem;
-  right: -4.1rem;
+  top: 9.4rem;
+  right: -4.2rem;
 }
 .name {
   color: #888; 
-  top: 11.35rem;
+  top: 11.4rem;
   left:10rem;
 }
 .nameValue {
-  top: 11.35rem;
+  top: 11.4rem;
   left: 14rem;
 }
 .engNameValue{
@@ -171,14 +169,14 @@
   transform-origin: center center;
   width: 4rem;
   height: 5rem;
-  top: 14.7rem; 
+  top: 14.9rem; 
   right: -4.3rem; 
   pointer-events: none;
 }
 
 .email {
   color: #888; 
-  top: 18.55rem; 
+  top: 18.4rem; 
   left:10rem;
 }
 .emailValue {
