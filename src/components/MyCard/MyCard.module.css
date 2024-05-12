@@ -44,7 +44,6 @@
   width: 19rem;
   height: 30rem;
   perspective: 300rem;
-  margin-right:2rem;
 }
 
 .cardFront,
@@ -73,7 +72,7 @@
 
 .frame {
   position: absolute;
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
   transform-origin: center center;
   top: 10.4rem;
   left: -4.1rem;
