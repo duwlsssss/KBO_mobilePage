@@ -40,7 +40,7 @@
 }
 
 .card {
-  background-color: aqua;
+  /* background-color: aqua; */
   width: 19rem;
   height: 30rem;
   perspective: 300rem;
@@ -71,26 +71,27 @@
   bottom: 0;
 }
 
-
-/* .cardImage{
-  border-radius: 0.5em;
-  width: 11rem;
-  height: 13rem;
-  margin-top:11.5rem;
-  margin-left: -4.4rem;
-  object-fit: cover;
-} */
+.frame {
+  position: absolute;
+  transform: rotate(90deg);
+  transform-origin: center center;
+  top: 10.4rem;
+  left: -4.1rem;
+  width: 55%; 
+  height: auto; 
+  z-index: 1; 
+}
 
 .cardImageContainer {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 10rem; 
-  height: 12rem;
+  width: 9rem; 
+  height: 11rem;
   overflow: hidden; 
   margin-top: 10rem;
-  margin-left: -4.5rem;
+  margin-left: -3.5rem;
   border-radius: 50%; 
   border: 2px solid grey; 
 }
@@ -108,60 +109,64 @@
 }
 
 .date{
-  top: 9.4rem;
-  right: -4.2rem;
+  top: 9.65rem;
+  right: -3.5rem;
 }
 .name {
   color: #888; 
   top: 11.4rem;
-  left:10rem;
+  left:9rem;
 }
 .nameValue {
   top: 11.4rem;
-  left: 14rem;
+  left: 13rem;
 }
 .engNameValue{
   top: 11.35rem;
-  right: -3.5rem;
+  right: -2.5rem;
 }
 .school {
   color: #888; 
   top: 12.75rem; 
-  left: 10rem;
+  left: 9rem;
 }
 .schoolValue {
   top: 12.75rem; 
-  left: 14rem;
+  left: 11rem;
+}
+.schoolValueWithoutNum {
+  top: 12.75rem; 
+  right: -2.5rem;
 }
 .studentNumValue {
   top: 12.75rem; 
-  right: -3.5rem;
+  right: -2.5rem;
 }
 .major {
   color: #888; 
-  top: 14.15rem; 
-  left:10rem;
+  top: 14.1rem; 
+  left:9rem;
 }
 .majorValue {
-  top: 14.15rem; 
-  right: -3.5rem;
+  top: 14.1rem; 
+  right: -2.5rem;
 }
 .session {
   color: #888; 
-  top: 15.55rem; 
-  left:10rem;
+  top: 15.5rem; 
+  left:9rem;
 }
 .sessionValue {
-  top: 15.55rem; 
-  right: -3.5rem;
+  top: 15.5rem; 
+  right: -2.5rem;
 }
 .highlight {
   background-color: #fef9f0; 
 }
 .MBTI{
   color: #888; 
-  top: 17.05rem; 
-  left:10rem;
+  top: 16.7rem; 
+  left:9rem;
 }
 
 .MBTIValue {
@@ -169,54 +174,63 @@
   transform-origin: center center;
   width: 4rem;
   height: 5rem;
-  top: 14.9rem; 
-  right: -4.3rem; 
+  top: 14.57rem; 
+  right: -3.3rem; 
   pointer-events: none;
 }
 
 .email {
   color: #888; 
-  top: 18.4rem; 
-  left:10rem;
+  top: 18.1rem; 
+  left:9rem;
 }
 .emailValue {
-  top: 18.55rem; 
-  right: -3.5rem;
+  top: 18.1rem; 
+  right: -2.5rem;
 }
 .emailValue:hover{
   background-color: white;
 }
 .IG {
   color: #888; 
-  top: 19.85rem; 
-  left:10rem; 
+  top: 19.4rem; 
+  left:9rem; 
 }
 .IGValue {
-  top: 19.85rem; 
-  right: -3.5rem; 
+  top: 19.4rem; 
+  right: -2.5rem; 
 }
 .IGValue:hover{
   background-color: white;
 }
 
+.pattern{
+  position: absolute;
+  top: -2rem;
+  left: 0.6rem;
+  width: 93%;
+  height: auto;
+}
+
 .moto {
   position: absolute;
-  top: 11.5rem; 
-  left: 0.7rem;
+  top: 11.5rem;
+  left: 0.1rem;
   right: 0;
   bottom: 0;
   transform: rotate(90deg);
   transform-origin: center center;
   /* background-color: aquamarine; */
-  width:25.5rem;
-  height:7rem;
+  width: 24rem;
+  height: 7rem;
+  font-size: 1rem;
   display:flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
   white-space: normal; /* 텍스트가 요소 폭을 넘어가면 줄바꿈되게 함 */
-  overflow: hidden; /* 내용이 요소의 크기를 초과하면 숨김 처리 */
+  overflow: hidden;
 }
+
 .QR{
   position: absolute;
   transform: rotate(90deg);

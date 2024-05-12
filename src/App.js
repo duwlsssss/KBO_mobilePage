@@ -1,13 +1,8 @@
 import React, { useEffect }  from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import queryString from 'query-string';
 import MyCard from './components/MyCard/MyCard';
 import CardInfo from './components/CardInfo/CardInfo'
 import 'react-toastify/dist/ReactToastify.css';
-
-function useQuery() {
-  return queryString.parse(useLocation().search);
-}
 
 
 function App() {
@@ -24,26 +19,18 @@ function App() {
     return () => window.removeEventListener('resize', setVHVariable);
   }, []);
 
-  // Route Handler to manage component rendering based on the query string
-  function RouteHandler({ component: Component }) {
-    const query = useQuery();
-    const userEmail = query.userEmail;
-
-    useEffect(() => {
-      if (userEmail) {
-        console.log("User Email from URL Query String:", userEmail);
-      }
-    }, [userEmail]);
-
-    return <Component />;
-  }
+  // useEffect(() => {
+  //   if (userEmail) {
+  //     console.log("User Email from URL Query String:", userEmail);
+  //   }
+  // }, [userEmail]);
 
   return (
     <Router>
       <>
         <Routes>
-          <Route path="/" element={<RouteHandler component={MyCard} />} />
-          <Route path="/card-info" element={<RouteHandler component={CardInfo} />} /> 
+          <Route path="/" element={<MyCard/>}/>
+          <Route path="/card-info" element={<CardInfo/>}/>
         </Routes>
       </>
     </Router>
