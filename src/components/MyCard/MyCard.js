@@ -555,12 +555,12 @@ const handleIgClick = useCallback(() => {
                           <div className={styles.IGValue} style={infoItemStyle} onClick={handleIgClick}>{cards[0].ig ? `@${cards[0].ig}` : ''}</div>
                           {frameUrl && <img className={styles.frame} src={frameUrl} alt="Frame"/>} 
                           {cardImage && 
-                            <div className={styles.cardImageContainer}>
+                            <div className={cards[0].frameShapeoption === "Rec" ? styles.cardImageContainerR : styles.cardImageContainerC}>
                               <img src={cardImage} alt="Profile" 
-                              className={cards[0].frameShapeoption === "Rec" ? styles.cardImageRectGrey : styles.cardImageCircleGrey}
-                              style={infoItemStyle} 
-                            />
-                            </div>}
+                                className={cards[0].frameShapeoption === "Rec" ? styles.cardImageRectGrey : styles.cardImageCircleGrey}
+                              />
+                            </div>
+                          }
                           {mbtiUrl && <img src={mbtiUrl} alt="mbti" className={styles.MBTIValue} style={infoItemStyle}/>}
                           </div>
                       </div>

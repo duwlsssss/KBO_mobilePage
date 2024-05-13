@@ -74,14 +74,32 @@
   position: absolute;
   transform: rotate(-90deg);
   transform-origin: center center;
-  top: 10.4rem;
+  top: 10.5rem;
   left: -4.1rem;
-  width: 55%; 
+  width: 58%; 
   height: auto; 
   z-index: 1; 
 }
 
-.cardImageContainer {
+.cardImageContainerR {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8.8rem; 
+  height: 10.3rem;
+  overflow: hidden; 
+  margin-top: 10.6rem;
+  margin-left: -3.2rem; 
+  border: 2px solid grey;
+}
+
+.cardImageRectGrey {
+  height: 100%;
+  width: auto;
+}
+
+.cardImageContainerC {
   position: relative;
   display: flex;
   align-items: center;
@@ -90,21 +108,16 @@
   height: 11rem;
   overflow: hidden; 
   margin-top: 10rem;
-  margin-left: -3.5rem; 
+  margin-left: -3.3rem; 
+  border-radius: 50%;
   border: 2px solid grey;
 }
 
-.cardImageCircleGrey {
-  border-radius: 50%; 
-  width: auto;
+.cardImageCircleGrey{
   height: 100%;
-  border: 2px solid grey; /* Ensure the border is applied with the specified color */
+  width: auto;
 }
 
-.cardImageRectGrey{
-  width: auto;
-  height: 100%; 
-}
 
 .date{
   top: 9.65rem;
@@ -214,8 +227,6 @@
   position: absolute;
   top: 11.5rem;
   left: 0.1rem;
-  right: 0;
-  bottom: 0;
   transform: rotate(90deg);
   transform-origin: center center;
   /* background-color: aquamarine; */
@@ -225,6 +236,7 @@
   display:flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   white-space: normal; /* 텍스트가 요소 폭을 넘어가면 줄바꿈되게 함 */
   overflow: hidden;
 }
