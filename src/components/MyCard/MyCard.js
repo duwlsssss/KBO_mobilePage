@@ -190,6 +190,7 @@ function MyCard() {
       if (response.data && response.data.length > 0) {
         // 이미지 데이터 배열 중 마지막 이미지의 URL을 사용
         setCardImage(response.data[0].url);
+        console.log(response.data[0].url)
       }
       else {
         // 데이터가 비어있을 경우 기본 이미지 설정

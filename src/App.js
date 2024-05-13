@@ -2,7 +2,6 @@ import React, { useEffect }  from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import MyCard from './components/MyCard/MyCard';
 import CardInfo from './components/CardInfo/CardInfo'
-import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
