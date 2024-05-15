@@ -24,6 +24,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .ownerText{
@@ -39,20 +40,11 @@
 }
 
 .card {
-  margin: 0 1rem;
-  width: 20rem;
+  /* background-color: aqua; */
+  width: 19rem;
   height: 30rem;
   perspective: 300rem;
 }
-
-
-.cardImg{
-  width:10rem;
-  height:13rem;
-  object-fit: cover;
-}
-
-
 
 .cardFront,
 .cardBack {
@@ -78,146 +70,177 @@
   bottom: 0;
 }
 
+.frame {
+  position: absolute;
+  transform: rotate(-90deg);
+  transform-origin: center center;
+  top: 10.5rem;
+  left: -4.1rem;
+  width: 58%; 
+  height: auto; 
+  z-index: 1; 
+}
 
-/* .cardImage{
-  border-radius: 0.5em;
-  width: 11rem;
-  height: 13rem;
-  margin-top:11.5rem;
-  margin-left: -4.4rem;
-  object-fit: cover;
-} */
+.cardImageContainerR {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8.8rem; 
+  height: 10.3rem;
+  overflow: hidden; 
+  margin-top: 10.6rem;
+  margin-left: -3.2rem; 
+  border: 2px solid grey;
+}
+
+.cardImageRectGrey {
+  height: 100%;
+  width: auto;
+}
+
+.cardImageContainerC {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 9rem; 
+  height: 11rem;
+  overflow: hidden; 
+  margin-top: 10rem;
+  margin-left: -3.3rem; 
+  border-radius: 50%;
+  border: 2px solid grey;
+}
 
 .cardImageCircleGrey{
-  border: solid grey 2px;
-  border-radius: 50%;
-  width: 10rem;
-  height: 12rem;
-  margin-top:10rem;
-  margin-left: -4rem;
-  object-fit: cover;
+  height: 100%;
+  width: auto;
 }
 
-.cardImageRectGrey{
-  border: solid grey 2px;
-  border-radius: 0.2rem;
-  width: 9rem;
-  height: 12rem;
-  margin-top:10rem;
-  margin-left: -3.5rem;
-  object-fit: cover;
-}
 
 .date{
-  top: 9.25rem;
-  right: -4.1rem;
+  top: 9.65rem;
+  right: -3.5rem;
 }
 .name {
   color: #888; 
-  top: 11.35rem;
-  left:10rem;
+  top: 11.4rem;
+  left:9rem;
 }
 .nameValue {
-  top: 11.35rem;
-  left: 14rem;
+  top: 11.4rem;
+  left: 13rem;
 }
 .engNameValue{
   top: 11.35rem;
-  right: -3.5rem;
+  right: -2.5rem;
 }
 .school {
   color: #888; 
   top: 12.75rem; 
-  left: 10rem;
+  left: 9rem;
 }
 .schoolValue {
   top: 12.75rem; 
-  left: 14rem;
+  left: 13rem;
+}
+.schoolValueWithoutNum {
+  top: 12.75rem; 
+  right: -2.5rem;
 }
 .studentNumValue {
   top: 12.75rem; 
-  right: -3.5rem;
+  right: -2.5rem;
 }
 .major {
   color: #888; 
-  top: 14.15rem; 
-  left:10rem;
+  top: 14.1rem; 
+  left:9rem;
 }
 .majorValue {
-  top: 14.15rem; 
-  right: -3.5rem;
+  top: 14.1rem; 
+  right: -2.5rem;
 }
 .session {
   color: #888; 
-  top: 15.55rem; 
-  left:10rem;
+  top: 15.5rem; 
+  left:9rem;
 }
 .sessionValue {
-  top: 15.55rem; 
-  right: -3.5rem;
+  top: 15.5rem; 
+  right: -2.5rem;
 }
 .highlight {
-  /* inset | offset-x | offset-y | color */
-  box-shadow: inset 0 -10px 0 #FCFBEE;
+  background-color: #fef9f0; 
 }
 .MBTI{
   color: #888; 
-  top: 17.05rem; 
-  left:10rem;
+  top: 16.7rem; 
+  left:9rem;
 }
+
 .MBTIValue {
   transform: rotate(-90deg);
   transform-origin: center center;
   width: 4rem;
-  height: 4rem;
-  top: 15.55rem; 
-  right: -4rem; 
-  object-fit: cover;
+  height: 5rem;
+  top: 14.57rem; 
+  right: -3.3rem; 
   pointer-events: none;
 }
+
 .email {
   color: #888; 
-  top: 18.55rem; 
-  left:10rem;
+  top: 18.1rem; 
+  left:9rem;
 }
 .emailValue {
-  top: 18.55rem; 
-  right: -3.5rem;
+  top: 18.1rem; 
+  right: -2.5rem;
 }
 .emailValue:hover{
   background-color: white;
 }
 .IG {
   color: #888; 
-  top: 19.85rem; 
-  left:10rem; 
+  top: 19.4rem; 
+  left:9rem; 
 }
 .IGValue {
-  top: 19.85rem; 
-  right: -3.5rem; 
+  top: 19.4rem; 
+  right: -2.5rem; 
 }
 .IGValue:hover{
   background-color: white;
 }
 
+.pattern{
+  position: absolute;
+  top: -2rem;
+  left: 0.6rem;
+  width: 93%;
+  height: auto;
+}
+
 .moto {
   position: absolute;
-  top: 11.5rem; 
-  left: 0.7rem;
-  right: 0;
-  bottom: 0;
+  top: 11.5rem;
+  left: 0.1rem;
   transform: rotate(90deg);
   transform-origin: center center;
   /* background-color: aquamarine; */
-  width:25.5rem;
-  height:7rem;
+  width: 24rem;
+  height: 7rem;
+  font-size: 1rem;
   display:flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  text-align: center;
   white-space: normal; /* 텍스트가 요소 폭을 넘어가면 줄바꿈되게 함 */
-  overflow: hidden; /* 내용이 요소의 크기를 초과하면 숨김 처리 */
+  overflow: hidden;
 }
+
 .QR{
   position: absolute;
   transform: rotate(90deg);
@@ -263,24 +286,21 @@
 @media (max-width: 375px) { /* iPhone mini width */
   .card{
       /* background-color: aqua; */
-      margin-left:2rem; 
   }
 }
 
 @media (max-width: 360px) {  /* 갤럭시 s8+,노트 width */
   .card{
       /* background-color: aqua; */
-      margin-left:2.5rem;
   }
 }
 
 @media (max-width: 320px) { /* z-flip, iphone se width */
   .container{
-    width: 300px;
+    width: 280px;
   }
   .card{
       /* background-color: aqua; */
-      margin-left:3.5rem;
   }
   .btnContainer{
     gap:0.5rem;
