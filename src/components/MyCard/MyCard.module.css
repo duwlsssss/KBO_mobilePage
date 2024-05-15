@@ -286,24 +286,21 @@
 @media (max-width: 375px) { /* iPhone mini width */
   .card{
       /* background-color: aqua; */
-      margin-left:2rem; 
   }
 }
 
 @media (max-width: 360px) {  /* 갤럭시 s8+,노트 width */
   .card{
       /* background-color: aqua; */
-      margin-left:2.5rem;
   }
 }
 
 @media (max-width: 320px) { /* z-flip, iphone se width */
   .container{
-    width: 300px;
+    width: 280px;
   }
   .card{
       /* background-color: aqua; */
-      margin-left:3.5rem;
   }
   .btnContainer{
     gap:0.5rem;

@@ -14,7 +14,7 @@ function MyCard() {
   const userEmail = useUserEmailStore(state=>state.userEmail);
   const setUserEmail = useUserEmailStore(state=>state.setUserEmail);
   const [cards, setCards] = useState([]); //카드 저장용
-  const [cardImage, setCardImage] = useState('/images/kimLogo_padded_w.png'); // 에러 발생 시 기본 이미지);//이미지 저장
+  const [cardImage, setCardImage] = useState('/images/kimLogo_padded_w.webp'); // 에러 발생 시 기본 이미지);//이미지 저장
   const [isLoading, setIsLoading] = useState(true);//로딩 상태 
   const [isSaving, setIsSaving] = useState(false);//사진 저장 상태 추적
   const [isFlipped, setIsFlipped] = useState(false);
@@ -194,11 +194,11 @@ function MyCard() {
       }
       else {
         // 데이터가 비어있을 경우 기본 이미지 설정
-        setCardImage('/images/kimLogo_padded_w.png');
+        setCardImage('/images/kimLogo_padded_w.webp');
       }
     } catch (error) {
       console.error('Error fetching images:', error);
-      setCardImage('/images/kimLogo_padded_w.png'); // 에러 발생 시 기본 이미지
+      setCardImage('/images/kimLogo_padded_w.webp'); // 에러 발생 시 기본 이미지
   }};
 
    //이미지로 저장
@@ -367,8 +367,8 @@ const handleIgClick = useCallback(() => {
     if (cards.length > 0) {
       const card = cards[0];
       return {
-        backImageUrl: card.backgroundOption ? getBackImageUrl(card.backgroundOption): '/images/back/GreyA.png',
-        frontImageUrl: card.backgroundOption ? `/images/front/${card.backgroundOption}.png` : '/images/front/GreyAurora.png'
+        backImageUrl: card.backgroundOption ? getBackImageUrl(card.backgroundOption): '/images/back/GreyA.webp',
+        frontImageUrl: card.backgroundOption ? `/images/front/${card.backgroundOption}.webp` : '/images/front/GreyAurora.webp'
       };
     }
     return { backImageUrl: '', frontImageUrl: '' };
@@ -397,9 +397,9 @@ const handleIgClick = useCallback(() => {
         fontFamily: getFontFamily(card.fontOption),
       }));
 
-      setPatternUrl(card.patternOption ? `/images/pattern/${card.patternOption}.png` : '');
-      setFrameUrl(card.frameOption ? `/images/frame/${card.frameOption}.png` : '');
-      setMbtiUrl(card.MBTI ? `/images/mbti/${card.MBTI}.png` : '');
+      setPatternUrl(card.patternOption ? `/images/pattern/${card.patternOption}.webp` : '');
+      setFrameUrl(card.frameOption ? `/images/frame/${card.frameOption}.webp` : '');
+      setMbtiUrl(card.MBTI ? `/images/mbti/${card.MBTI}.webp` : '');
     }
   }, [cards]); 
 
@@ -410,7 +410,7 @@ const handleIgClick = useCallback(() => {
 
   //   if (card) {
   //     const backImageUrl = getBackImageUrl(card.backgroundOption);
-  //     const frontImageUrl = card.backgroundOption ? `/images/front/${card.backgroundOption}.png` : '/images/front/GreyAurora.png';
+  //     const frontImageUrl = card.backgroundOption ? `/images/front/${card.backgroundOption}.webp` : '/images/front/GreyAurora.webp';
   //     const newBackStyle = {
   //       ...cardStyles.back,
   //       backgroundImage: `url('${backImageUrl}')`,
@@ -432,10 +432,10 @@ const handleIgClick = useCallback(() => {
   //     setInfoItemStyle(newInfoItemStyle);
   
   //     // 패턴 옵션, 프레임 필터 옵션, MBTI URL 설정
-  //     const patternImageUrl = card.patternOption ? `/images/pattern/${card.patternOption}.png` : '';
-  //     const frameImageUrl = card.frameOption ? `/images/frame/${card.frameOption}.png` : '';
+  //     const patternImageUrl = card.patternOption ? `/images/pattern/${card.patternOption}.webp` : '';
+  //     const frameImageUrl = card.frameOption ? `/images/frame/${card.frameOption}.webp` : '';
   //     console.log("frameImageUrl",frameImageUrl);
-  //     const mbtiImageUrl = card.MBTI ?`/images/mbti/${card.MBTI}.png`:'';
+  //     const mbtiImageUrl = card.MBTI ?`/images/mbti/${card.MBTI}.webp`:'';
   //     setPatternUrl(patternImageUrl);
   //     setFrameUrl(frameImageUrl);
   //     setMbtiUrl(mbtiImageUrl);
@@ -465,35 +465,35 @@ const handleIgClick = useCallback(() => {
   function getBackImageUrl(backgroundOption) {
     switch (backgroundOption) {
       case 'BlueCheck':
-        return `/images/back/Blue.png`;
+        return `/images/back/Blue.webp`;
       case 'GreenMilitary':
-        return `/images/back/GreenM.png`;
+        return `/images/back/GreenM.webp`;
       case 'GreenBerry':
-        return `/images/back/GreenB.png`; 
+        return `/images/back/GreenB.webp`; 
       case 'Grey':
-        return `/images/back/Grey.png`;
+        return `/images/back/Grey.webp`;
       case 'GreyAurora':
-        return `/images/back/GreyA.png`;
+        return `/images/back/GreyA.webp`;
       case 'PinkAurora':
       case 'PinkCheck':
       case 'Pink':
-        return `/images/back/Pink.png`;
+        return `/images/back/Pink.webp`;
       case 'RedMelt':
-        return `/images/back/RedM.png`;
+        return `/images/back/RedM.webp`;
       case 'PurpleAurora':
-        return `/images/back/PurpleA.png`;
+        return `/images/back/PurpleA.webp`;
       case 'PurpleCheck':
-        return `/images/back/PurpleC.png`;
+        return `/images/back/PurpleC.webp`;
       case 'SkyMelt':
-        return `/images/back/SkyM.png`;
+        return `/images/back/SkyM.webp`;
       case 'SKy':
-        return `/images/back/SkyM.png`;
+        return `/images/back/SkyM.webp`;
       case 'SkyCloud':
-        return `/images/back/SkyC.png`;
+        return `/images/back/SkyC.webp`;
       case 'Yellow':
-        return `/images/back/Yellow.png`;
+        return `/images/back/Yellow.webp`;
       default:
-        return '/images/back/Grey.png'; // 기본 이미지-단색 그레이
+        return '/images/back/Grey.webp'; // 기본 이미지-단색 그레이
     }
   }
 
