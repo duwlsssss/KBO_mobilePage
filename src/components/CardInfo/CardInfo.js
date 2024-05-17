@@ -580,8 +580,9 @@ const handleIgClick = useCallback(() => {
                   <div className={styles.btnContainer}>
                     <button type="button" className={styles.btn} onClick={handleCardClick}>카드뒤집기</button>
                     <button type="button" className={styles.btn} onClick={saveCardFAsImage}>저장하기 (이미지)</button>
+                    <button type="button" className={styles.btn} onClick={shareCard}>공유하기</button>
                   </div>
-                </div>
+                  </div>
           </div>
       </>
   );
