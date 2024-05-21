@@ -257,27 +257,27 @@ function CardInfo() {
     }
     setIsSaving(false); 
   };
-  // const saveCardBAsImage = async () => {
-  //   setIsSaving(true); // 사진 저장 상태 시작
-  //   setShowQR(true); // QR 코드 보이기 시작_qr이 안찍히는 상황 방지
+  const saveCardBAsImage = async () => {
+    setIsSaving(true); // 사진 저장 상태 시작
+    setShowQR(true); // QR 코드 보이기 시작_qr이 안찍히는 상황 방지
 
-  //   setIsFlipped(true); //뒷면으로 돌리고 
-  //   await waitForRender();
-  //   // await waitForElement('.cardBack');
-  //   if (backRef.current) {
-  //     console.log("뒷면 저장 시작");
-  //   //  alert("뒷면 저장 시작");
-  //   await captureCardImage(backRef.current, "card-back.png");
-  //   console.log("뒷면 저장 완료");
-  //   //  alert("뒷면 저장 완료");
-  //   }
+    setIsFlipped(true); //뒷면으로 돌리고 
+    await waitForRender();
+    // await waitForElement('.cardBack');
+    if (backRef.current) {
+      console.log("뒷면 저장 시작");
+    //  alert("뒷면 저장 시작");
+    await captureCardImage(backRef.current, "card-back.png");
+    console.log("뒷면 저장 완료");
+    //  alert("뒷면 저장 완료");
+    }
 
-  //   setIsFlipped(false);
-  //   // await waitForElement('.cardFront');
-  //   // await new Promise((resolve) => setTimeout(resolve, 800)); // 다시 앞면이 화면에 나타날 때까지 기다림
-  //   await waitForRender();
-  //   setIsSaving(false); 
-  // };
+    setIsFlipped(false);
+    // await waitForElement('.cardFront');
+    // await new Promise((resolve) => setTimeout(resolve, 800)); // 다시 앞면이 화면에 나타날 때까지 기다림
+    await waitForRender();
+    setIsSaving(false); 
+  };
 
 const handleEmailClick = useCallback(() => {
   console.log("이메일 클릭");
@@ -578,9 +578,9 @@ const handleIgClick = useCallback(() => {
                   ) : ( <div>{userEmail}에 해당하는 카드 없음</div>)
                   } 
                   <div className={styles.btnContainer}>
-                    <button type="button" className={styles.btn} onClick={handleCardClick}>카드뒤집기</button>
-                    <button type="button" className={styles.btn} onClick={saveCardFAsImage}>저장하기 (이미지)</button>
-                    <button type="button" className={styles.btn} onClick={shareCard}>공유하기</button>
+                    <button type="button" className={styles.btn} onClick={handleCardClick}>뒤집기</button>
+                    <button type="button" className={styles.btn} onClick={saveCardFAsImage}>앞저장</button>
+                    <button type="button" className={styles.btn} onClick={saveCardBAsImage}>뒤저장</button>
                   </div>
                   </div>
           </div>
