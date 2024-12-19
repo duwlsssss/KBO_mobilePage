@@ -17,7 +17,7 @@ const api = axios.create({
 // 요청 인터셉터 추가
 api.interceptors.request.use(
     (config) => {
-      console.log('Request Interceptor - Config:', config);
+      // console.log('Request Interceptor - Config:', config);
       return config;
     },
     (error) => {
@@ -29,7 +29,7 @@ api.interceptors.request.use(
   // 응답 인터셉터 추가
  api.interceptors.response.use(
     (response) => {
-      console.log('Response Interceptor - Response:', response);
+      // console.log('Response Interceptor - Response:', response);
       return response;
     },
     (error) => {

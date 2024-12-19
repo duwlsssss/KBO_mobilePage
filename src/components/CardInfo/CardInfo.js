@@ -89,7 +89,7 @@ function CardInfo() {
     const searchParams = new URLSearchParams(location.search);
     const email = searchParams.get('userEmail');
     if (email) {
-      console.log("url에서 뽑은 userEmail",email);
+      // console.log("url에서 뽑은 userEmail",email);
       setUserEmail(email);
     }
 
@@ -190,7 +190,7 @@ function CardInfo() {
       if (response.data && response.data.length > 0) {
         // 이미지 데이터 배열 중 마지막 이미지의 URL을 사용
         setCardImage(response.data[0].url);
-        console.log(response.data[0].url)
+        // console.log(response.data[0].url)
       }
       else {
         // 데이터가 비어있을 경우 기본 이미지 설정
@@ -244,16 +244,15 @@ function CardInfo() {
    const saveCardFAsImage = async () => {
     setIsSaving(true); // 사진 저장 상태 시작
  
-    console.log("앞면 저장 실행");
+    // console.log("앞면 저장 실행");
     setIsFlipped(false); //앞면으로 돌리고
     await waitForRender();
     // await waitForElement('.cardFront'); // 앞면이 화면에 나타날 때까지 기다림
     if (frontRef.current) {
-      console.log("앞면 저장 시작");
+      // console.log("앞면 저장 시작");
     //  alert("앞면 저장 시작");
     await captureCardImage(frontRef.current, "card.png");
-    console.log("앞면 저장 완료");
-    //  alert("앞면 저장 완료");
+    // console.log("앞면 저장 완료");
     }
     setIsSaving(false); 
   };
@@ -265,11 +264,10 @@ function CardInfo() {
     await waitForRender();
     // await waitForElement('.cardBack');
     if (backRef.current) {
-      console.log("뒷면 저장 시작");
+      // console.log("뒷면 저장 시작");
     //  alert("뒷면 저장 시작");
     await captureCardImage(backRef.current, "card-back.png");
-    console.log("뒷면 저장 완료");
-    //  alert("뒷면 저장 완료");
+    // console.log("뒷면 저장 완료");
     }
 
     setIsFlipped(false);
@@ -280,16 +278,16 @@ function CardInfo() {
   };
 
 const handleEmailClick = useCallback(() => {
-  console.log("이메일 클릭");
+  // console.log("이메일 클릭");
   if (cards[0].email) {
     const emailUrl = `mailto:${cards[0].email}`;
     window.open(emailUrl, '_self'); 
   }
 },[cards]);
 const handleIgClick = useCallback(() => {
-  console.log("인스타 클릭");
+  // console.log("인스타 클릭");
   if (cards[0].ig) {
-    console.log('cards[0].ig',cards[0].ig)
+    // console.log('cards[0].ig',cards[0].ig)
     const instagramUrl = `https://www.instagram.com/${cards[0].ig}/`; //비공개 계정도 열러기 해야함
     // const instagramUrl = `https://www.instagram.com/k_nijy/`;
     window.open(instagramUrl, '_blank');
@@ -304,19 +302,19 @@ const handleIgClick = useCallback(() => {
     try {
       const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
       // const shareUrl = `http://localhost:3000/card-info?userEmail=${userEmail}`;
-      console.log("공유 주소",shareUrl);
+      // console.log("공유 주소",shareUrl);
       // 공유주소를 클립보드에 복사
       await navigator.clipboard.writeText(shareUrl);
-      alert("링크가 복사되었어요");
+      // alert("링크가 복사되었어요");
     } catch (err) {
-      console.log(err);
+      console.error('링크 복사 실패',err);
     }
   };
 
   const shareCard = async () => {
     if (isShareSupported()) {
       try {
-        console.log("공유 주소",`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`);
+        // console.log("공유 주소",`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`);
         await navigator.share({
           title: `${cards[0].name} 님의 명함`,
           url: `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`,
@@ -339,7 +337,7 @@ const handleIgClick = useCallback(() => {
   const handleCardClick = useCallback(() => {
     // 카드의 뒤집힌 상태를 토글
     setIsFlipped(!isFlipped);
-    console.log("card flipped!")
+    // console.log("card flipped!")
 
     //앞면->뒷면 (f->t)
     if (isFlipped) {
