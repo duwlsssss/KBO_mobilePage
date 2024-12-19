@@ -34,6 +34,6 @@
 
 ## 🚀 주요 기능
 
-| 나의 명함 조회 (앞) | 나만의 명함 조회 (뒤) | 명함 이미지 저장 (앞, 뒤) | 명함 공유 |                                                      
-| :-------------: | :-------------: | :-------------: | :-------------: |
-| ![IMG_3230](https://github.com/user-attachments/assets/83b4941a-33bc-447f-9bc8-8a662dde7eb4) | ![IMG_3229](https://github.com/user-attachments/assets/031edb21-adeb-423d-bbdd-b9ec2b466c20) | ![IMG_3231](https://github.com/user-attachments/assets/226ab2e3-92e3-4686-9a78-049627d49697) | ![IMG_3232](https://github.com/user-attachments/assets/87cef9a0-f86d-4fe5-bb60-8a96305d80b0) |
+| 나의 명함 조회 (앞) | 나만의 명함 조회 (뒤) | 명함 이미지 저장 (앞, 뒤) | 이메일, 인스타 계정 클릭시 이동 | 명함 공유 |                                              
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| ![명함조회앞](https://github.com/user-attachments/assets/83b4941a-33bc-447f-9bc8-8a662dde7eb4) | ![명함조회뒤](https://github.com/user-attachments/assets/031edb21-adeb-423d-bbdd-b9ec2b466c20) | ![명함저장](https://github.com/user-attachments/assets/226ab2e3-92e3-4686-9a78-049627d49697) | ![이메일클릭](https://github.com/user-attachments/assets/e7348e9a-396a-4af1-858f-67f4def6fd64) | ![명함공유](https://github.com/user-attachments/assets/87cef9a0-f86d-4fe5-bb60-8a96305d80b0) |
