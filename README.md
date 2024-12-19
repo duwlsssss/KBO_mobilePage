@@ -2,12 +2,16 @@
 
 테스트 이메일 추가 주소: [테스트 주소](https://kimsofficebc.netlify.app/?userEmail=rladuwls0814@gmail.com)
 
+&nbsp;
+ 
 ## 📂 프로젝트 소개
 
 ### **김씨네 명함 사무소의 명함 조회 사이트입니다.**
 
 > **나만의 명함 조회하고 공유해보세요 ✨** 💫
 
+&nbsp;
+ 
 ## 🔧 기술 스택
 
 <div align="center">
