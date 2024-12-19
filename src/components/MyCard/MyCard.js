@@ -170,6 +170,7 @@ function MyCard() {
         // 가장 마지막 요소가 가장 최신 카드
         // console.log("fetch cards에서 호출 userCards", userCards)
         const mostRecentCard = userCards[userCards.length - 1];
+        // const mostRecentCard = userCards[0];
         // 카드가 존재하면 상태 업데이트
         setCards(mostRecentCard ? [mostRecentCard] : []);
       }

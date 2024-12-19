@@ -1,11 +1,8 @@
 .container{
   width: 350px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 11px;
+  margin: 1rem auto;
   box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
-  background: silver;
-  padding: 3px;
+  padding: 0.2rem;
 }
 
 .addressText {
@@ -21,10 +18,8 @@
 
 .contentArea{
   background-color: #FFF;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin:0;
+  padding:1rem;
 }
 
 .ownerText{
@@ -43,7 +38,7 @@
   /* background-color: aqua; */
   width: 19rem;
   height: 30rem;
-  perspective: 300rem;
+  perspective: 1000px;
 }
 
 .cardFront,
@@ -82,15 +77,15 @@
 }
 
 .cardImageContainerR {
-  position: relative;
+  position: absolute;
+  top: 10.5rem;
+  left: -3rem; 
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 8.8rem; 
-  height: 10.3rem;
+  width: 125px; 
+  height: 150px;
   overflow: hidden; 
-  margin-top: 10.6rem;
-  margin-left: -3.2rem; 
   border: 2px solid grey;
 }
 
@@ -100,15 +95,15 @@
 }
 
 .cardImageContainerC {
-  position: relative;
+  position: absolute;
+  top: 10rem;
+  left: -3.3rem; 
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 9rem; 
-  height: 11rem;
+  width: 120px; 
+  height: 150px;
   overflow: hidden; 
-  margin-top: 10rem;
-  margin-left: -3.3rem; 
   border-radius: 50%;
   border: 2px solid grey;
 }
@@ -246,32 +241,27 @@
   transform: rotate(90deg);
   transform-origin: center center;
   margin: 25.5rem 3.5rem;
-  z-index: 100;
+  z-index: 1;
 }
 
 .popUp {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #f2f2f2;
-  z-index: 1000;
+  z-index:1;
+  background-color: #F2F2F2;
+  font-family: "Pixelated MS Sans Serif", Arial;
   font-size: 1.2rem;
+  text-align: center;
 }
 
 .popUpContent {
-  font-family: "Pixelated MS Sans Serif", Arial;
-  width: 100%; 
-  max-width: 600px; 
-  margin-top: -50px; /*조금 위로 옮김*/
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .btnContainer{
