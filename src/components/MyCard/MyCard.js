@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import QRCode from 'qrcode.react';
 import api from '../../api/axios'
 import html2canvas from 'html2canvas';

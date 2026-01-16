@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import QRCode from 'qrcode.react';
 import api from '../../api/axios'
 import html2canvas from 'html2canvas';
@@ -10,11 +10,10 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import "xp.css/dist/98.css"
 
 function CardInfo() {
-
   const userEmail = useUserEmailStore(state=>state.userEmail);
   const setUserEmail = useUserEmailStore(state=>state.setUserEmail);
   const [cards, setCards] = useState([]); //카드 저장용
-  const [cardImage, setCardImage] = useState('/images/kimLogo_padded_w.webp'); // 에러 발생 시 기본 이미지);//이미지 저장
+  const [cardImage, setCardImage] = useState('/images/kimLogo_padded_w.webp'); // 에러 발생 시 기본 이미지
   const [isLoading, setIsLoading] = useState(true);//로딩 상태 
   const [isSaving, setIsSaving] = useState(false);//사진 저장 상태 추적
   const [isFlipped, setIsFlipped] = useState(false);
@@ -293,41 +292,6 @@ const handleIgClick = useCallback(() => {
     window.open(instagramUrl, '_blank');
   }
 }, [cards]); //cards가 변경될때만 함수 재생성
-
-  //공유하기 누르면 
-  const isShareSupported = () => !!navigator.share; //share api 지원 확인 
-
-  // 텍스트를 클립보드에 복사하는 함수
-  const copyToClipboard = async() => {
-    try {
-      const shareUrl = `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`;
-      // const shareUrl = `http://localhost:3000/card-info?userEmail=${userEmail}`;
-      // console.log("공유 주소",shareUrl);
-      // 공유주소를 클립보드에 복사
-      await navigator.clipboard.writeText(shareUrl);
-      // alert("링크가 복사되었어요");
-    } catch (err) {
-      console.error('링크 복사 실패',err);
-    }
-  };
-
-  const shareCard = async () => {
-    if (isShareSupported()) {
-      try {
-        // console.log("공유 주소",`https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`);
-        await navigator.share({
-          title: `${cards[0].name} 님의 명함`,
-          url: `https://kimsofficebc.netlify.app/card-info?userEmail=${userEmail}`,
-        });
-      } catch (error) {
-        console.error("share api 링크 공유 실패:", error);
-        copyToClipboard();
-      }
-    } else {
-      copyToClipboard();
-    }
-  };
-
 
   // useEffect(()=>{
   //   console.log("isFlipped 변함", isFlipped);
