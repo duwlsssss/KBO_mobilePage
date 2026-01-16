@@ -1,6 +1,6 @@
-# 🖥 [김명사 모바일 페이지](https://kimsofficebc.netlify.app)
+# 🖥 [김명사 모바일 페이지](https://kbo-mobile-page.vercel.app/)
 
-테스트 이메일 추가 주소: [테스트 주소](https://kimsofficebc.netlify.app/?userEmail=rladuwls0814@gmail.com)
+테스트 이메일 추가 주소: [테스트 주소](https://kbo-mobile-page.vercel.app/?userEmail=rladuwls0814@gmail.com)
 
 &nbsp;
  
