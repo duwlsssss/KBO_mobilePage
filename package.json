@@ -2,6 +2,7 @@
   "name": "kim-mobile",
   "version": "0.1.0",
   "private": true,
+  "author": "joy <rladuwls0814@gmail.com>",
   "homepage": "https://kbo-mobile-page.vercel.app",
   "dependencies": {
     "98.css": "^0.1.20",
